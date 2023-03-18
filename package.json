@@ -6,15 +6,8 @@
   "scripts": {
     "test": "mocha",
     "ejer1": "tsc-watch --onSuccess \"node dist/ejercicio-1.js\"",
-    "ejer2": "tsc-watch --onSuccess \"node dist/ejercicio-2.js\"",
-    "ejer3": "tsc-watch --onSuccess \"node dist/ejercicio-3.js\"",
-    "ejer4": "tsc-watch --onSuccess \"node dist/ejercicio-4.js\"",
-    "ejer5": "tsc-watch --onSuccess \"node dist/ejercicio-5.js\"",
-    "ejer6": "tsc-watch --onSuccess \"node dist/ejercicio-6.js\"",
-    "ejer7": "tsc-watch --onSuccess \"node dist/ejercicio-7.js\"",
-    "ejer8": "tsc-watch --onSuccess \"node dist/ejercicio-8.js\"",
     "doc": "typedoc",
-    "coverage": "nyc npm test"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf ./nyc_output"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +24,7 @@
     "prettier": "^2.8.4",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.0",
-    "typedoc": "^0.23.25"
+    "typedoc": "^0.23.25",
+    "typescript": "^5.0.2"
   }
 }
