@@ -1,9 +1,5 @@
 # Informe 
 
-En está práctica pondremos en prácticas los conceptos aprendidos en las clases de teoría sobre los diferentes estructuras de datos como los arrays, las tuplas y los enumerados.
-
-Para el desarrollo de este informe vamos a tener en cuenta el guión de la práctica, se nos han pedido realizar ocho ejercicios, por lo que realizaré el informe resolviendo diferentes apartados de cada uno de ellos:
-
 - Enunciado.
 - Solución propuesta.
 - Algoritmo/Funciones realizadas para la resolución del ejercicio.
