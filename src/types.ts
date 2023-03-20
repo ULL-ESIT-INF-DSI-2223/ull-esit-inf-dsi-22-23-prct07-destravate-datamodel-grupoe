@@ -4,13 +4,9 @@ letra: "X" | "Y" | "Z";
 coordenada: number;
 } // X:28 Y:30 Z:15
   
-export type actividad = {
-nombre: "correr" | "bicicleta";
-}
+export type actividad = "correr" | "bicicleta";
 
-export type ID = {
-  id: number;
-}
+export type ID = number;
 
 type estadistica = {
   km: number;

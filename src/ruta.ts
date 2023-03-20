@@ -45,14 +45,11 @@ export class Ruta {
     // si no está inicializado, lo inicializamos a 0
     // si está inicializado, devolvemos el valor de id_global
     if (Ruta.id_global_ == undefined) {
-      Ruta.id_global_ = {
-        id: 0
-      }
+      Ruta.id_global_ = 0;
     }
-    Ruta.id_global_.id += 1; 
-    const identificador: ID = {
-      id: Ruta.id_global_.id
-    }
+    Ruta.id_global_ += 1; 
+    const identificador: ID = Ruta.id_global_;
+
     // identificador.id = Ruta.id_global;
     return identificador;
   }

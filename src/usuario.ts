@@ -36,14 +36,10 @@ export class Usuario {
     // si no está inicializado, lo inicializamos a 0
     // si está inicializado, devolvemos el valor de id_global_
     if (Usuario.id_global_ == undefined) {
-      Usuario.id_global_ = {
-        id: 0
-      }
+      Usuario.id_global_ = 0;
     }
-    Usuario.id_global_.id += 1; 
-    const identificador: ID = {
-      id: Usuario.id_global_.id
-    }
+    Usuario.id_global_ += 1; 
+    const identificador: ID = Usuario.id_global_;
     return identificador;
   }
 

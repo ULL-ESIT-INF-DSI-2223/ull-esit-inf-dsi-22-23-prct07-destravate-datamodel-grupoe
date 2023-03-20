@@ -31,14 +31,11 @@ export class Reto {
     // si no está inicializado, lo inicializamos a 0
     // si está inicializado, devolvemos el valor de id_global
     if (Reto.id_global_ == undefined) {
-      Reto.id_global_ = {
-        id: 0
-      }
+      Reto.id_global_ = 0;
     }
-    Reto.id_global_.id += 1; 
-    const identificador: ID = {
-      id: Reto.id_global_.id
-    }
+    Reto.id_global_ += 1; 
+    const identificador: ID = Reto.id_global_;
+    
     return identificador;
   }
 }

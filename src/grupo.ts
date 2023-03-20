@@ -32,14 +32,10 @@ export class Grupo {
     // si no está inicializado, lo inicializamos a 0
     // si está inicializado, devolvemos el valor de id_global
     if (Grupo.id_global_ == undefined) {
-        Grupo.id_global_ = {
-        id: 0
-      }
+        Grupo.id_global_ = 0;
     }
-    Grupo.id_global_.id += 1; 
-    const identificador: ID = {
-      id: Grupo.id_global_.id
-    }
+    Grupo.id_global_ += 1; 
+    const identificador: ID = Grupo.id_global_;
     return identificador;
   }
 
