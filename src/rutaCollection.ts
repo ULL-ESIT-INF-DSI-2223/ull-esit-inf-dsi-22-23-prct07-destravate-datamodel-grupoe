@@ -1,7 +1,8 @@
-import {Ruta} from "./ruta"
+import {Ruta} from "./ruta";
 import {ID} from "./types";
-import inquirer from "inquirer"
-// import * as Prompt from 'prompt-sync';
+import * as inquirer from "inquirer";
+
+
 
 /**
  * Clase rutaCollection
@@ -82,59 +83,38 @@ class rutaCollection {
   
 }
 
+
 function promptUser(): void {
-  // nombre: string, geolocalización_inicio: coordenadas[], geolocalización_fin: coordenadas[], longitud: number, desnivel: number, usuario: Usuario[], tipo_actividad: actividad, calificacion: number
-  // const prompt = inquirer.createPromptModule();
-  console.clear();
 
-  inquirer.prompt([
+  const prompt = inquirer.createPromptModule();
+  prompt([
     {
-      type: 'input',
-      name: 'nombre',
-      message: 'Introduce el nombre de la ruta',
-    },
-    {
-      type: 'input',
-      name: 'geolocalizacion_inicio',
-      message: 'Introduce la geolocalización de inicio',
-    },
-    {
-      type: 'input',
-      name: 'geolocalizacion_fin',
-      message: 'Introduce la geolocalización de fin',
-    },
-    {
-      type: 'input',
-      name: 'longitud',
-      message: 'Introduce la longitud de la ruta',
-    },
-    {
-      type: 'input',
-      name: 'desnivel',
-      message: 'Introduce el desnivel de la ruta',
-    },
-    {
-      type: 'input',
-      name: 'usuario',
-      message: 'Introduce el usuario',
-    },
-    {
-      type: 'input',
-      name: 'tipo_actividad',
-      message: 'Introduce el tipo de actividad',
-    },
-    {
-      type: 'input',
-      name: 'calificacion',
-      message: 'Introduce la calificación',
-    },
-  ]).then((answers) => {
-    const ruta1 = new Ruta(answers.nombre, answers.geolocalizacion_inicio, answers.geolocalizacion_fin, answers.longitud, answers.desnivel, answers.usuario, answers.tipo_actividad, answers.calificacion);
-    const coleccion_rutas = new rutaCollection([ruta1]);
+      type: 'list',
+      name: 'opcion',
+      message: '¿Qué quieres hacer?',
+      choices: [
+        {name:'Añadir ruta', value: 'add'},
+        {name:'Borrar ruta', value: 'remove'},
+      ]
     }
-  );
-
-
+  ]).then((answers) => {
+    if (answers.opcion === 'Añadir ruta') {
+      console.log('Añadir ruta');
+      promptUser();
+    }
+    else if (answers.opcion === 'Borrar ruta') {
+      console.log('Borrar ruta');
+      promptUser();
+    }
+    else if (answers.opcion === 'Modificar ruta') {
+      console.log('Modificar ruta');
+      
+      promptUser();
+    }
+    else if (answers.opcion === 'Salir') {
+      console.log('Salir');
+    }
+  });
 }
 
 promptUser();
