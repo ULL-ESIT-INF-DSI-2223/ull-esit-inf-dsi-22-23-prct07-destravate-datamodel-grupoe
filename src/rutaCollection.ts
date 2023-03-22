@@ -97,25 +97,113 @@ class rutaCollection {
   }
 
   
-  // promptModificarRuta():void {
-  //   const prompt = inquirer.createPromptModule();
-  //   prompt([
-  //     {
-  //       type: 'input',
-  //       name: 'id',
-  //       message: 'Introduce el id de la ruta a modificar',
-  //     }
-  //   ]).then((answers) => {
-  //     if(this.modificarRuta(answers.id)) {
-  //       console.log('Ruta modificada');
-  //       this.manageRutas();
-  //     }
-  //     else {
-  //       console.log('La ruta no existe');
-  //     }
-  //     console.log("algopasa")
-  //   });
-  // }
+  promptModificarRuta():void {
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'input',
+        name: 'id',
+        message: 'Introduce el id de la ruta a modificar',
+      }
+    ]).then((answers) => {
+      this.modificarRuta(answers.id);
+      // this.manageRutas();
+    });
+  }
+
+  modificarRuta(identificador: ID): void {
+    // 1. comprobar que el id de la ruta existe
+    // 2. preguntar que se quiere modificar
+    // 3. modificarlo
+    // 4. devolver true si se ha modificado o false si no se ha modificado
+    let id_existe_en_coleccion = false;
+    let indice = -1;
+    this.coleccion_rutas_.forEach((ruta, index) => {
+      if (ruta.getId == identificador) {
+        id_existe_en_coleccion = true;
+        indice = index;
+      }
+    }
+    );
+    if (!id_existe_en_coleccion) {
+      console.log('No existe la ruta que se intenta modificar');
+      return;
+    }
+    
+    let modificado = false;
+
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Qué quieres modificar?',
+        choices: [
+          {name:'Nombre', value: 'nombre'},
+          {name:'Geolocalización inicio', value: 'geolocalizacion_inicio'},
+          {name:'Geolocalización fin', value: 'geolocalizacion_fin'},
+          {name:'Longitud', value: 'longitud'},
+          {name:'Desnivel', value: 'desnivel'},
+          {name:'Usuario', value: 'usuario'},
+          {name:'Tipo de actividad', value: 'tipo_actividad'},
+          {name:'Dificultad', value: 'dificultad'}
+        ]
+      } 
+    ]).then((answers) => {
+      const prompt = inquirer.createPromptModule();
+      switch (answers.opcion) {
+        case 'nombre':
+          prompt([
+            {
+              type: 'input',
+              name: 'nombre2',
+              message: 'Introduce el nuevo nombre de la ruta',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setNombre = answers.nombre2;
+            modificado = true;
+            console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
+          }
+          );
+          break;
+        case 'geolocalizacion_inicio':
+          // introducir las 3 coordenadas x,y,z
+          prompt([
+            {
+              type: 'input',
+              name: 'x',
+              message: 'Introduce la coordenada x de la geolocalización de inicio',
+            },
+            {
+              type: 'input',
+              name: 'y',
+              message: 'Introduce la coordenada y de la geolocalización de inicio',
+            },
+            {
+              type: 'input',
+              name: 'z',
+              message: 'Introduce la coordenada z de la geolocalización de inicio',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setGeolocalizaciónInicio = [answers.x, answers.y, answers.z];
+            modificado = true;
+            // imprmir nuevas coordenadas
+            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizaciónInicio}`);
+          }
+          );
+          break;
+          //! faltan el resto de casos
+
+      }
+    });
+  }
+
+
+
+
+
+
+
   // modificarRuta(identificador: ID): boolean {
 
   //   // CONTROLAMOS QUE EXISTE LA RUTA QUE SE INTENTA MODIFICAR... 
@@ -211,26 +299,24 @@ class rutaCollection {
           {name:'Añadir ruta', value: 'add'},
           {name:'Borrar ruta', value: 'remove'},
           {name:'Modificar ruta', value: 'modify'},
+          {name:'Salir', value: 'Salir'},
         ]
       }
     ]).then((answers) => {
       if (answers.opcion === 'add') {
         console.log('Añadir ruta');
-        this.manageRutas();
       }
       else if (answers.opcion === 'remove') {
-
         this.promptBorrarRuta();
       }
       else if (answers.opcion === 'modify') {
-        // this.promptModificarRuta();
+        this.promptModificarRuta();
       }
       else if (answers.opcion === 'Salir') {
         console.log('Salir');
       }
     });
   }
-
 
 }
 
