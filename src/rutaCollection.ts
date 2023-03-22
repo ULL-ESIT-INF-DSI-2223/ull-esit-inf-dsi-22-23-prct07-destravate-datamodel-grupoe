@@ -129,8 +129,7 @@ class rutaCollection {
       console.log('No existe la ruta que se intenta modificar');
       return;
     }
-    
-    let modificado = false;
+
 
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -146,7 +145,7 @@ class rutaCollection {
           {name:'Desnivel', value: 'desnivel'},
           {name:'Usuario', value: 'usuario'},
           {name:'Tipo de actividad', value: 'tipo_actividad'},
-          {name:'Dificultad', value: 'dificultad'}
+          {name:'Calificacion', value: 'calificacion'}
         ]
       } 
     ]).then((answers) => {
@@ -161,8 +160,8 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setNombre = answers.nombre2;
-            modificado = true;
             console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
+            this.manageRutas();
           }
           );
           break;
@@ -186,106 +185,141 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setGeolocalizaciónInicio = [answers.x, answers.y, answers.z];
-            modificado = true;
-            // imprmir nuevas coordenadas
             console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizaciónInicio}`);
+            this.manageRutas();
           }
           );
           break;
-          //! faltan el resto de casos
+        case 'geolocalizacion_fin':
+          // introducir las 3 coordenadas x,y,z
+          prompt([
+            {
+              type: 'input',
+              name: 'x',
+              message: 'Introduce la coordenada x de la geolocalización de fin',
+            },
+            {
+              type: 'input',
+              name: 'y',
+              message: 'Introduce la coordenada y de la geolocalización de fin',
+            },
+            {
+              type: 'input',
+              name: 'z',
+              message: 'Introduce la coordenada z de la geolocalización de fin',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setGeolocalizaciónFin = [answers.x, answers.y, answers.z];
+            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizaciónFin}`);
+            this.manageRutas();
+          }
+          );
+          break;
+        case 'longitud':
+          prompt([  
+            {
+              type: 'input',
+              name: 'longitud2',
+              message: 'Introduce la nueva longitud de la ruta',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setLongitud = answers.longitud2;
+            console.log(`Nueva longitud: ${this.coleccion_rutas_[indice].getLongitud}`);
+            this.manageRutas();
+          }
+          );
+          break;
+        case 'desnivel':
+          prompt([
+            {
+              type: 'input',
+              name: 'desnivel2',
+              message: 'Introduce el nuevo desnivel de la ruta',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setDesnivel = answers.desnivel2;
+            console.log(`Nuevo desnivel: ${this.coleccion_rutas_[indice].getDesnivel}`);
+            this.manageRutas();
+          }
+          );
+          break;
 
+
+          //TODO
+
+        case 'usuario':
+          // añadir usuario o eliminar usuario?
+          prompt([
+            {
+              type: 'list',
+              name: 'opcion2',
+              message: '¿Qué desea hacer?', 
+              choices: [
+                {name:'Añadir usuario', value: 'añadir'},
+                {name:'Eliminar usuario', value: 'eliminar'},
+                {name: 'Modificar usuario', value: 'modificar'}
+              ]
+            }
+          ]).then((answers) => {
+            if (answers.opcion2 == 'añadir') {
+              // ! Hay que pedir todo sobre el nuevo usuario a añadir
+              // prompt([
+              //   {
+              //     type: 'input',
+              //     name: 'usuario2',
+              //     message: 'Introduce el nombre del usuario que quieres añadir a la ruta',
+              //   }
+              // ]).then((answers) => {
+              //   this.coleccion_rutas_[indice].setUsuario = answers.usuario2;
+              //   console.log(`Nuevo usuario: ${this.coleccion_rutas_[indice].getUsuario}`);
+              //   this.manageRutas();
+              // }
+              // );
+            }
+            else if (answers.opcion2 == 'eliminar') {
+              
+            }
+            else if (answers.opcion2 == 'modificar') {
+            }
+
+          });
+        break;
+
+        case 'tipo_actividad':
+          prompt([
+            {
+              type: 'list',
+              name: 'tipo_actividad2',
+              message: 'Introduce el nuevo tipo de actividad de la ruta',
+              choices: [
+                {name:'Correr', value: 'correr'},
+                {name:'Bicicleta', value: 'bicicleta'}
+              ]
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setTipoActividad = answers.tipo_actividad2;
+            console.log(`Nuevo tipo de actividad: ${this.coleccion_rutas_[indice].getTipoActividad}`);
+            this.manageRutas();
+          });
+          break;
+        case 'calificacion':
+          prompt([
+            {
+              type: 'input',
+              name: 'calificacion2',
+              message: 'Introduce la nueva calificacion de la ruta',
+            }
+          ]).then((answers) => {
+            this.coleccion_rutas_[indice].setCalificacion = answers.calificacion2;
+            console.log(`Nueva calificacion: ${this.coleccion_rutas_[indice].getCalificacion}`);
+            this.manageRutas();
+          }
+          );
+          break;
       }
+      // this.manageRutas();
     });
   }
-
-
-
-
-
-
-
-  // modificarRuta(identificador: ID): boolean {
-
-  //   // CONTROLAMOS QUE EXISTE LA RUTA QUE SE INTENTA MODIFICAR... 
-  //   let id_existe_en_coleccion = false;
-  //   this.coleccion_rutas_.forEach((ruta) => {
-  //     if (ruta.getId == identificador) {
-  //       id_existe_en_coleccion = true;
-  //     }
-  //   });
-  //   if (!id_existe_en_coleccion) {
-  //     console.log('No existe la ruta que se intenta modificar');
-  //     return false;
-  //   }
-
-  //   let modificado = false;
-
-  //   const prompt = inquirer.createPromptModule();
-  //   prompt([
-  //     {
-  //       type: 'list',
-  //       name: 'opcion',
-  //       message: '¿Qué quieres modificar?',
-  //       choices: [
-  //         {name:'Nombre', value: 'nombre'},
-  //         {name:'Geolocalización inicio', value: 'geolocalizacion_inicio'},
-  //         {name:'Geolocalización fin', value: 'geolocalizacion_fin'},
-  //         {name:'Longitud', value: 'longitud'},
-  //         {name:'Desnivel', value: 'desnivel'},
-  //         // {name:'Usuario', value: 'usuario'},
-  //         {name:'Tipo de actividad', value: 'tipo_actividad'},
-  //         {name:'Calificación', value: 'calificacion'},
-  //       ]
-  //     }
-  //   ]).then((answers) => {
-  //     if (answers.opcion === 'nombre') {
-  //       const input_prompt = Prompt();
-  //       const nombre = input_prompt('Introduce el nuevo nombre: ');
-  //       this.coleccion_rutas_.forEach((ruta) => {
-  //         if (ruta.getId == identificador) {
-  //           ruta.setNombre = nombre;
-  //           console.log("hecho");
-  //           // nueva_ruta = ruta;
-  //           modificado = true;
-  //         }
-  //       });
-  //       return modificado;  
-  //     }
-  //     else if (answers.opcion === 'geolocalizacion_inicio') {
-  //       console.log('Modificar geolocalizacion inicio');
-  //       // promptUser();
-  //     }
-  //     else if (answers.opcion === 'geolocalizacion_fin') {
-  //       console.log('Modificar geolocalizacion fin');
-  //       // promptUser();
-  //     }
-  //     else if (answers.opcion === 'longitud') {
-  //       console.log('Modificar longitud');
-  //       // promptUser();
-  //     }
-  //     else if (answers.opcion === 'desnivel') {
-  //       console.log('Modificar desnivel');
-  //       // promptUser();
-  //     }
-  //     // else if (answers.opcion === 'usuario') {
-  //     //   console.log('Modificar usuario');
-  //     //   // promptUser();
-  //     // }
-  //     else if (answers.opcion === 'tipo_actividad') {
-  //       console.log('Modificar tipo de actividad');
-  //       // promptUser();
-  //     }
-  //     else if (answers.opcion === 'calificacion') {
-  //       console.log('Modificar calificacion');
-  //       // promptUser();
-  //     }
-  //     else  {
-  //       return modificado;
-  //     }
-  //   });
-  //   // console.log("no plis")   // no puede ser así, hay que separarlo en un método a parte.
-  //   // return modificado;
-  // }
 
 
   manageRutas(): void {
