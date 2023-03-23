@@ -543,16 +543,113 @@ class rutaCollection {
 
 
   ordenarRutasPorLongitud(){
-    console.log("No listo");
+    let ascendente = true; // por defecto ascendente
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Cómo deseas ordenar?',
+        choices: [
+          {name:'Ascendente', value: 'ascendente'},
+          {name:'Descendente', value: 'descendente'},
+        ]
+      }
+    ]).then((answers) => {
+      if (answers.opcion === 'descendente') {
+        ascendente = false;
+      }
+      // ordenar
+      const copia_rutas = this.coleccion_rutas_;
+      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
+      copia_rutas.sort((a, b) => {
+        if (ascendente) {
+          return a.getLongitud - b.getLongitud;
+        }
+        else {
+          return b.getLongitud - a.getLongitud;
+        }
+      });
+      // mostrar
+      copia_rutas.forEach((ruta) => {
+        console.log(`Nombre: ${ruta.getNombre}, Longitud: ${ruta.getLongitud}`);
+      });
+      this.infoRutas();
+    });
   }
 
   ordenarRutasPorCalificacion(){
-    console.log("No listo");
-
+    let ascendente = true; // por defecto ascendente
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Cómo deseas ordenar?',
+        choices: [
+          {name:'Ascendente', value: 'ascendente'},
+          {name:'Descendente', value: 'descendente'},
+        ]
+      }
+    ]).then((answers) => {
+      if (answers.opcion === 'descendente') {
+        ascendente = false;
+      }
+      // ordenar
+      const copia_rutas = this.coleccion_rutas_;
+      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
+      copia_rutas.sort((a, b) => {
+        if (ascendente) {
+          return a.getCalificacion - b.getCalificacion;
+        }
+        else {
+          return b.getCalificacion - a.getCalificacion;
+        }
+      });
+      // mostrar
+      copia_rutas.forEach((ruta) => {
+        console.log(`Nombre: ${ruta.getNombre}, Calificación: ${ruta.getCalificacion}`);
+      });
+      this.infoRutas();
+    });
   }
 
-  ordenarRutasPorActividad(){
-    console.log("No listo");
+  ordenarRutasPorActividad(){ //! PENDIENTE --> Es filtrar por actividad, o mostrar primero todas las rutas de una actividad y luego las de otra?
+    let ascendente = true; // por defecto ascendente
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Cómo deseas ordenar?',
+
+        choices: [
+          {name:'Ascendente', value: 'ascendente'},
+          {name:'Descendente', value: 'descendente'},
+        ]
+      }
+
+    ]).then((answers) => {
+      if (answers.opcion === 'descendente') {
+        ascendente = false;
+      }
+      // ordenar
+      const copia_rutas = this.coleccion_rutas_;
+      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
+      copia_rutas.sort((a, b) => {
+        if (ascendente) {
+          return a.getTipoActividad.localeCompare(b.getTipoActividad);
+        }
+        else {
+          return b.getTipoActividad.localeCompare(a.getTipoActividad);
+        }
+      });
+      // mostrar
+      copia_rutas.forEach((ruta) => {
+        console.log(`Nombre: ${ruta.getNombre}, Actividad: ${ruta.getTipoActividad}`);
+      });
+      this.infoRutas();
+    });
 
   }
 
