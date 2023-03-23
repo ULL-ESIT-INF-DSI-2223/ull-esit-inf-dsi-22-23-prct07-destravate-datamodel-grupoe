@@ -417,6 +417,112 @@ class rutaCollection {
       }
     });
   }
+
+
+  infoRutas(): void {
+    // Alfabéticamente por nombre de la ruta, ascendente y descendente.
+    // Cantidad de usuarios que realizan las rutas, ascendente y descendente.
+    // Por longitud de la ruta, ascendente y descendente.
+    // Por la calificación media de la ruta, ascendente y descendente.
+    // Ordenar por actividad: correr o ciclismo.
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Qué deseas ver?',
+        choices: [
+          {name:'Mostrar por orden alfabético las rutas', value: 'alfabetico'},
+          {name:'Mostrar por cantidad de usuarios que realizan las rutas', value: 'cantidad_usuarios'},
+          {name:'Mostrar por longitud de la ruta', value: 'longitud'},
+          {name:'Mostrar por la calificación media de la ruta', value: 'calificacion'},
+          {name:'Mostrar por actividad (Correr o Ciclismo)', value: 'actividad'},
+          {name:'Salir', value: 'Salir'},
+        ]
+      }
+    ]).then((answers) => {
+      switch (answers.opcion) {
+        case 'alfabetico':
+          this.ordenarRutasPorNombre();
+          break;
+        case 'cantidad_usuarios':
+          this.ordenarRutasPorCantidadUsuarios();
+          break;
+        case 'longitud':
+          this.ordenarRutasPorLongitud();
+          break;
+        case 'calificacion':
+          this.ordenarRutasPorCalificacion();
+          break;
+        case 'actividad':
+          this.ordenarRutasPorActividad();
+          break;
+        case 'Salir':
+          // cerrar prompt
+          break;
+      }
+    });
+  }
+
+  ordenarRutasPorNombre() {
+    // preguntar ascendente o descendente
+    // ordenar
+    // mostrar
+    let ascendente = true; // por defecto ascendente
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Cómo deseas ordenar?',
+        choices: [
+          {name:'Ascendente', value: 'ascendente'},
+          {name:'Descendente', value: 'descendente'},
+        ]
+      }
+    ]).then((answers) => {
+      if (answers.opcion === 'descendente') {
+        ascendente = false;
+      }
+      // ordenar
+      const copia_rutas = this.coleccion_rutas_;
+      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
+      copia_rutas.sort((a, b) => {
+        if (ascendente) {
+          return a.getNombre.localeCompare(b.getNombre);
+        }
+        else {
+          return b.getNombre.localeCompare(a.getNombre);
+        }
+      });
+      // mostrar
+      copia_rutas.forEach((ruta) => {
+        console.log(`Nombre: ${ruta.getNombre}, Longitud: ${ruta.getLongitud}`);
+      });
+      this.infoRutas();
+    });
+  }
+
+  ordenarRutasPorCantidadUsuarios(){
+    console.log("No listo");
+  }
+
+  ordenarRutasPorLongitud(){
+    console.log("No listo");
+  }
+
+  ordenarRutasPorCalificacion(){
+    console.log("No listo");
+
+  }
+
+  ordenarRutasPorActividad(){
+    console.log("No listo");
+
+  }
+
+
+
 }
 
 
@@ -521,4 +627,5 @@ const ruta2 = new Ruta('Adventour', [eje_x4, eje_y4, eje_z4], [eje_x5, eje_y5, e
 
 const coleccion_rutas = new rutaCollection([ruta0, ruta1, ruta2]);
 
-coleccion_rutas.manageRutas();
+// coleccion_rutas.manageRutas();
+coleccion_rutas.infoRutas();
