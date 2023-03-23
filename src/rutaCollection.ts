@@ -504,8 +504,43 @@ class rutaCollection {
   }
 
   ordenarRutasPorCantidadUsuarios(){
-    console.log("No listo");
+    let ascendente = true; // por defecto ascendente
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: 'list',
+        name: 'opcion',
+        message: '¿Cómo deseas ordenar?',
+        choices: [
+          {name:'Ascendente', value: 'ascendente'},
+          {name:'Descendente', value: 'descendente'},
+        ]
+      }
+    ]).then((answers) => {
+      if (answers.opcion === 'descendente') {
+        ascendente = false;
+      }
+      // ordenar
+      const copia_rutas = this.coleccion_rutas_;
+      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
+      copia_rutas.sort((a, b) => {
+        if (ascendente) {
+          return a.getUsuarios.length - b.getUsuarios.length;
+        }
+        else {
+          return b.getUsuarios.length - a.getUsuarios.length;
+        }
+      }
+      );
+      // mostrar
+      copia_rutas.forEach((ruta) => {
+        console.log(`Nombre: ${ruta.getNombre}, Cantidad de usuarios: ${ruta.getUsuarios.length}`);
+      }
+      );
+      this.infoRutas();
+    });
   }
+
 
   ordenarRutasPorLongitud(){
     console.log("No listo");
@@ -620,9 +655,9 @@ const user6 = new Usuario('Daniel_Felipe', "bicicleta" , [1,2,3,20,19,18]);
 const user7 = new Usuario('Alberto', "bicicleta" , [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]);
 const user8 = new Usuario('Facundo', "bicicleta" , [1,2,3,4,5,6]);
 
-const ruta0 = new Ruta('San Vicente', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1, eje_z1], 1000, 200, [user0, user1, user2], "correr", 9);
+const ruta0 = new Ruta('San Vicente', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1, eje_z1], 1000, 200, [user0, user1], "correr", 9);
 const ruta1 = new Ruta('Plaza el charco', [eje_x2, eje_y2, eje_z2], [eje_x3, eje_y3, eje_z3], 2000, 200, [user3, user4, user5], "bicicleta", 8);
-const ruta2 = new Ruta('Adventour', [eje_x4, eje_y4, eje_z4], [eje_x5, eje_y5, eje_z5], 300, 200, [user6, user7, user8], "correr", 8);
+const ruta2 = new Ruta('Adventour', [eje_x4, eje_y4, eje_z4], [eje_x5, eje_y5, eje_z5], 300, 200, [user6, user7, user8, user2], "correr", 8);
 
 
 const coleccion_rutas = new rutaCollection([ruta0, ruta1, ruta2]);
