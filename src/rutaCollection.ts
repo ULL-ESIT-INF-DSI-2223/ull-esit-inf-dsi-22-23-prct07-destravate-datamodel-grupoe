@@ -3,7 +3,6 @@ import {ID} from "./types";
 import * as inquirer from "inquirer";
 import { coordenadas } from "./types";
 import { Usuario } from "./usuario";
-import * as Prompt from 'prompt-sync';
 
 
 /**
