@@ -17,7 +17,7 @@ database.defaults({ rutas: [] }).write();
  * @description Clase que representa una ruta
  */
 export class Ruta {
-  private static id_global_: ID;
+  // private static id_global_: ID;
   private id_: ID;
   private nombre_: string;
   private geolocalizacion_inicio_: coordenadas[];
@@ -55,10 +55,13 @@ export class Ruta {
     if (id_global.includes(this.nombre_)) {
       //console.log("El nombre ya existe");
       // buscar este nombre en el array de rutas y devolver el id
+      console.log("NO HAY NEW RUTA");
       this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
 
     } else {
-      this.id_ = Ruta.comprobarEstatica();
+      // this.id_ = Ruta.comprobarEstatica();
+      console.log("SI HAY NEW RUTA");
+      this.id_ = database.get("rutas").size().value() + 1;
       database.get("rutas").push({
         id: this.id_,
         nombre: this.nombre_,
@@ -93,26 +96,26 @@ export class Ruta {
    * Método que genera una id única para cada ruta
    * @returns -- id de la ruta
    */
-  public static comprobarEstatica(): ID{
-    // en este método comprobamos si el id_global está inicializado
-    // si no está inicializado, lo inicializamos a 0
-    // si está inicializado, devolvemos el valor de id_global
+  // public static comprobarEstatica(): ID{
+  //   // en este método comprobamos si el id_global está inicializado
+  //   // si no está inicializado, lo inicializamos a 0
+  //   // si está inicializado, devolvemos el valor de id_global
 
-    // buscar el id más alto de la base de datos
-    // si no hay ninguna ruta, el id_global será 0
-    // si hay rutas, el id_global será el id de la última ruta + 1
+  //   // buscar el id más alto de la base de datos
+  //   // si no hay ninguna ruta, el id_global será 0
+  //   // si hay rutas, el id_global será el id de la última ruta + 1
 
-    if (Ruta.id_global_ == undefined) {
-      Ruta.id_global_ = 0;
+  //   if (Ruta.id_global_ == undefined) {
+  //     Ruta.id_global_ = 0;
       
-    }
-    // obtener numero de rutas
-    Ruta.id_global_ = database.get("rutas").size().value() + 1;
-    console.log(Ruta.id_global_-1);
+  //   }
+  //   // obtener numero de rutas
+  //   Ruta.id_global_ = database.get("rutas").size().value() + 1;
+  //   console.log(Ruta.id_global_-1);
 
 
-    return Ruta.id_global_;
-  }
+  //   return Ruta.id_global_;
+  // }
 
 
   //* GETTERS Y SETTERS

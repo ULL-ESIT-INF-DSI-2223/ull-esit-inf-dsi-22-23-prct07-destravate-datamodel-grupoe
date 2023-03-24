@@ -42,7 +42,7 @@ class rutaCollection {
     const rutas = database.get("rutas").value();
     const array_aux: Ruta[] = [];
     rutas.forEach((ruta) => {
-      const ruta_aux: Ruta = new Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
+      const ruta_aux: Ruta = new Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, [], ruta.tipo_actividad, ruta.calificacion);
       array_aux.push(ruta_aux);
     });
     this.setRutas = array_aux;
@@ -69,7 +69,8 @@ class rutaCollection {
     // else {
     //   return undefined;
     // }
-    // this.coleccion_rutas_.push(ruta);
+    //! si se rompe es aqui
+    this.coleccion_rutas_.push(ruta);
     return ruta;
   }
 
@@ -193,6 +194,19 @@ class rutaCollection {
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setNombre = answers.nombre2;
             console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
+            
+            // guardar elemento en la base de datos con el id actual
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion);
+            // ruta_aux.setId = this.coleccion_rutas_[indice].getId;
+            
+            this.borrarRuta(identificador);
+            // escribir en la base de datos
+
+
+            // imprmir todos los nombres de las rutas restantes
+            this.coleccion_rutas_.forEach((ruta) => {
+              console.log(ruta.getNombre);
+            });
             this.manageRutas();
           }
           );
@@ -481,7 +495,7 @@ class rutaCollection {
           {name:'Mostrar por cantidad de usuarios que realizan las rutas', value: 'cantidad_usuarios'},
           {name:'Mostrar por longitud de la ruta', value: 'longitud'},
           {name:'Mostrar por la calificación media de la ruta', value: 'calificacion'},
-          {name:'Mostrar por actividad (Correr o Ciclismo)', value: 'actividad'},
+          {name:'Mostrar por actividad (Correr o Bicicleta)', value: 'actividad'},
           {name:'Salir', value: 'Salir'},
         ]
       }
@@ -504,6 +518,7 @@ class rutaCollection {
           break;
         case 'Salir':
           // cerrar prompt
+          process.exit(0);
           break;
       }
     });
@@ -695,15 +710,13 @@ class rutaCollection {
       });
       this.infoRutas();
     });
-
   }
-
-
-
 }
+
+
 
 //? PRUEBAS
 const coleccion_rutas = new rutaCollection();
 
-coleccion_rutas.manageRutas();
 // coleccion_rutas.infoRutas();
+coleccion_rutas.manageRutas();

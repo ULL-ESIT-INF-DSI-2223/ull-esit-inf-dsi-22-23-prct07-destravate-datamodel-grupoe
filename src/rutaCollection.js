@@ -44,7 +44,7 @@ var rutaCollection = /** @class */ (function () {
         var rutas = ruta_2.database.get("rutas").value();
         var array_aux = [];
         rutas.forEach(function (ruta) {
-            var ruta_aux = new ruta_1.Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
+            var ruta_aux = new ruta_1.Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, [], ruta.tipo_actividad, ruta.calificacion);
             array_aux.push(ruta_aux);
         });
         this.setRutas = array_aux;
@@ -68,7 +68,8 @@ var rutaCollection = /** @class */ (function () {
         // else {
         //   return undefined;
         // }
-        // this.coleccion_rutas_.push(ruta);
+        //! si se rompe es aqui
+        this.coleccion_rutas_.push(ruta);
         return ruta;
     };
     /**
@@ -187,6 +188,10 @@ var rutaCollection = /** @class */ (function () {
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setNombre = answers.nombre2;
                         console.log("Nuevo nombre: ".concat(_this.coleccion_rutas_[indice].getNombre));
+                        // eliminar la ruta de la base de datos y añadir la nueva
+                        var ruta_aux = _this.coleccion_rutas_[indice];
+                        _this.borrarRuta(identificador);
+                        _this.addRuta(ruta_aux);
                         _this.manageRutas();
                     });
                     break;
@@ -430,7 +435,6 @@ var rutaCollection = /** @class */ (function () {
             else if (answers.opcion === 'Salir') {
                 // cerrar prompt
                 process.exit(0);
-                // cerrar el programa
             }
         });
     };
@@ -453,7 +457,7 @@ var rutaCollection = /** @class */ (function () {
                     { name: 'Mostrar por cantidad de usuarios que realizan las rutas', value: 'cantidad_usuarios' },
                     { name: 'Mostrar por longitud de la ruta', value: 'longitud' },
                     { name: 'Mostrar por la calificación media de la ruta', value: 'calificacion' },
-                    { name: 'Mostrar por actividad (Correr o Ciclismo)', value: 'actividad' },
+                    { name: 'Mostrar por actividad (Correr o Bicicleta)', value: 'actividad' },
                     { name: 'Salir', value: 'Salir' },
                 ]
             }
@@ -476,6 +480,7 @@ var rutaCollection = /** @class */ (function () {
                     break;
                 case 'Salir':
                     // cerrar prompt
+                    process.exit(0);
                     break;
             }
         });
@@ -667,5 +672,5 @@ var rutaCollection = /** @class */ (function () {
 }());
 //? PRUEBAS
 var coleccion_rutas = new rutaCollection();
-coleccion_rutas.manageRutas();
 // coleccion_rutas.infoRutas();
+coleccion_rutas.manageRutas();
