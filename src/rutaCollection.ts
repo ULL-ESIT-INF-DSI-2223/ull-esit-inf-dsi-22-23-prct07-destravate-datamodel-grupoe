@@ -18,12 +18,7 @@ class rutaCollection {
    */
   constructor() {
     // leer rutas de la base de datos y añadirlas al array de rutas
-    const rutas = database.get("rutas").value();
-    rutas.forEach((ruta) => {
-      const ruta_aux = new Ruta(ruta.nombre, ruta.geolocalización_inicio, ruta.geolocalización_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
-      this.coleccion_rutas_.push(ruta_aux);
-    });
-
+    this.leerBD();
   }
 
   /**
@@ -41,29 +36,43 @@ class rutaCollection {
   }
 
   /**
+   * Método que lee de la base de datos y actualiza el array de rutas
+   */
+  leerBD(): void {
+    const rutas = database.get("rutas").value();
+    const array_aux: Ruta[] = [];
+    rutas.forEach((ruta) => {
+      const ruta_aux: Ruta = new Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
+      array_aux.push(ruta_aux);
+    });
+    this.setRutas = array_aux;
+  }
+
+
+  /**
    * Método que añade una nueva ruta a la coleción de rutas
    * @param ruta ruta a añadir
    * @returns array de rutas modificado o undefined en caso de no haber podido añadir la ruta.
    */
-  addRuta(ruta: Ruta): Ruta[] | undefined{  
-    //! ¿HACE FALTA ESTE MÉTODO? --> YA EL CONSTRUCTOR DE RUTA INTRODUCE LA RUTA EN LA BASE DE DATOS
-    //! LUEGO EL CONSTRUCTOR DE RUTA COLLECTION SIMPLEMENTE LEE LA BASE DE DATOS Y CREA LAS RUTAS
-    let repetido = false;
-    this.coleccion_rutas_.forEach((ruta_aux) => {
-      if (ruta.getId === ruta_aux.getId) { //? comprobamos que no este repetido ¿EL ID, PARA QUE? --> REVISAR
-        repetido = true;
-      }
-    });
-    if (repetido === false) {
-      this.coleccion_rutas_.push(ruta);
-      return this.coleccion_rutas_;
-      
-
-    }
-    else {
-      return undefined;
-    }
+  addRuta(ruta: Ruta): Ruta{  
+    
+    // let repetido = false;
+    // this.coleccion_rutas_.forEach((ruta_aux) => {
+    //   if (ruta.getId == ruta_aux.getId) { 
+    //     repetido = true;
+    //   }
+    // });
+    // if (repetido === false) {
+    //   this.coleccion_rutas_.push(ruta);
+    //   return this.coleccion_rutas_;
+    // }
+    // else {
+    //   return undefined;
+    // }
+    // this.coleccion_rutas_.push(ruta);
+    return ruta;
   }
+
 
   /**
    * Método que borra una ruta
@@ -73,15 +82,23 @@ class rutaCollection {
   borrarRuta(identificador: ID): Ruta | undefined {
     let control_bool = false;
     let ruta_aux: Ruta | undefined;
+    // console.log(`identificador: ${identificador}`)
+    // console.log('TAMAÑO ARRAY:' + this.coleccion_rutas_.length)
     this.coleccion_rutas_.forEach((ruta, indice) => {
+      // console.log(ruta);
       if (ruta.getId == identificador) {
         ruta_aux = ruta;
         this.coleccion_rutas_.splice(indice, 1);
         control_bool = true;
-        // borrar de la base de datos
-        database.get("rutas").remove({id: identificador}).write(); //* añadido para borrar de la base de datos.
+        // borrar de la base de datos la ruta por el id pasado por parametro
+        // const element = identificador -1;
+        database.get("rutas").splice(indice,1).write();
       }
     });
+    // imprmimir todos los nombres de las rutas restantes
+    // this.coleccion_rutas_.forEach((ruta) => {
+      // console.log(ruta.getNombre);
+    // });
     if (control_bool) {
       return ruta_aux;
     }
@@ -102,7 +119,7 @@ class rutaCollection {
     ]).then((answers) => {
       const ruta_aux: Ruta | undefined = this.borrarRuta(answers.id);
       if (typeof ruta_aux != 'undefined') {
-        console.log('Ruta borrada: ' + ruta_aux.getNombre);
+        console.log('Ruta borrada: ' + ruta_aux.getId);
       }
       else {
         console.log('La ruta no existe');
@@ -199,8 +216,8 @@ class rutaCollection {
               message: 'Introduce la coordenada z de la geolocalización de inicio',
             }
           ]).then((answers) => {
-            this.coleccion_rutas_[indice].setGeolocalizaciónInicio = [answers.x, answers.y, answers.z];
-            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizaciónInicio}`);
+            this.coleccion_rutas_[indice].setGeolocalizacionInicio = [answers.x, answers.y, answers.z];
+            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizacionInicio}`);
             this.manageRutas();
           }
           );
@@ -224,8 +241,8 @@ class rutaCollection {
               message: 'Introduce la coordenada z de la geolocalización de fin',
             }
           ]).then((answers) => {
-            this.coleccion_rutas_[indice].setGeolocalizaciónFin = [answers.x, answers.y, answers.z];
-            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizaciónFin}`);
+            this.coleccion_rutas_[indice].setGeolocalizacionFin = [answers.x, answers.y, answers.z];
+            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizacionFin}`);
             this.manageRutas();
           }
           );
@@ -391,18 +408,18 @@ class rutaCollection {
         message: 'Introduce la calificacion de la nueva ruta',
       }
     ]).then((answers) => {
-
       // crear nueva ruta
       coordenadas_inicio = [answers.geolocalizacion_inicioX, answers.geolocalizacion_inicioY, answers.geolocalizacion_inicioZ];
       coordenadas_fin = [answers.geolocalizacion_finX, answers.geolocalizacion_finY, answers.geolocalizacion_finZ];
       const nueva_ruta = new Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, answers.usuario, answers.tipo_actividad, answers.calificacion);
       this.addRuta(nueva_ruta);
-      // console.log(nueva_ruta);
+      // escribir en la base
       this.manageRutas();
     });
   }
 
   manageRutas(): void {
+    // console.log(this.coleccion_rutas_)
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -428,11 +445,24 @@ class rutaCollection {
       }
       else if (answers.opcion === 'Salir') {
         // cerrar prompt
-
+        process.exit(0);
       }
     });
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+  //! NO TOCAR
 
   infoRutas(): void {
     // Alfabéticamente por nombre de la ruta, ascendente y descendente.
@@ -672,106 +702,7 @@ class rutaCollection {
 
 }
 
-
-
-
-
-
 //? PRUEBAS
-
-// const eje_x0: coordenadas = {
-//   letra : "X",
-//   coordenada : 10
-// }
-// const eje_y0: coordenadas = {
-//   letra : "Y",
-//   coordenada : 20
-// }
-// const eje_z0: coordenadas = {
-//   letra : "Z",
-//   coordenada : 30
-// }
-
-
-// const eje_x1: coordenadas = {
-//   letra : "X",
-//   coordenada : 12435
-// }
-// const eje_y1: coordenadas = {
-//   letra : "Y",
-//   coordenada : 1234325436
-// }
-// const eje_z1: coordenadas = {
-//   letra : "Z",
-//   coordenada : 1232
-// }
-
-
-// const eje_x2: coordenadas = {
-//   letra : "X",
-//   coordenada : 214
-// }
-// const eje_y2: coordenadas = {
-//   letra : "Y",
-//   coordenada : 20213
-// }
-// const eje_z2: coordenadas = {
-//   letra : "Z",
-//   coordenada : 3023
-// }
-
-// const eje_x3: coordenadas = {
-//   letra : "X",
-//   coordenada : 10
-// }
-// const eje_y3: coordenadas = {
-//   letra : "Y",
-//   coordenada : 20
-// }
-// const eje_z3: coordenadas = {
-//   letra : "Z",
-//   coordenada : 30
-// }
-// const eje_x4: coordenadas = {
-//   letra : "X",
-//   coordenada : 1010
-// }
-// const eje_y4: coordenadas = {
-//   letra : "Y",
-//   coordenada : 2020
-// }
-// const eje_z4: coordenadas = {
-//   letra : "Z",
-//   coordenada : 3030
-// }
-// const eje_x5: coordenadas = {
-//   letra : "X",
-//   coordenada : 1001
-// }
-// const eje_y5: coordenadas = {
-//   letra : "Y",
-//   coordenada : 2002
-// }
-// const eje_z5: coordenadas = {
-//   letra : "Z",
-//   coordenada : 3003
-// }
-
-// const user0 = new Usuario('Pepe', "correr" , [1,2,3]);
-// const user1 = new Usuario('Adrian', "correr" , [3,4,5]);
-// const user2 = new Usuario('Eduardo', "correr" , [6,7,8,9,10,11]);
-// const user3 = new Usuario('Eva', "correr" , [1,2,3,4,5,6]);
-// const user4 = new Usuario('Marco', "correr" , [1,2,3]);
-// const user5 = new Usuario('Ismael', "bicicleta" , [1,2,3,5,6,7]);
-// const user6 = new Usuario('Daniel_Felipe', "bicicleta" , [1,2,3,20,19,18]);
-// const user7 = new Usuario('Alberto', "bicicleta" , [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]);
-// const user8 = new Usuario('Facundo', "bicicleta" , [1,2,3,4,5,6]);
-
-// const ruta0 = new Ruta('San Vicente', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1, eje_z1], 1000, 200, [user0, user1], "correr", 9);
-// const ruta1 = new Ruta('Plaza el charco', [eje_x2, eje_y2, eje_z2], [eje_x3, eje_y3, eje_z3], 2000, 200, [user3, user4, user5], "bicicleta", 8);
-// const ruta2 = new Ruta('Adventour', [eje_x4, eje_y4, eje_z4], [eje_x5, eje_y5, eje_z5], 300, 200, [user6, user7, user8, user2], "correr", 8);
-
-
 const coleccion_rutas = new rutaCollection();
 
 coleccion_rutas.manageRutas();

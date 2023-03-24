@@ -36,8 +36,8 @@ export type schemaType = {
   rutas: { 
     id: ID;
     nombre: string;
-    geolocalización_inicio: coordenadas[];
-    geolocalización_fin: coordenadas[];
+    geolocalizacion_inicio: coordenadas[];
+    geolocalizacion_fin: coordenadas[];
     longitud: number;
     desnivel: number;
     usuarios: Usuario[];

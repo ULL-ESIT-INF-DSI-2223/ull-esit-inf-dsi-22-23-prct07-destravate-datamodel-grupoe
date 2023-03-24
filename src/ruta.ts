@@ -20,8 +20,8 @@ export class Ruta {
   private static id_global_: ID;
   private id_: ID;
   private nombre_: string;
-  private geolocalización_inicio_: coordenadas[];
-  private geolocalización_fin_: coordenadas[];
+  private geolocalizacion_inicio_: coordenadas[];
+  private geolocalizacion_fin_: coordenadas[];
   private longitud_: number;
   private desnivel_: number;
   private usuarios_: Usuario[];
@@ -32,10 +32,10 @@ export class Ruta {
 
 
 
-  constructor(nombre: string, geolocalización_inicio: coordenadas[], geolocalización_fin: coordenadas[], longitud: number, desnivel: number, usuario: Usuario[], tipo_actividad: actividad, calificacion: number) {
+  constructor(nombre: string, geolocalizacion_inicio: coordenadas[], geolocalizacion_fin: coordenadas[], longitud: number, desnivel: number, usuario: Usuario[], tipo_actividad: actividad, calificacion: number) {
     this.nombre_ = nombre;
-    this.geolocalización_inicio_ = geolocalización_inicio;
-    this.geolocalización_fin_ = geolocalización_fin;
+    this.geolocalizacion_inicio_ = geolocalizacion_inicio;
+    this.geolocalizacion_fin_ = geolocalizacion_fin;
     this.longitud_ = longitud;
     this.desnivel_ = desnivel;
     this.usuarios_ = usuario;
@@ -45,20 +45,25 @@ export class Ruta {
     // el id_global hace de contador de la clase, para asignar identificadores únicos a cada ruta
     // el id_ es el identificador de la ruta
     // el id_global se incrementa en 1 cada vez que se crea una ruta
-    this.id_ = Ruta.comprobarEstatica();
-
-
+    
+    
     //* escribir en lowdb la ruta creada
-    // comprobar primero que el objeto no existe en la base de datos
-    // si no existe, lo creamos
-    // si existe, no hacemos nada
-    const ruta = database.get("rutas").find({ id: this.id_ }).value();
-    if (ruta == undefined) {
+    // obtenemos todos los id de la base de datos
+    // si this.id_ está en la base de datos, no se meterá
+    // si this.id_ no está en la base de datos, se meterá
+    const id_global = database.get("rutas").map("nombre").value();
+    if (id_global.includes(this.nombre_)) {
+      //console.log("El nombre ya existe");
+      // buscar este nombre en el array de rutas y devolver el id
+      this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
+
+    } else {
+      this.id_ = Ruta.comprobarEstatica();
       database.get("rutas").push({
         id: this.id_,
         nombre: this.nombre_,
-        geolocalización_inicio: this.geolocalización_inicio_,
-        geolocalización_fin: this.geolocalización_fin_,
+        geolocalizacion_inicio: this.geolocalizacion_inicio_,
+        geolocalizacion_fin: this.geolocalizacion_fin_,
         longitud: this.longitud_,
         desnivel: this.desnivel_,
         usuarios: this.usuarios_,
@@ -66,6 +71,22 @@ export class Ruta {
         calificacion: this.calificacion_
       }).write();
     }
+
+  
+
+    // meter ruta en la base de datos
+    // database.get("rutas").push({
+    //   id: this.id_,
+    //   nombre: this.nombre_,
+    //   geolocalizacion_inicio: this.geolocalizacion_inicio_,
+    //   geolocalizacion_fin: this.geolocalizacion_fin_,
+    //   longitud: this.longitud_,
+    //   desnivel: this.desnivel_,
+    //   usuarios: this.usuarios_,
+    //   tipo_actividad: this.tipo_actividad_,
+    //   calificacion: this.calificacion_
+    // }).write();
+
   } 
 
   /**
@@ -76,14 +97,21 @@ export class Ruta {
     // en este método comprobamos si el id_global está inicializado
     // si no está inicializado, lo inicializamos a 0
     // si está inicializado, devolvemos el valor de id_global
+
+    // buscar el id más alto de la base de datos
+    // si no hay ninguna ruta, el id_global será 0
+    // si hay rutas, el id_global será el id de la última ruta + 1
+
     if (Ruta.id_global_ == undefined) {
       Ruta.id_global_ = 0;
+      
     }
-    Ruta.id_global_ += 1; 
-    const identificador: ID = Ruta.id_global_;
+    // obtener numero de rutas
+    Ruta.id_global_ = database.get("rutas").size().value() + 1;
+    console.log(Ruta.id_global_-1);
 
-    // identificador.id = Ruta.id_global;
-    return identificador;
+
+    return Ruta.id_global_;
   }
 
 
@@ -91,6 +119,10 @@ export class Ruta {
 
   get getId(): ID {
     return this.id_;
+  }
+
+  set setId(id: ID) {
+    this.id_ = id;
   }
 
   /**
@@ -110,35 +142,35 @@ export class Ruta {
   }
 
   /**
-   * Método que devuelve la geolocalización de inicio de la ruta
+   * Método que devuelve la geolocalizacion de inicio de la ruta
    * @returns 
    */
-  get getGeolocalizaciónInicio(): coordenadas[] {
-    return this.geolocalización_inicio_;
+  get getGeolocalizacionInicio(): coordenadas[] {
+    return this.geolocalizacion_inicio_;
   }
 
   /**
-   * Método que asigna la geolocalización de inicio de la ruta
-   * @param geolocalización_inicio 
+   * Método que asigna la geolocalizacion de inicio de la ruta
+   * @param geolocalizacion_inicio 
    */
-  set setGeolocalizaciónInicio(geolocalización_inicio: coordenadas[]) {
-    this.geolocalización_inicio_ = geolocalización_inicio;
+  set setGeolocalizacionInicio(geolocalizacion_inicio: coordenadas[]) {
+    this.geolocalizacion_inicio_ = geolocalizacion_inicio;
   }
 
   /**
-   * Método que devuelve la geolocalización de fin de la ruta
+   * Método que devuelve la geolocalizacion de fin de la ruta
    * @returns 
    */
-  get getGeolocalizaciónFin(): coordenadas[] {
-    return this.geolocalización_fin_;
+  get getGeolocalizacionFin(): coordenadas[] {
+    return this.geolocalizacion_fin_;
   }
 
   /**
-   * Méotodo que asigna la geolocalización de fin de la ruta
-   * @param geolocalización_fin 
+   * Méotodo que asigna la geolocalizacion de fin de la ruta
+   * @param geolocalizacion_fin 
    */
-  set setGeolocalizaciónFin(geolocalización_fin: coordenadas[]) {
-    this.geolocalización_fin_ = geolocalización_fin;
+  set setGeolocalizacionFin(geolocalizacion_fin: coordenadas[]) {
+    this.geolocalizacion_fin_ = geolocalizacion_fin;
   }
   
   /**
@@ -207,7 +239,7 @@ export class Ruta {
   }
 
   /**
-   * Método que devuelve la calificación de la ruta
+   * Método que devuelve la calificacion de la ruta
    * @returns 
    */
   get getCalificacion(): number {
@@ -215,7 +247,7 @@ export class Ruta {
   }
 
   /**
-   * Método que asigna la calificación de la ruta
+   * Método que asigna la calificacion de la ruta
    * @param calificacion 
    */
   set setCalificacion(calificacion: number) {
