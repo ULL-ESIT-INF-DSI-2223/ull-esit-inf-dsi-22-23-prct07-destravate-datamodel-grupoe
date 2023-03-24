@@ -1,3 +1,4 @@
+import { Usuario } from "./usuario";
 
 export type coordenadas = {
 letra: "X" | "Y" | "Z";
@@ -29,3 +30,18 @@ export type historicoRutas = {
   fecha: fecha;
   id: number;
 }
+
+
+export type schemaType = {
+  rutas: { 
+    id: ID;
+    nombre: string;
+    geolocalización_inicio: coordenadas[];
+    geolocalización_fin: coordenadas[];
+    longitud: number;
+    desnivel: number;
+    usuarios: Usuario[];
+    tipo_actividad: actividad;
+    calificacion: number;
+  }[]
+};

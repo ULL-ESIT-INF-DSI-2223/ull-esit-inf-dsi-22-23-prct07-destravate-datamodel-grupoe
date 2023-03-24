@@ -1,5 +1,16 @@
-import { coordenadas, actividad, ID } from "./types";
+import { coordenadas, actividad, ID, schemaType } from "./types";
 import { Usuario } from "./usuario";
+
+// lowdb
+import * as lowdb from "lowdb";
+import * as FileSync from "lowdb/adapters/FileSync";
+
+export let database: lowdb.LowdbSync<schemaType>;
+// eslint-disable-next-line prefer-const
+database = lowdb(new FileSync("database.json"));
+database.defaults({ rutas: [] }).write();
+
+
 
 /**
  * @class Ruta
@@ -17,6 +28,9 @@ export class Ruta {
   private tipo_actividad_: actividad;
   private calificacion_: number;
 
+  // private database: lowdb.LowdbSync<schemaType>;
+
+
 
   constructor(nombre: string, geolocalización_inicio: coordenadas[], geolocalización_fin: coordenadas[], longitud: number, desnivel: number, usuario: Usuario[], tipo_actividad: actividad, calificacion: number) {
     this.nombre_ = nombre;
@@ -32,8 +46,26 @@ export class Ruta {
     // el id_ es el identificador de la ruta
     // el id_global se incrementa en 1 cada vez que se crea una ruta
     this.id_ = Ruta.comprobarEstatica();
-       
-    
+
+
+    //* escribir en lowdb la ruta creada
+    // comprobar primero que el objeto no existe en la base de datos
+    // si no existe, lo creamos
+    // si existe, no hacemos nada
+    const ruta = database.get("rutas").find({ id: this.id_ }).value();
+    if (ruta == undefined) {
+      database.get("rutas").push({
+        id: this.id_,
+        nombre: this.nombre_,
+        geolocalización_inicio: this.geolocalización_inicio_,
+        geolocalización_fin: this.geolocalización_fin_,
+        longitud: this.longitud_,
+        desnivel: this.desnivel_,
+        usuarios: this.usuarios_,
+        tipo_actividad: this.tipo_actividad_,
+        calificacion: this.calificacion_
+      }).write();
+    }
   } 
 
   /**

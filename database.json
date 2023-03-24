@@ -1,0 +1,267 @@
+{
+  "rutas": [
+    {
+      "id": 1,
+      "nombre": "San Vicente",
+      "geolocalización_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "geolocalización_fin": [
+        {
+          "letra": "X",
+          "coordenada": 12435
+        },
+        {
+          "letra": "Y",
+          "coordenada": 1234325436
+        },
+        {
+          "letra": "Z",
+          "coordenada": 1232
+        }
+      ],
+      "longitud": 1000,
+      "desnivel": 200,
+      "usuarios": [
+        {
+          "id_": 1,
+          "nombre_": "Pepe",
+          "actividad_": "correr",
+          "amigos_": [
+            1,
+            2,
+            3
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 2,
+          "nombre_": "Adrian",
+          "actividad_": "correr",
+          "amigos_": [
+            3,
+            4,
+            5
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        }
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 9
+    },
+    {
+      "id": 2,
+      "nombre": "Plaza el charco",
+      "geolocalización_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 214
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20213
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3023
+        }
+      ],
+      "geolocalización_fin": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "longitud": 2000,
+      "desnivel": 200,
+      "usuarios": [
+        {
+          "id_": 4,
+          "nombre_": "Eva",
+          "actividad_": "correr",
+          "amigos_": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 5,
+          "nombre_": "Marco",
+          "actividad_": "correr",
+          "amigos_": [
+            1,
+            2,
+            3
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 6,
+          "nombre_": "Ismael",
+          "actividad_": "bicicleta",
+          "amigos_": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        }
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 8
+    },
+    {
+      "id": 3,
+      "nombre": "Adventour",
+      "geolocalización_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 1010
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2020
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3030
+        }
+      ],
+      "geolocalización_fin": [
+        {
+          "letra": "X",
+          "coordenada": 1001
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2002
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3003
+        }
+      ],
+      "longitud": 300,
+      "desnivel": 200,
+      "usuarios": [
+        {
+          "id_": 7,
+          "nombre_": "Daniel_Felipe",
+          "actividad_": "bicicleta",
+          "amigos_": [
+            1,
+            2,
+            3,
+            20,
+            19,
+            18
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 8,
+          "nombre_": "Alberto",
+          "actividad_": "bicicleta",
+          "amigos_": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 9,
+          "nombre_": "Facundo",
+          "actividad_": "bicicleta",
+          "amigos_": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        },
+        {
+          "id_": 3,
+          "nombre_": "Eduardo",
+          "actividad_": "correr",
+          "amigos_": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "grupo_de_amigos_": [],
+          "rutasFavoritas_": [],
+          "historicoRutas_": []
+        }
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 8
+    }
+  ]
+}
