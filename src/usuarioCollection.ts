@@ -12,17 +12,17 @@ import { estadisticaEntrenamiento, estadistica, ID}  from './types';
  */
 export class usuarioCollection {
   private usuarios: Usuario[] = [];
+
+  /**
+   * Constructor de la clase 
+   */
   constructor() {
     this.leerBD();
-
-    // this.usuarios = usuario_array;
-    // usuario_array.forEach((usuario1) => {
-    //   const user_aux = new Usuario(usuario1.getNombre, usuario1.getActividad, usuario1.getAmigos, usuario1.getGrupoAmigos, usuario1.getEstadisticas, usuario1.getHistoricoRutas, usuario1.getRetos, usuario1.getID);
-    //   this.usuarios.push(user_aux);
-    // });
-    // this.usuarios = usuario_array;
   }
 
+  /**
+   * Método que lee la base de datos y la carga en el array de usuarios
+   */
   leerBD() {
     const usuarios_aux = database.get("usuarios").value();
     const array_aux: Usuario[] = [];
@@ -33,7 +33,9 @@ export class usuarioCollection {
     this.setUsuarios = array_aux;  
   }
   
-
+  /**
+   * Método que controla el menú de usuarios
+   */
   manageUsuarios() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -65,6 +67,9 @@ export class usuarioCollection {
     });
   }
   
+  /**
+   * Método que controla el menú de borrar usuarios
+   */
   promptBorrarUser() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -82,6 +87,10 @@ export class usuarioCollection {
     });
   }
 
+  /**
+   * Método que borra un usuario de la base de datos
+   * @param id 
+   */
   borrarUsuario(id: number) {
     let control_bool = false;
     this.usuarios.forEach((user, indice) => {
@@ -99,6 +108,9 @@ export class usuarioCollection {
     }
   }
 
+  /**
+   * Método que controla el menú para añadir usuarios
+   */
   promptAddUser() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -182,13 +194,16 @@ export class usuarioCollection {
     });
   }
 
+  /**
+   * Método que controla el menú para modificar usuarios
+   */
   promptModificarUser() {
     const prompt = inquirer.createPromptModule();
     prompt([
       {
         type: 'list',
         name: 'opcion',
-        message: '¿Qué usuario quieres modificar? Introduce su ID: ',
+        message: '¿Qué usuario quieres modificar? ',
         choices: this.usuarios.map((user) => {
           return {name: user.getNombre, value: user.getID};
         })
@@ -212,6 +227,11 @@ export class usuarioCollection {
       return false;
     }
     
+  /**
+   * Método que modifica un usuario
+   * @param identificador 
+   * @returns 
+   */
   modificarUsuario(identificador: ID) {
     // 1. comprobar que el id de la ruta existe
     // 2. preguntar que se quiere modificar
@@ -585,15 +605,11 @@ export class usuarioCollection {
     });
   }
 
-
-
-
-
-  
-
-  
   //* INFO USUARIO
 
+  /**
+   * Metodo para ordenar los usuarios por nombre
+   */
   ordenarUsuarioPorNombre() {
    let ascendente = true; // por defecto ascendente
    const prompt = inquirer.createPromptModule();
@@ -630,6 +646,9 @@ export class usuarioCollection {
    });
   }
 
+  /**
+   * Metodo para ordenar los usuarios por kms semanales
+   */
   ordenarPorKmsSemanales() {
    let ascendente = true; // por defecto ascendente
    const prompt = inquirer.createPromptModule();
@@ -666,6 +685,9 @@ export class usuarioCollection {
    });
   }
   
+  /**
+   * Metodo para ordenar los usuarios por kms mensuales
+   */
   ordenarPorKmsMensuales() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -702,6 +724,9 @@ export class usuarioCollection {
     });
   }
 
+  /**
+   * Metodo para ordenar los usuarios por kms anuales
+   */
   ordenarPorKmsAnuales() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -738,6 +763,9 @@ export class usuarioCollection {
     });
   }
 
+  /**
+   * Método que controla el menú de información de los usuarios
+   */
   infoUsuario() {
     const prompt = inquirer.createPromptModule();
     prompt([

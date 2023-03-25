@@ -17,6 +17,14 @@ export class Grupo {
   private rutas_favoritas_ : ID[]; //? EXPLICAR EN EL INFORME QUE HEMOS DECIDIDO HACER UN ARRAY DE RUTAS PARA REALIZARLO DE LA MISMA MANERA QUE LA CLASE USUARIO
   private historicoRutas_: historicoRutas[];
   
+  /**
+   * Constructor de la clase Grupo.
+   * @param nombre 
+   * @param participantes 
+   * @param estadisticaEntrenamiento 
+   * @param historicoRutas 
+   * @param id 
+   */
   constructor(nombre: string, participantes: ID[], estadisticaEntrenamiento: estadisticaEntrenamiento, historicoRutas: historicoRutas[],id?: ID) {
     this.nombre_ = nombre;
     this.participantes_ = participantes;

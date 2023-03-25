@@ -3,13 +3,23 @@ import { database } from "./bd";
 import { Grupo } from "./grupo";
 import { ID, fecha, estadistica, estadisticaEntrenamiento, historicoRutas } from "./types";
 
+/**
+ * Clase que representa una colección de grupos.
+ * @class
+ */
 export class GruposCollection {
   private grupos_: Grupo[];
 
+  /**
+   * Constructor de la clase GruposCollection.
+   */
   constructor() {
     this.leerBD();
   }
   
+  /**
+   * Método que lee los elementos de la base de datos y los guarda en el array de grupos.
+   */
   leerBD() {
     const grupos_aux = database.get("grupos").value();
     const array_aux: Grupo[] = [];
@@ -20,8 +30,11 @@ export class GruposCollection {
     this.setGrupos = array_aux;  
   }
 
-
   //* INFO
+
+  /**
+   * Método que muestra la información de los grupos.
+   */
   infoUsuario() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -63,6 +76,9 @@ export class GruposCollection {
     });
   }
   
+  /**
+   * Método que ordena los grupos por nombre.
+   */
   ordenarGruposPorNombre() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -99,6 +115,9 @@ export class GruposCollection {
     });
   }
 
+  /**
+   * Método que ordena los grupos por kms semanales.
+   */
   ordenarPorKmsSemanales() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -135,6 +154,9 @@ export class GruposCollection {
     });
   }
 
+  /**
+   * Método que ordena los grupos por kms mensuales.
+   */
   ordenarPorKmsMensuales() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -171,6 +193,9 @@ export class GruposCollection {
     });
   }
 
+  /**
+   * Método que ordena los grupos por kms anuales.
+   */
   ordenarPorKmsAnuales() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -207,6 +232,9 @@ export class GruposCollection {
     });
   }
 
+  /**
+   * Método que ordena los grupos por número de usuarios.
+   */
   ordenarPorNumUsuarios() {
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -245,6 +273,9 @@ export class GruposCollection {
 
   //* MANAGE
 
+  /**
+   * Método que gestiona los grupos.
+   */
   manageGrupos() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -278,6 +309,10 @@ export class GruposCollection {
     });
   }
 
+  
+  /**
+   * Método que impelementa el prompt para modificar un grupo.
+   */
   promptModificarGrupo() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -285,7 +320,7 @@ export class GruposCollection {
         type: 'list',
         name: 'opcion',
         message: '¿Qué grupo deseas modificar?',
-        choices: this.getGrupos.map((group) => {
+        choices: this.grupos_.map((group) => {
           return {name: group.getNombre, value: group.getID};
         }
         )
@@ -308,7 +343,11 @@ export class GruposCollection {
     return false;
   }
 
-
+  /**
+   * Método que modifica un grupo.
+   * @param identificador 
+   * @returns 
+   */
   modificarGrupo(identificador: ID) {
     // 1. comprobar que el id de la ruta existe
     // 2. preguntar que se quiere modificar
@@ -353,7 +392,7 @@ export class GruposCollection {
           ]).then((answers) => {
             this.grupos_[indice].setNombre = answers.nombre2;
             this.borrarElementoBD(identificador);
-            const grupo_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes, this.grupos_[indice].getHistoricoRutas, this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getID);
+            const grupo_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes,this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas,  this.grupos_[indice].getID);
             this.grupos_.push(grupo_aux);
             this.grupos_.splice(indice, 1);
             this.manageGrupos();
@@ -361,10 +400,57 @@ export class GruposCollection {
           );
           break;
         case 'participantes':
-          // solicitar participantes
+          // preguntar que se quiere hacer si añadir o eliminar participantes
+          prompt([
+            {
+              type: 'list',
+              name: 'opcion',
+              message: '¿Qué deseas hacer?',
+              choices: [
+                {name:'Añadir participante', value: 'añadir'},
+                {name:'Eliminar participante', value: 'eliminar'},
+              ]
+            }
+          ]).then((answers) => {
+            switch (answers.opcion) {
+              case 'añadir':
+                prompt([
+                  {
+                    type: 'input',
+                    name: 'id_participante',
+                    message: 'Introduce el id del participante',
+                  }
+                ]).then((answers) => {
+                  this.grupos_[indice].setParticipantes = this.grupos_[indice].getParticipantes.concat(answers.id_participante); 
+                  this.borrarElementoBD(identificador);
+                  const grupo_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes,this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas,  this.grupos_[indice].getID);
+                  this.grupos_.push(grupo_aux);
+                  this.grupos_.splice(indice, 1);
+                  this.manageGrupos();
+                });
+                break;
+              case 'eliminar':
+                prompt([
+                  {
+                    type: 'input',
+                    name: 'id_participante',
+                    message: 'Introduce el id del participante',
+                  }
+                ]).then((answers) => {
+                  this.grupos_[indice].setParticipantes = this.grupos_[indice].getParticipantes.filter((id) => {
+                    return id != answers.id_participante;
+                  });
+                  this.borrarElementoBD(identificador);
+                  const grupo_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes,this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas,  this.grupos_[indice].getID);
+                  this.grupos_.push(grupo_aux);
+                  this.grupos_.splice(indice, 1);
+                  this.manageGrupos();
+                });
+              break;
+            }
+          });
           break;
         case 'estadisticas':
-          // solicitar kms y desnivel para semana mes y año
           prompt([
             {
               type: 'input',
@@ -417,6 +503,7 @@ export class GruposCollection {
               año: new_estadistica_año,
             }
             this.grupos_[indice].setEstadisticasEntrenamiento = new_estadisticas;
+            this.borrarElementoBD(identificador);
             const grupos_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes, this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas, this.grupos_[indice].getID);
             this.grupos_.push(grupos_aux);
             this.grupos_.splice(indice, 1);
@@ -459,12 +546,12 @@ export class GruposCollection {
               id: answers.id,
             }
             // añadirlo y modificar la base de datos
-            this.usuarios[indice].getHistoricoRutas.push(new_historico);
+            this.grupos_[indice].getHistoricoRutas.push(new_historico);
             this.borrarElementoBD(identificador);
-            const ruta_aux = new Usuario(this.usuarios[indice].getNombre, this.usuarios[indice].getActividad, this.usuarios[indice].getAmigos, this.usuarios[indice].getGrupoAmigos, this.usuarios[indice].getEstadisticas, this.usuarios[indice].getHistoricoRutas, this.usuarios[indice].getRetos, this.usuarios[indice].getID);
-            this.usuarios.push(ruta_aux);
-            this.usuarios.splice(indice, 1);
-            this.manageUsuarios();
+            const ruta_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes, this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas, this.grupos_[indice].getID);
+            this.grupos_.push(ruta_aux);
+            this.grupos_.splice(indice, 1);
+            this.manageGrupos();
           });
           break;
         
@@ -472,6 +559,9 @@ export class GruposCollection {
     });
   }
 
+  /**
+   * Método que permite eliminar un grupo
+   */
   promptEliminarGrupo() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -490,6 +580,9 @@ export class GruposCollection {
     });
   }
   
+  /**
+   * Método que permite eliminar un grupo
+   */
   eliminarGrupo(identificador: ID): Grupo | undefined {
     let control_bool = false;
     let grupo_aux: Grupo | undefined;
@@ -512,8 +605,9 @@ export class GruposCollection {
     
   }
 
-
-
+  /**
+   * Método que permite añadir un grupo
+   */
   promptAñadirGrupo() {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -569,27 +663,8 @@ export class GruposCollection {
       const grupo_aux = new Grupo(answers.nombre, participantes, estadisticas, historico2);
       this.grupos_.push(grupo_aux);
       this.manageGrupos();
-
     });
-
-
-
   }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
   //* SETTERs Y GETTERs
@@ -609,6 +684,137 @@ export class GruposCollection {
   }
 
 }
+
+
+
+
+//? PRUEBAS
+
+
+// const semana: estadistica = {
+//   km: 10,
+//   desnivel: 1000
+// }
+
+// const semana2: estadistica = {
+//   km: 20,
+//   desnivel: 200
+// }
+
+// const semana3: estadistica = {
+//   km: 30,
+//   desnivel: 300
+// }
+
+// const mes: estadistica = {
+//   km: 20,
+//   desnivel: 2000
+// }
+
+// const mes2: estadistica = {
+//   km: 30,
+//   desnivel: 3000
+// }
+
+// const mes3: estadistica = {
+//   km: 40,
+//   desnivel: 4000
+// }
+
+// const año: estadistica = {
+//   km: 30,
+//   desnivel: 3000
+// }
+
+// const año2: estadistica = {
+//   km: 40,
+//   desnivel: 4000
+// }
+
+// const año3: estadistica = {
+//   km: 50,
+//   desnivel: 5000
+// }
+
+// const estadisticas: estadisticaEntrenamiento = {
+//   semana: semana,
+//   mes: mes,
+//   año: año
+// }
+
+// const estadisticas2: estadisticaEntrenamiento = {
+//   semana: semana2,
+//   mes: mes2,
+//   año: año2
+// }
+
+// const estadisticas3: estadisticaEntrenamiento = {
+//   semana: semana3,
+//   mes: mes3,
+//   año: año3
+// }
+
+// const fecha1: fecha = {
+//   dia: 1,
+//   mes: 1,
+//   año: 2021
+// }
+
+// const fecha2: fecha = {
+//   dia: 2,
+//   mes: 2,
+//   año: 2021
+// }
+
+// const fecha3: fecha = {
+//   dia: 3,
+//   mes: 3,
+//   año: 2021
+// }
+
+// const fecha4: fecha = {
+//   dia: 4,
+//   mes: 4,
+//   año: 2021
+// }
+
+// const historic1: historicoRutas = {
+//   fecha: fecha1,
+//   id: 1
+// }
+
+// const historic2: historicoRutas = {
+//   fecha: fecha2,
+//   id: 2
+// }
+
+// const historic3: historicoRutas = {
+//   fecha: fecha3,
+//   id: 3
+// }
+
+// const historic4: historicoRutas = {
+//   fecha: fecha4,
+//   id: 1
+// }
+
+// const historic5: historicoRutas = {
+//   fecha: fecha1,
+//   id: 2
+// }
+
+// const historic6: historicoRutas = {
+//   fecha: fecha2,
+//   id: 3
+// }
+
+// const grupo0 = new Grupo('Grupo 0', [0,1,2,3,4,5,6,7,8,9,10], estadisticas, [historic1,historic2]);
+// const grupo1 = new Grupo('Grupo 1', [0,1,2,3,4,5], estadisticas2, [historic3,historic4]);
+// const grupo2 = new Grupo('Grupo 2', [0,6,7,8,9,10], estadisticas3, [historic5,historic6]);
+// const grupo3 = new Grupo('Grupo 3', [0,4,5,6,7,8,9,10], estadisticas, [historic1,historic2]);
+// const grupo4 = new Grupo('Grupo 4', [0,1,2,3,4,5,6,7,8,9,10], estadisticas2, [historic3,historic4]);
+// const grupo5 = new Grupo('Grupo 5', [0,6,7,8,9,10], estadisticas3, [historic5,historic6]);
+
 
 const gruposCollection = new GruposCollection();
 

@@ -18,7 +18,7 @@ export class Usuario {
   private historicoRutas_: historicoRutas[];
 
   /**
-   * Método que obtiene las rutas favoritas del usuario
+   * Constructor de la clase Usuario
    * @param nombre 
    * @param actividad 
    * @param amigos 
@@ -224,6 +224,9 @@ export class Usuario {
     this.historicoRutas_ = historicoRutas;
   }
 
+  /**
+   * Método que calcula las rutas favoritas del usuario
+   */
   obtenerRutasFavoritas(): void {
     // recorrer histórico, contar el número de veces que se repite cada id de ruta y si se repite mas de 2 veces lo metemos en rutas fav
     const historico = this.historicoRutas_;
@@ -269,7 +272,3 @@ export class Usuario {
     return kmTotales;
   }
 }
-
-
-
-

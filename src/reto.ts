@@ -2,41 +2,64 @@ import { actividad, ID } from "./types";
 import { Usuario } from "./usuario";
 import { Ruta } from "./ruta";
 
+import { database } from "./bd";
 
+/**
+ * Clase que representa un reto.
+ * @class
+ */
 export class Reto {
-  private static id_global_: ID;
   private id_: ID;
   private nombre_: string;
-  private rutas_: Ruta[];
+  private rutas_: ID[];
   private tipo_actividad_ : actividad;
   private km_totales_: number;
-  private usuarios_: Usuario[];
-
-  constructor(nombre: string, rutas: Ruta[], tipo_actividad: actividad) {
-      this.nombre_ = nombre;
-      this.rutas_ = rutas;
-      this.tipo_actividad_ = tipo_actividad;
-      this.km_totales_ = this.kmTotales();
-      this.usuarios_ = [];
-
-      this.id_ = Reto.comprobarEstatica();
-  }
+  private usuarios_: ID[];
 
   /**
-   * Método que genera un id único para el reto
-   * @returns -- id del reto
+   * Constructor de la clase Reto.
+   * @param nombre 
+   * @param rutas 
+   * @param tipo_actividad 
+   * @param id 
    */
-  public static comprobarEstatica(): ID{
-    // en este método comprobamos si el id_global está inicializado
-    // si no está inicializado, lo inicializamos a 0
-    // si está inicializado, devolvemos el valor de id_global
-    if (Reto.id_global_ == undefined) {
-      Reto.id_global_ = 0;
+  constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, usuarios: ID[], id?: ID) {
+    this.nombre_ = nombre;
+    this.rutas_ = rutas;
+    this.tipo_actividad_ = tipo_actividad;
+    this.km_totales_ = this.kmTotales();
+    this.usuarios_ = usuarios;
+
+
+    //* escribir en lowdb el reto creado
+    const id_global = database.get("retos").map("nombre").value();
+    if (id_global.includes(this.nombre_)) {
+      this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
+
+    } else {
+      if (id !== undefined) {
+        this.id_ = id;
+      }
+      else {
+        // buscar el id más alto y sumarle 1
+        const id_global = database.get("retos").map("id").value();
+        id_global.sort((a, b) => a - b);
+        if (id_global.length === 0) {
+          this.id_ = 1;
+        }
+        else {
+          this.id_ = id_global[id_global.length - 1] + 1;
+        }
+      }
+      database.get("retos").push({
+        id: this.id_,
+        nombre: this.nombre_,
+        rutas: this.rutas_,
+        tipo_actividad: this.tipo_actividad_,
+        km_totales: this.km_totales_,
+        usuarios: this.usuarios_
+      }).write();
     }
-    Reto.id_global_ += 1; 
-    const identificador: ID = Reto.id_global_;
-    
-    return identificador;
   }
 
 
@@ -48,7 +71,10 @@ export class Reto {
     // calcular los km totales de todas las rutas
     let km_totales = 0;
     for (let i = 0; i < this.rutas_.length; i++) {
-      km_totales += this.rutas_[i].getLongitud;
+      // obtener ruta con este identificador
+      const ruta = database.get("rutas").find({ id: this.rutas_[i] }).value();
+      km_totales += ruta.longitud;
+      // km_totales += this.rutas_[i].getLongitud;
     }
     return km_totales;
   }
@@ -75,7 +101,7 @@ export class Reto {
    * Método que devuelve las rutas del reto
    * @returns -- rutas del reto
    */
-  get getRutas(): Ruta[] {
+  get getRutas(): ID[] {
     return this.rutas_;
   }
 
@@ -99,7 +125,7 @@ export class Reto {
    * Método que devuelve los usuarios del reto
    * @returns -- usuarios del reto
    */
-  get getUsuarios(): Usuario[] {
+  get getUsuarios(): ID[] {
     return this.usuarios_;
   }
 
@@ -115,7 +141,7 @@ export class Reto {
    * Método que modifica las rutas del reto
    * @param rutas -- nuevas rutas del reto
    */
-  set setRutas(rutas: Ruta[]) {
+  set setRutas(rutas: ID[]) {
     this.rutas_ = rutas;
   }
 
@@ -139,7 +165,7 @@ export class Reto {
    * Método que añade un usuario al reto
    * @param usuario -- usuario a añadir
    */
-  set setUsuarios(usuarios: Usuario[]) {
+  set setUsuarios(usuarios: ID[]) {
     this.usuarios_ = usuarios;
   }
 

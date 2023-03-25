@@ -808,14 +808,3 @@ export class rutaCollection {
     });
   }
 }
-
-
-
-
-
-// ! Borrar después
-
-// const coleccion_rutas = new rutaCollection();
-
-//coleccion_rutas.infoRutas();
-// coleccion_rutas.manageRutas();

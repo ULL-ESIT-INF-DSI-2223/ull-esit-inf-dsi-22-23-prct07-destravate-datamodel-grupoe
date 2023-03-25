@@ -628,5 +628,304 @@
       ]
     }
   ],
-  "grupos": []
+  "grupos": [
+    {
+      "id": 1,
+      "nombre": "Grupo 0",
+      "participantes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Grupo 1",
+      "participantes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        },
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Grupo 2",
+      "participantes": [
+        0,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Grupo 3",
+      "participantes": [
+        0,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Grupo 4",
+      "participantes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        },
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nombre": "GRUPO 6",
+      "participantes": [
+        0,
+        6,
+        7,
+        8,
+        9,
+        10,
+        "1",
+        "2"
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": "10",
+          "desnivel": "10"
+        },
+        "mes": {
+          "km": "20",
+          "desnivel": "3000"
+        },
+        "año": {
+          "km": "2321",
+          "desnivel": "312321"
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        },
+        {
+          "fecha": {
+            "dia": "1",
+            "mes": "1",
+            "año": "1"
+          },
+          "id": "1"
+        }
+      ]
+    }
+  ]
 }
