@@ -126,77 +126,7 @@
   ],
   "usuarios": [
     {
-      "id": null,
-      "nombre": "user0",
-      "actividad": "correr",
-      "amigos": [
-        1,
-        2,
-        3
-      ],
-      "grupo_de_amigos": [
-        [
-          1,
-          2
-        ],
-        [
-          3,
-          4
-        ],
-        [
-          5,
-          6
-        ]
-      ],
-      "estadisticas": {
-        "semana": {
-          "km": 10,
-          "desnivel": 1000
-        },
-        "mes": {
-          "km": 20,
-          "desnivel": 2000
-        },
-        "año": {
-          "km": 30,
-          "desnivel": 3000
-        }
-      },
-      "rutasFavoritas": [],
-      "retos": [
-        1,
-        2,
-        3
-      ],
-      "historicoRutas": [
-        {
-          "fecha": {
-            "dia": 1,
-            "mes": 1,
-            "año": 2021
-          },
-          "id": 1
-        },
-        {
-          "fecha": {
-            "dia": 2,
-            "mes": 2,
-            "año": 2021
-          },
-          "id": 2
-        },
-        {
-          "fecha": {
-            "dia": 3,
-            "mes": 3,
-            "año": 2021
-          },
-          "id": 3
-        }
-      ]
-    },
-    {
-      "id": null,
+      "id": 2,
       "nombre": "user1",
       "actividad": "correr",
       "amigos": [
@@ -265,7 +195,7 @@
       ]
     },
     {
-      "id": null,
+      "id": 3,
       "nombre": "user2",
       "actividad": "correr",
       "amigos": [
@@ -334,7 +264,7 @@
       ]
     },
     {
-      "id": null,
+      "id": 4,
       "nombre": "user3",
       "actividad": "correr",
       "amigos": [
@@ -404,7 +334,7 @@
       ]
     },
     {
-      "id": null,
+      "id": 5,
       "nombre": "user4",
       "actividad": "correr",
       "amigos": [
@@ -474,7 +404,7 @@
       ]
     },
     {
-      "id": null,
+      "id": 6,
       "nombre": "user5",
       "actividad": "correr",
       "amigos": [
@@ -544,7 +474,7 @@
       ]
     },
     {
-      "id": null,
+      "id": 7,
       "nombre": "user6",
       "actividad": "correr",
       "amigos": [
@@ -612,6 +542,91 @@
           "id": 3
         }
       ]
+    },
+    {
+      "id": 1,
+      "nombre": "marco",
+      "actividad": "Bicicleta",
+      "amigos": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "grupo_de_amigos": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": "1",
+          "desnivel": "1"
+        },
+        "mes": {
+          "km": "1",
+          "desnivel": "1"
+        },
+        "año": {
+          "km": "1",
+          "desnivel": "1"
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        },
+        {
+          "fecha": {
+            "dia": "12",
+            "mes": "23",
+            "año": "3060"
+          },
+          "id": "20"
+        }
+      ]
     }
-  ]
+  ],
+  "grupos": []
 }

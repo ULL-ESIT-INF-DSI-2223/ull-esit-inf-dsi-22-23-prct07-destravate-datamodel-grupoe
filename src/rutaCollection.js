@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.rutaCollection = void 0;
 var ruta_1 = require("./ruta");
 var inquirer = require("inquirer");
 // import { Usuario } from "./usuario";
@@ -40,6 +41,7 @@ var rutaCollection = /** @class */ (function () {
     });
     /**
      * Método que lee de la base de datos y actualiza el array de rutas
+     * @returns array de ids de las rutas, para las pruebas.
      */
     rutaCollection.prototype.leerBD = function () {
         var rutas = bd_1.database.get("rutas").value();
@@ -49,17 +51,27 @@ var rutaCollection = /** @class */ (function () {
             array_aux.push(ruta_aux);
         });
         this.setRutas = array_aux;
+        var array_aux2 = [];
+        array_aux.forEach(function (ruta) {
+            array_aux2.push(ruta.getId);
+        });
+        // console.log(array_aux2);
+        return array_aux2;
     };
     /**
      * Metodo para borrar un elemento de la base de datos
      * @param identificador
      */
     rutaCollection.prototype.borrarElementoBD = function (identificador) {
+        console.log("parte 1");
         this.coleccion_rutas_.forEach(function (ruta, indice) {
+            console.log("getid: " + ruta.getId + " identificador: " + identificador);
             if (ruta.getId == identificador) {
                 bd_1.database.get("rutas").splice(indice, 1).write();
+                return true;
             }
         });
+        return false;
     };
     /**
      * Método que borra una ruta
@@ -525,8 +537,8 @@ var rutaCollection = /** @class */ (function () {
                 _this.promptBorrarRuta();
             }
             else if (answers.opcion === 'modify') {
-                _this.promptModificarRuta();
-            }
+                _this.promptModificarRuta(); // espera un seg
+            } // la estoy usando yo, estamos comprobando que funciona un metodo tocho
             else if (answers.opcion === 'Salir') {
                 // cerrar prompt
                 process.exit(0);
@@ -777,6 +789,7 @@ var rutaCollection = /** @class */ (function () {
     };
     return rutaCollection;
 }());
+exports.rutaCollection = rutaCollection;
 // ! Borrar después
 // const coleccion_rutas = new rutaCollection();
 //coleccion_rutas.infoRutas();

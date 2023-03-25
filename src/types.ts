@@ -54,4 +54,16 @@ export type schemaType = {
     historicoRutas: historicoRutas[];
   }[],
 
+  grupos: {
+    id: ID;
+    nombre: string;
+    participantes: ID[];
+    estadisticasEntrenamiento: estadisticaEntrenamiento;
+    ranking: ID[];
+    rutas_favoritas: ID[];
+    historicoRutas: historicoRutas[];
+  }[],
+
+
+
 };

@@ -42,7 +42,12 @@ var Ruta = /** @class */ (function () {
                 // buscar el id más alto y sumarle 1
                 var id_global_1 = bd_1.database.get("rutas").map("id").value();
                 id_global_1.sort(function (a, b) { return a - b; });
-                this.id_ = id_global_1[id_global_1.length - 1] + 1;
+                if (id_global_1.length === 0) {
+                    this.id_ = 1;
+                }
+                else {
+                    this.id_ = id_global_1[id_global_1.length - 1] + 1;
+                }
             }
             bd_1.database.get("rutas").push({
                 id: this.id_,

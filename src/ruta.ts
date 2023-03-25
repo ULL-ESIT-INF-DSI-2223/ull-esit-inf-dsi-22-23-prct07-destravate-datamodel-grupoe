@@ -18,7 +18,6 @@ export class Ruta {
   private tipo_actividad_: actividad;
   private calificacion_: number;
 
-
   /** 
    * @constructor
    * @param nombre Nombre de la ruta
@@ -55,7 +54,12 @@ export class Ruta {
         // buscar el id más alto y sumarle 1
         const id_global = database.get("rutas").map("id").value();
         id_global.sort((a, b) => a - b);
-        this.id_ = id_global[id_global.length - 1] + 1;
+        if (id_global.length === 0) {
+          this.id_ = 1;
+        }
+        else {
+          this.id_ = id_global[id_global.length - 1] + 1;
+        }
       }
       database.get("rutas").push({
         id: this.id_,

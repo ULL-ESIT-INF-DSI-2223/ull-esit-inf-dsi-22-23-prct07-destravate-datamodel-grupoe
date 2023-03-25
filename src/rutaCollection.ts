@@ -10,14 +10,13 @@ import { database } from "./bd";
  * Clase rutaCollection
  * @description Clase que representa una colección de rutas
  */
-class rutaCollection {
+export class rutaCollection {
   private coleccion_rutas_: Ruta[];
   /**
    * Constructor por defecto
    * @param coleccion_rutas_ array de rutas
    */
   constructor() {
-
     this.leerBD();
   }
 
@@ -39,8 +38,9 @@ class rutaCollection {
 
   /**
    * Método que lee de la base de datos y actualiza el array de rutas
+   * @returns array de ids de las rutas, para las pruebas.
    */
-  leerBD(): void {
+  leerBD(): ID[] {
     const rutas = database.get("rutas").value();
     const array_aux: Ruta[] = [];
     rutas.forEach((ruta) => {
@@ -48,18 +48,28 @@ class rutaCollection {
       array_aux.push(ruta_aux);
     });
     this.setRutas = array_aux;
+    const array_aux2: ID[] = [];
+    array_aux.forEach((ruta) => {
+      array_aux2.push(ruta.getId);
+    });
+    // console.log(array_aux2);
+    return array_aux2;
   }
 
   /**
    * Metodo para borrar un elemento de la base de datos
    * @param identificador 
    */
-  borrarElementoBD(identificador: ID): void {
+  borrarElementoBD(identificador: ID): boolean{
+    console.log("parte 1");
     this.coleccion_rutas_.forEach((ruta, indice) => {
+      console.log("getid: " + ruta.getId + " identificador: " + identificador);
       if (ruta.getId == identificador) {
         database.get("rutas").splice(indice,1).write();
+        return true;
       }
     });
+    return false;
   }
 
   /**
@@ -105,7 +115,7 @@ class rutaCollection {
       if (typeof ruta_aux != 'undefined') {
         console.log('Ruta borrada: ' + ruta_aux.getId);
       }
-      else {
+      else { 
         console.log('La ruta no existe');
       }
       this.manageRutas();
@@ -540,11 +550,11 @@ class rutaCollection {
         this.promptAddRuta();
       }
       else if (answers.opcion === 'remove') {
-        this.promptBorrarRuta();
+        this.promptBorrarRuta(); 
       }
       else if (answers.opcion === 'modify') {
-        this.promptModificarRuta();
-      }
+        this.promptModificarRuta();// espera un seg
+      } // la estoy usando yo, estamos comprobando que funciona un metodo tocho
       else if (answers.opcion === 'Salir') {
         // cerrar prompt
         process.exit(0);
