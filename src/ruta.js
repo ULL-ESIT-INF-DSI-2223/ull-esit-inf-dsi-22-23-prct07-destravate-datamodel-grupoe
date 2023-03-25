@@ -13,7 +13,7 @@ exports.database.defaults({ rutas: [] }).write();
  */
 var Ruta = /** @class */ (function () {
     // private database: lowdb.LowdbSync<schemaType>;
-    function Ruta(nombre, geolocalizacion_inicio, geolocalizacion_fin, longitud, desnivel, usuario, tipo_actividad, calificacion) {
+    function Ruta(nombre, geolocalizacion_inicio, geolocalizacion_fin, longitud, desnivel, usuario, tipo_actividad, calificacion, id) {
         this.nombre_ = nombre;
         this.geolocalizacion_inicio_ = geolocalizacion_inicio;
         this.geolocalizacion_fin_ = geolocalizacion_fin;
@@ -22,21 +22,42 @@ var Ruta = /** @class */ (function () {
         this.usuarios_ = usuario;
         this.tipo_actividad_ = tipo_actividad;
         this.calificacion_ = calificacion;
-        // el id_global hace de contador de la clase, para asignar identificadores únicos a cada ruta
-        // el id_ es el identificador de la ruta
-        // el id_global se incrementa en 1 cada vez que se crea una ruta
+        // imprmir usuarios
+        // usuario.forEach(element => {
+        //   console.log("usuarios param:"+element.getNombre);
+        // });
+        // this.usuarios_.forEach(element => {
+        //   console.log("usuarios this:"+element.getNombre);
+        // });
         //* escribir en lowdb la ruta creada
         // obtenemos todos los id de la base de datos
         // si this.id_ está en la base de datos, no se meterá
         // si this.id_ no está en la base de datos, se meterá
         var id_global = exports.database.get("rutas").map("nombre").value();
+        // imprimir los nombres
+        console.log(id_global);
+        console.log("Nombre actual: " + this.nombre_);
         if (id_global.includes(this.nombre_)) {
-            //console.log("El nombre ya existe");
             // buscar este nombre en el array de rutas y devolver el id
+            console.log("PARTE 1");
             this.id_ = exports.database.get("rutas").find({ nombre: this.nombre_ }).value().id;
         }
         else {
-            this.id_ = Ruta.comprobarEstatica();
+            // si id tiene algo
+            console.log("PARTE 2");
+            console.log("id: " + id);
+            if (id !== undefined) { //? ¿FUNCIONA?
+                this.id_ = id; //?
+            }
+            else {
+                // buscar el id más alto y sumarle 1
+                var id_global_1 = exports.database.get("rutas").map("id").value();
+                id_global_1.sort(function (a, b) { return a - b; });
+                console.log("id_global: " + id_global_1);
+                this.id_ = id_global_1[id_global_1.length - 1] + 1;
+                console.log("nuevo id: " + this.id_);
+                // this.id_ = database.get("rutas").size().value() + 1;
+            }
             exports.database.get("rutas").push({
                 id: this.id_,
                 nombre: this.nombre_,
@@ -49,38 +70,7 @@ var Ruta = /** @class */ (function () {
                 calificacion: this.calificacion_
             }).write();
         }
-        // meter ruta en la base de datos
-        // database.get("rutas").push({
-        //   id: this.id_,
-        //   nombre: this.nombre_,
-        //   geolocalizacion_inicio: this.geolocalizacion_inicio_,
-        //   geolocalizacion_fin: this.geolocalizacion_fin_,
-        //   longitud: this.longitud_,
-        //   desnivel: this.desnivel_,
-        //   usuarios: this.usuarios_,
-        //   tipo_actividad: this.tipo_actividad_,
-        //   calificacion: this.calificacion_
-        // }).write();
     }
-    /**
-     * Método que genera una id única para cada ruta
-     * @returns -- id de la ruta
-     */
-    Ruta.comprobarEstatica = function () {
-        // en este método comprobamos si el id_global está inicializado
-        // si no está inicializado, lo inicializamos a 0
-        // si está inicializado, devolvemos el valor de id_global
-        // buscar el id más alto de la base de datos
-        // si no hay ninguna ruta, el id_global será 0
-        // si hay rutas, el id_global será el id de la última ruta + 1
-        if (Ruta.id_global_ == undefined) {
-            Ruta.id_global_ = 0;
-        }
-        // obtener numero de rutas
-        Ruta.id_global_ = exports.database.get("rutas").size().value() + 1;
-        console.log(Ruta.id_global_ - 1);
-        return Ruta.id_global_;
-    };
     Object.defineProperty(Ruta.prototype, "getId", {
         //* GETTERS Y SETTERS
         get: function () {

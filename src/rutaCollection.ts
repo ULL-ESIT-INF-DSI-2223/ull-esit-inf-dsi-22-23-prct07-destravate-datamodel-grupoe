@@ -1,7 +1,6 @@
 import {Ruta} from "./ruta";
-import {ID} from "./types";
+import {ID, coordenadas} from "./types";
 import * as inquirer from "inquirer";
-// import { coordenadas } from "./types";
 // import { Usuario } from "./usuario";
 
 import {database} from "./ruta";
@@ -9,6 +8,7 @@ import {database} from "./ruta";
 
 /**
  * Clase rutaCollection
+ * @description Clase que representa una colección de rutas
  */
 class rutaCollection {
   private coleccion_rutas_: Ruta[];
@@ -17,12 +17,13 @@ class rutaCollection {
    * @param coleccion_rutas_ array de rutas
    */
   constructor() {
-    // leer rutas de la base de datos y añadirlas al array de rutas
+
     this.leerBD();
   }
 
   /**
    * getter coleccion_rutas_
+   * @returns array de rutas
    */
   get getRutas(): Ruta[] {
     return this.coleccion_rutas_;
@@ -30,6 +31,7 @@ class rutaCollection {
 
   /**
    * setter coleccion_rutas_
+   * @param coleccion_rutas array de rutas
    */
   set setRutas(coleccion_rutas: Ruta[]) {
     this.coleccion_rutas_ = coleccion_rutas;
@@ -42,38 +44,23 @@ class rutaCollection {
     const rutas = database.get("rutas").value();
     const array_aux: Ruta[] = [];
     rutas.forEach((ruta) => {
-      const ruta_aux: Ruta = new Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, [], ruta.tipo_actividad, ruta.calificacion);
+      const ruta_aux: Ruta = new Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios , ruta.tipo_actividad, ruta.calificacion);
       array_aux.push(ruta_aux);
     });
     this.setRutas = array_aux;
   }
 
-
   /**
-   * Método que añade una nueva ruta a la coleción de rutas
-   * @param ruta ruta a añadir
-   * @returns array de rutas modificado o undefined en caso de no haber podido añadir la ruta.
+   * Metodo para borrar un elemento de la base de datos
+   * @param identificador 
    */
-  addRuta(ruta: Ruta): Ruta{  
-    
-    // let repetido = false;
-    // this.coleccion_rutas_.forEach((ruta_aux) => {
-    //   if (ruta.getId == ruta_aux.getId) { 
-    //     repetido = true;
-    //   }
-    // });
-    // if (repetido === false) {
-    //   this.coleccion_rutas_.push(ruta);
-    //   return this.coleccion_rutas_;
-    // }
-    // else {
-    //   return undefined;
-    // }
-    //! si se rompe es aqui
-    this.coleccion_rutas_.push(ruta);
-    return ruta;
+  borrarElementoBD(identificador: ID): void {
+    this.coleccion_rutas_.forEach((ruta, indice) => {
+      if (ruta.getId == identificador) {
+        database.get("rutas").splice(indice,1).write();
+      }
+    });
   }
-
 
   /**
    * Método que borra una ruta
@@ -83,23 +70,16 @@ class rutaCollection {
   borrarRuta(identificador: ID): Ruta | undefined {
     let control_bool = false;
     let ruta_aux: Ruta | undefined;
-    // console.log(`identificador: ${identificador}`)
-    // console.log('TAMAÑO ARRAY:' + this.coleccion_rutas_.length)
+
     this.coleccion_rutas_.forEach((ruta, indice) => {
-      // console.log(ruta);
+
       if (ruta.getId == identificador) {
         ruta_aux = ruta;
         this.coleccion_rutas_.splice(indice, 1);
         control_bool = true;
-        // borrar de la base de datos la ruta por el id pasado por parametro
-        // const element = identificador -1;
         database.get("rutas").splice(indice,1).write();
       }
     });
-    // imprmimir todos los nombres de las rutas restantes
-    // this.coleccion_rutas_.forEach((ruta) => {
-      // console.log(ruta.getNombre);
-    // });
     if (control_bool) {
       return ruta_aux;
     }
@@ -108,6 +88,9 @@ class rutaCollection {
     }
   }
 
+  /**
+   * Metodo para ejecutar el menu de rutas para borrar elementos de la bd
+   */
   promptBorrarRuta(): void {
     // solicitar id, pasarselo al metodo que borra
     const prompt = inquirer.createPromptModule();
@@ -129,7 +112,9 @@ class rutaCollection {
     });
   }
 
-  
+  /**
+   * Metodo para ejecutar el menu de rutas para modificar elementos de la bd
+   */
   promptModificarRuta():void {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -144,6 +129,10 @@ class rutaCollection {
     });
   }
 
+  /**
+   * Metodo para modificar una ruta
+   * @param identificador -- id de la ruta a modificar
+   */
   modificarRuta(identificador: ID): void {
     // 1. comprobar que el id de la ruta existe
     // 2. preguntar que se quiere modificar
@@ -183,6 +172,18 @@ class rutaCollection {
       } 
     ]).then((answers) => {
       const prompt = inquirer.createPromptModule();
+      const coordenadaX: coordenadas = {
+        letra: 'X',
+        coordenada: 0
+      }
+      const coordenadaY: coordenadas = {
+        letra: 'Y',
+        coordenada: 0
+      }
+      const coordenadaZ: coordenadas = {
+        letra: 'Z',
+        coordenada: 0
+      }
       switch (answers.opcion) {
         case 'nombre':
           prompt([
@@ -193,20 +194,10 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setNombre = answers.nombre2;
-            console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
-            
-            // guardar elemento en la base de datos con el id actual
-            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion);
-            // ruta_aux.setId = this.coleccion_rutas_[indice].getId;
-            
-            this.borrarRuta(identificador);
-            // escribir en la base de datos
-
-
-            // imprmir todos los nombres de las rutas restantes
-            this.coleccion_rutas_.forEach((ruta) => {
-              console.log(ruta.getNombre);
-            });
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
           );
@@ -230,8 +221,16 @@ class rutaCollection {
               message: 'Introduce la coordenada z de la geolocalización de inicio',
             }
           ]).then((answers) => {
-            this.coleccion_rutas_[indice].setGeolocalizacionInicio = [answers.x, answers.y, answers.z];
-            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizacionInicio}`);
+            coordenadaX.coordenada = parseFloat(answers.x);
+            coordenadaY.coordenada = parseFloat(answers.y);
+            coordenadaZ.coordenada = parseFloat(answers.z);
+
+            this.coleccion_rutas_[indice].setGeolocalizacionInicio = [coordenadaX, coordenadaY, coordenadaZ];
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
+
             this.manageRutas();
           }
           );
@@ -255,8 +254,15 @@ class rutaCollection {
               message: 'Introduce la coordenada z de la geolocalización de fin',
             }
           ]).then((answers) => {
-            this.coleccion_rutas_[indice].setGeolocalizacionFin = [answers.x, answers.y, answers.z];
-            console.log(`Nuevas coordenadas: ${this.coleccion_rutas_[indice].getGeolocalizacionFin}`);
+            coordenadaX.coordenada = parseFloat(answers.x);
+            coordenadaY.coordenada = parseFloat(answers.y);
+            coordenadaZ.coordenada = parseFloat(answers.z);
+
+            this.coleccion_rutas_[indice].setGeolocalizacionFin = [coordenadaX, coordenadaY, coordenadaZ];
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
           );
@@ -270,7 +276,14 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setLongitud = answers.longitud2;
-            console.log(`Nueva longitud: ${this.coleccion_rutas_[indice].getLongitud}`);
+            this.borrarElementoBD(identificador);
+            // creamos nuevo elemento y a su vez lo escribimos en la base de datos
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            // lo introducimos en la coleccion
+            this.coleccion_rutas_.push(ruta_aux);
+            // borramos la ruta
+            // this.borrarRuta(identificador);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
           );
@@ -284,33 +297,98 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setDesnivel = answers.desnivel2;
-            console.log(`Nuevo desnivel: ${this.coleccion_rutas_[indice].getDesnivel}`);
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
           );
           break;
 
+        case 'usuario':
+          // las opciones son añadir una nueva lista de usuarios, eliminar un usuario o añadir un nuevo usuario
+          prompt([
+            {
+              type: 'list',
+              name: 'usuarios',
+              message: '¿Qué quieres hacer con los usuarios?',
+              choices: [
+                'Añadir una nueva lista de usuarios',
+                'Eliminar un usuario',
+                'Añadir un nuevo usuario'
+              ]
+            }
+          ]).then((answers) => {
+            switch (answers.usuarios) {
+              case 'Añadir una nueva lista de usuarios':
+                prompt([
+                  {
+                    type: 'input',
+                    name: 'usuario',
+                    message: 'Introduce los usuarios de la ruta separados por comas',
+                  }
+                ]).then((answers) => {
+                  this.coleccion_rutas_[indice].setUsuarios = answers.usuario.split(',');
+                  this.borrarElementoBD(identificador);
+                  const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+                  this.coleccion_rutas_.push(ruta_aux);
+                  this.coleccion_rutas_.splice(indice, 1);
+                  this.manageRutas();
+                });
+              break;
 
-          //TODO
+              case 'Eliminar un usuario':
+                // imprimir usuarios de la ruta
+                console.log("Usuarios de la ruta: " + this.coleccion_rutas_[indice].getUsuarios);
+                prompt([
+                  {
+                    type: 'input',
+                    name: 'usuario',
+                    message: 'Introduce el usuario que quieres eliminar',
+                  }
+                ]).then((answers) => {
+                  const usuarios = this.coleccion_rutas_[indice].getUsuarios;
+                  const indice_usuario = usuarios.indexOf(answers.usuario);
+                  usuarios.splice(indice_usuario, 1);
+                  this.coleccion_rutas_[indice].setUsuarios = usuarios;
+                  this.borrarElementoBD(identificador);
+                  const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+                  this.coleccion_rutas_.push(ruta_aux);
+                  this.coleccion_rutas_.splice(indice, 1);
+                  this.manageRutas();
+                });
+              break;
 
-        // case 'usuario':
-        //   // añadir usuario o eliminar usuario?
-        //   prompt([
-        //     {
-        //       type: 'list',
-        //       name: 'opcion2',
-        //       message: '¿Qué desea hacer?', 
-        //       choices: [
-        //         {name:'Añadir usuario', value: 'añadir'},
-        //         {name:'Eliminar usuario', value: 'eliminar'},
-        //         {name: 'Modificar usuario', value: 'modificar'}
-        //       ]
-        //     }
-        //   ]).then((answers) => {
-        //     if (answers.opcion2 == 'añadir') {
-        //       // ! Hay que pedir todo sobre el nuevo usuario a añadir
-        //   });
-        // break;
+              case 'Añadir un nuevo usuario':
+                console.log("Usuarios de la ruta: " + this.coleccion_rutas_[indice].getUsuarios);
+                prompt([
+                  {
+                    type: 'input',
+                    name: 'usuario',
+                    message: 'Introduce el usuario que quieres añadir',
+                  }
+                ]).then((answers) => {
+                  const usuarios = this.coleccion_rutas_[indice].getUsuarios;
+                  // comprobar que no está repetido
+                  if (usuarios.indexOf(answers.usuario) != -1) {
+                    console.log("El usuario ya está en la lista");
+                    this.manageRutas();
+                  }
+                  else  {
+                    usuarios.push(answers.usuario);
+                    this.coleccion_rutas_[indice].setUsuarios = usuarios;
+                    this.borrarElementoBD(identificador);
+                    const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+                    this.coleccion_rutas_.push(ruta_aux);
+                    this.coleccion_rutas_.splice(indice, 1);
+                    this.manageRutas();
+                  }
+                });
+              break;
+            }
+          });
+          break;
 
         case 'tipo_actividad':
           prompt([
@@ -325,7 +403,10 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setTipoActividad = answers.tipo_actividad2;
-            console.log(`Nuevo tipo de actividad: ${this.coleccion_rutas_[indice].getTipoActividad}`);
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           });
           break;
@@ -338,16 +419,21 @@ class rutaCollection {
             }
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setCalificacion = answers.calificacion2;
-            console.log(`Nueva calificacion: ${this.coleccion_rutas_[indice].getCalificacion}`);
+            this.borrarElementoBD(identificador);
+            const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
+            this.coleccion_rutas_.push(ruta_aux);
+            this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
           );
           break;
       }
-      // this.manageRutas();
     });
   }
 
+  /**
+   * Método que maneja el menu para añadir una nueva ruta
+   */
   promptAddRuta() {
     // pedir datos de la nueva ruta
     const prompt = inquirer.createPromptModule();
@@ -401,12 +487,11 @@ class rutaCollection {
         name: 'desnivel',
         message: 'Introduce el desnivel de la nueva ruta',
       },
-      //? de momento mejor no
-      // {
-      //   type: 'input',
-      //   name: 'usuario',
-      //   message: 'Introduce el usuario de la nueva ruta',
-      // },
+      {
+        type: 'input',
+        name: 'usuario',
+        message: 'Introduce el usuario de la nueva ruta (de la forma "id1,id2,..."  las comas)',
+      },
       {
         type: 'list',
         name: 'tipo_actividad',
@@ -425,15 +510,18 @@ class rutaCollection {
       // crear nueva ruta
       coordenadas_inicio = [answers.geolocalizacion_inicioX, answers.geolocalizacion_inicioY, answers.geolocalizacion_inicioZ];
       coordenadas_fin = [answers.geolocalizacion_finX, answers.geolocalizacion_finY, answers.geolocalizacion_finZ];
-      const nueva_ruta = new Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, answers.usuario, answers.tipo_actividad, answers.calificacion);
-      this.addRuta(nueva_ruta);
+      const array_usuarios: ID[] = answers.usuario.split(',');
+      const nueva_ruta = new Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, array_usuarios, answers.tipo_actividad, answers.calificacion);
+      this.coleccion_rutas_.push(nueva_ruta);
       // escribir en la base
       this.manageRutas();
     });
   }
 
+  /**
+   * Metodo que gestiona el prompt de la clase Ruta
+   */
   manageRutas(): void {
-    // console.log(this.coleccion_rutas_)
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -464,26 +552,10 @@ class rutaCollection {
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  //! NO TOCAR
-
+  /**
+   * Método que muestra las rutas ordenadas por el criterio que se le pase
+   */
   infoRutas(): void {
-    // Alfabéticamente por nombre de la ruta, ascendente y descendente.
-    // Cantidad de usuarios que realizan las rutas, ascendente y descendente.
-    // Por longitud de la ruta, ascendente y descendente.
-    // Por la calificación media de la ruta, ascendente y descendente.
-    // Ordenar por actividad: correr o ciclismo.
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -524,6 +596,9 @@ class rutaCollection {
     });
   }
 
+  /**
+   * Método que ordena las rutas por nombre
+   */
   ordenarRutasPorNombre() {
     // preguntar ascendente o descendente
     // ordenar
@@ -557,12 +632,15 @@ class rutaCollection {
       });
       // mostrar
       copia_rutas.forEach((ruta) => {
-        console.log(`Nombre: ${ruta.getNombre}, Longitud: ${ruta.getLongitud}`);
+        console.log(`Nombre: ${ruta.getNombre}`);
       });
       this.infoRutas();
     });
   }
 
+  /**
+   * Método que ordena las rutas por cantidad de usuarios
+   */
   ordenarRutasPorCantidadUsuarios(){
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -601,7 +679,9 @@ class rutaCollection {
     });
   }
 
-
+  /**
+   * Método que ordena las rutas por longitud
+   */
   ordenarRutasPorLongitud(){
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -638,6 +718,9 @@ class rutaCollection {
     });
   }
 
+  /**
+   * Método que ordena las rutas por calificación
+   */
   ordenarRutasPorCalificacion(){
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
@@ -674,7 +757,10 @@ class rutaCollection {
     });
   }
 
-  ordenarRutasPorActividad(){ //! PENDIENTE --> Es filtrar por actividad, o mostrar primero todas las rutas de una actividad y luego las de otra?
+  /**
+   * Método que ordena las rutas por actividad
+   */
+  ordenarRutasPorActividad(){
     let ascendente = true; // por defecto ascendente
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -715,8 +801,12 @@ class rutaCollection {
 
 
 
-//? PRUEBAS
-const coleccion_rutas = new rutaCollection();
 
-// coleccion_rutas.infoRutas();
-coleccion_rutas.manageRutas();
+
+// ! Borrar después
+
+
+// const coleccion_rutas = new rutaCollection();
+
+//coleccion_rutas.infoRutas();
+// coleccion_rutas.manageRutas();

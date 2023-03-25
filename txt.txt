@@ -122,6 +122,129 @@
       ],
       "tipo_actividad": "correr",
       "calificacion": 8
+    },
+    {
+      "id": 1,
+      "nombre": "San Vicente",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 12435
+        },
+        {
+          "letra": "Y",
+          "coordenada": 1234325436
+        },
+        {
+          "letra": "Z",
+          "coordenada": 1232
+        }
+      ],
+      "longitud": 1000,
+      "desnivel": 200,
+      "usuarios": [
+        1,
+        2
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 9
+    },
+    {
+      "id": 2,
+      "nombre": "Plaza el charco",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 214
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20213
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3023
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "longitud": 2000,
+      "desnivel": 200,
+      "usuarios": [
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 8
+    },
+    {
+      "id": 3,
+      "nombre": "Adventour",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 1010
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2020
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3030
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 1001
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2002
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3003
+        }
+      ],
+      "longitud": 300,
+      "desnivel": 200,
+      "usuarios": [
+        6,
+        7,
+        8,
+        2
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 8
     }
   ]
 }

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ruta_1 = require("./ruta");
 var inquirer = require("inquirer");
-// import { coordenadas } from "./types";
 // import { Usuario } from "./usuario";
 var ruta_2 = require("./ruta");
 /**
@@ -14,7 +13,6 @@ var rutaCollection = /** @class */ (function () {
      * @param coleccion_rutas_ array de rutas
      */
     function rutaCollection() {
-        // leer rutas de la base de datos y añadirlas al array de rutas
         this.leerBD();
     }
     Object.defineProperty(rutaCollection.prototype, "getRutas", {
@@ -44,33 +42,17 @@ var rutaCollection = /** @class */ (function () {
         var rutas = ruta_2.database.get("rutas").value();
         var array_aux = [];
         rutas.forEach(function (ruta) {
-            var ruta_aux = new ruta_1.Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, [], ruta.tipo_actividad, ruta.calificacion);
+            var ruta_aux = new ruta_1.Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
             array_aux.push(ruta_aux);
         });
         this.setRutas = array_aux;
     };
-    /**
-     * Método que añade una nueva ruta a la coleción de rutas
-     * @param ruta ruta a añadir
-     * @returns array de rutas modificado o undefined en caso de no haber podido añadir la ruta.
-     */
-    rutaCollection.prototype.addRuta = function (ruta) {
-        // let repetido = false;
-        // this.coleccion_rutas_.forEach((ruta_aux) => {
-        //   if (ruta.getId == ruta_aux.getId) { 
-        //     repetido = true;
-        //   }
-        // });
-        // if (repetido === false) {
-        //   this.coleccion_rutas_.push(ruta);
-        //   return this.coleccion_rutas_;
-        // }
-        // else {
-        //   return undefined;
-        // }
-        //! si se rompe es aqui
-        this.coleccion_rutas_.push(ruta);
-        return ruta;
+    rutaCollection.prototype.borrarElementoBD = function (identificador) {
+        this.coleccion_rutas_.forEach(function (ruta, indice) {
+            if (ruta.getId == identificador) {
+                ruta_2.database.get("rutas").splice(indice, 1).write();
+            }
+        });
     };
     /**
      * Método que borra una ruta
@@ -177,6 +159,18 @@ var rutaCollection = /** @class */ (function () {
             }
         ]).then(function (answers) {
             var prompt = inquirer.createPromptModule();
+            var coordenadaX = {
+                letra: 'X',
+                coordenada: 0
+            };
+            var coordenadaY = {
+                letra: 'Y',
+                coordenada: 0
+            };
+            var coordenadaZ = {
+                letra: 'Z',
+                coordenada: 0
+            };
             switch (answers.opcion) {
                 case 'nombre':
                     prompt([
@@ -187,11 +181,15 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setNombre = answers.nombre2;
-                        console.log("Nuevo nombre: ".concat(_this.coleccion_rutas_[indice].getNombre));
-                        // eliminar la ruta de la base de datos y añadir la nueva
-                        var ruta_aux = _this.coleccion_rutas_[indice];
-                        _this.borrarRuta(identificador);
-                        _this.addRuta(ruta_aux);
+                        // console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
+                        _this.borrarElementoBD(identificador);
+                        // creamos nuevo elemento y a su vez lo escribimos en la base de datos
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        // lo introducimos en la coleccion
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        // borramos la ruta
+                        // this.borrarRuta(identificador);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
@@ -214,8 +212,15 @@ var rutaCollection = /** @class */ (function () {
                             message: 'Introduce la coordenada z de la geolocalización de inicio',
                         }
                     ]).then(function (answers) {
-                        _this.coleccion_rutas_[indice].setGeolocalizacionInicio = [answers.x, answers.y, answers.z];
-                        console.log("Nuevas coordenadas: ".concat(_this.coleccion_rutas_[indice].getGeolocalizacionInicio));
+                        coordenadaX.coordenada = parseFloat(answers.x);
+                        coordenadaY.coordenada = parseFloat(answers.y);
+                        coordenadaZ.coordenada = parseFloat(answers.z);
+                        _this.coleccion_rutas_[indice].setGeolocalizacionInicio = [coordenadaX, coordenadaY, coordenadaZ];
+                        _this.borrarElementoBD(identificador);
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        _this.coleccion_rutas_.splice(indice, 1);
+                        console.log('tamaño' + _this.coleccion_rutas_.length);
                         _this.manageRutas();
                     });
                     break;
@@ -238,8 +243,14 @@ var rutaCollection = /** @class */ (function () {
                             message: 'Introduce la coordenada z de la geolocalización de fin',
                         }
                     ]).then(function (answers) {
-                        _this.coleccion_rutas_[indice].setGeolocalizacionFin = [answers.x, answers.y, answers.z];
-                        console.log("Nuevas coordenadas: ".concat(_this.coleccion_rutas_[indice].getGeolocalizacionFin));
+                        coordenadaX.coordenada = parseFloat(answers.x);
+                        coordenadaY.coordenada = parseFloat(answers.y);
+                        coordenadaZ.coordenada = parseFloat(answers.z);
+                        _this.coleccion_rutas_[indice].setGeolocalizacionFin = [coordenadaX, coordenadaY, coordenadaZ];
+                        _this.borrarElementoBD(identificador);
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
@@ -252,7 +263,14 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setLongitud = answers.longitud2;
-                        console.log("Nueva longitud: ".concat(_this.coleccion_rutas_[indice].getLongitud));
+                        _this.borrarElementoBD(identificador);
+                        // creamos nuevo elemento y a su vez lo escribimos en la base de datos
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        // lo introducimos en la coleccion
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        // borramos la ruta
+                        // this.borrarRuta(identificador);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
@@ -265,29 +283,95 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setDesnivel = answers.desnivel2;
-                        console.log("Nuevo desnivel: ".concat(_this.coleccion_rutas_[indice].getDesnivel));
+                        _this.borrarElementoBD(identificador);
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
-                //TODO
-                // case 'usuario':
-                //   // añadir usuario o eliminar usuario?
-                //   prompt([
-                //     {
-                //       type: 'list',
-                //       name: 'opcion2',
-                //       message: '¿Qué desea hacer?', 
-                //       choices: [
-                //         {name:'Añadir usuario', value: 'añadir'},
-                //         {name:'Eliminar usuario', value: 'eliminar'},
-                //         {name: 'Modificar usuario', value: 'modificar'}
-                //       ]
-                //     }
-                //   ]).then((answers) => {
-                //     if (answers.opcion2 == 'añadir') {
-                //       // ! Hay que pedir todo sobre el nuevo usuario a añadir
-                //   });
-                // break;
+                case 'usuario':
+                    // las opciones son añadir una nueva lista de usuarios, eliminar un usuario o añadir un nuevo usuario
+                    console.log("dentro");
+                    prompt([
+                        {
+                            type: 'list',
+                            name: 'usuarios',
+                            message: '¿Qué quieres hacer con los usuarios?',
+                            choices: [
+                                'Añadir una nueva lista de usuarios',
+                                'Eliminar un usuario',
+                                'Añadir un nuevo usuario'
+                            ]
+                        }
+                    ]).then(function (answers) {
+                        switch (answers.usuarios) {
+                            case 'Añadir una nueva lista de usuarios':
+                                prompt([
+                                    {
+                                        type: 'input',
+                                        name: 'usuario',
+                                        message: 'Introduce los usuarios de la ruta separados por comas',
+                                    }
+                                ]).then(function (answers) {
+                                    _this.coleccion_rutas_[indice].setUsuarios = answers.usuario.split(',');
+                                    _this.borrarElementoBD(identificador);
+                                    var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                                    _this.coleccion_rutas_.push(ruta_aux);
+                                    _this.coleccion_rutas_.splice(indice, 1);
+                                    _this.manageRutas();
+                                });
+                                break;
+                            case 'Eliminar un usuario':
+                                // imprimir usuarios de la ruta
+                                console.log("Usuarios de la ruta: " + _this.coleccion_rutas_[indice].getUsuarios);
+                                prompt([
+                                    {
+                                        type: 'input',
+                                        name: 'usuario',
+                                        message: 'Introduce el usuario que quieres eliminar',
+                                    }
+                                ]).then(function (answers) {
+                                    var usuarios = _this.coleccion_rutas_[indice].getUsuarios;
+                                    var indice_usuario = usuarios.indexOf(answers.usuario);
+                                    usuarios.splice(indice_usuario, 1);
+                                    _this.coleccion_rutas_[indice].setUsuarios = usuarios;
+                                    _this.borrarElementoBD(identificador);
+                                    var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                                    _this.coleccion_rutas_.push(ruta_aux);
+                                    _this.coleccion_rutas_.splice(indice, 1);
+                                    _this.manageRutas();
+                                });
+                                break;
+                            case 'Añadir un nuevo usuario':
+                                console.log("Usuarios de la ruta: " + _this.coleccion_rutas_[indice].getUsuarios);
+                                prompt([
+                                    {
+                                        type: 'input',
+                                        name: 'usuario',
+                                        message: 'Introduce el usuario que quieres añadir',
+                                    }
+                                ]).then(function (answers) {
+                                    var usuarios = _this.coleccion_rutas_[indice].getUsuarios;
+                                    // comprobar que no está repetido
+                                    if (usuarios.indexOf(answers.usuario) != -1) {
+                                        console.log("El usuario ya está en la lista");
+                                        _this.manageRutas();
+                                    }
+                                    else {
+                                        usuarios.push(answers.usuario);
+                                        _this.coleccion_rutas_[indice].setUsuarios = usuarios;
+                                        _this.borrarElementoBD(identificador);
+                                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                                        _this.coleccion_rutas_.push(ruta_aux);
+                                        _this.coleccion_rutas_.splice(indice, 1);
+                                        _this.manageRutas();
+                                    }
+                                });
+                                break;
+                        }
+                    });
+                    break;
                 case 'tipo_actividad':
                     prompt([
                         {
@@ -301,7 +385,10 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setTipoActividad = answers.tipo_actividad2;
-                        console.log("Nuevo tipo de actividad: ".concat(_this.coleccion_rutas_[indice].getTipoActividad));
+                        _this.borrarElementoBD(identificador);
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
@@ -314,12 +401,14 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setCalificacion = answers.calificacion2;
-                        console.log("Nueva calificacion: ".concat(_this.coleccion_rutas_[indice].getCalificacion));
+                        _this.borrarElementoBD(identificador);
+                        var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
+                        _this.coleccion_rutas_.push(ruta_aux);
+                        _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
                     break;
             }
-            // this.manageRutas();
         });
     };
     rutaCollection.prototype.promptAddRuta = function () {
@@ -376,12 +465,11 @@ var rutaCollection = /** @class */ (function () {
                 name: 'desnivel',
                 message: 'Introduce el desnivel de la nueva ruta',
             },
-            //? de momento mejor no
-            // {
-            //   type: 'input',
-            //   name: 'usuario',
-            //   message: 'Introduce el usuario de la nueva ruta',
-            // },
+            {
+                type: 'input',
+                name: 'usuario',
+                message: 'Introduce el usuario de la nueva ruta (de la forma "id1,id2,..."  las comas)',
+            },
             {
                 type: 'list',
                 name: 'tipo_actividad',
@@ -400,8 +488,9 @@ var rutaCollection = /** @class */ (function () {
             // crear nueva ruta
             coordenadas_inicio = [answers.geolocalizacion_inicioX, answers.geolocalizacion_inicioY, answers.geolocalizacion_inicioZ];
             coordenadas_fin = [answers.geolocalizacion_finX, answers.geolocalizacion_finY, answers.geolocalizacion_finZ];
-            var nueva_ruta = new ruta_1.Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, answers.usuario, answers.tipo_actividad, answers.calificacion);
-            _this.addRuta(nueva_ruta);
+            var array_usuarios = answers.usuario.split(',');
+            var nueva_ruta = new ruta_1.Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, array_usuarios, answers.tipo_actividad, answers.calificacion);
+            _this.coleccion_rutas_.push(nueva_ruta);
             // escribir en la base
             _this.manageRutas();
         });
@@ -438,7 +527,6 @@ var rutaCollection = /** @class */ (function () {
             }
         });
     };
-    //! NO TOCAR
     rutaCollection.prototype.infoRutas = function () {
         var _this = this;
         // Alfabéticamente por nombre de la ruta, ascendente y descendente.
@@ -670,7 +758,6 @@ var rutaCollection = /** @class */ (function () {
     };
     return rutaCollection;
 }());
-//? PRUEBAS
 var coleccion_rutas = new rutaCollection();
-// coleccion_rutas.infoRutas();
+//coleccion_rutas.infoRutas();
 coleccion_rutas.manageRutas();

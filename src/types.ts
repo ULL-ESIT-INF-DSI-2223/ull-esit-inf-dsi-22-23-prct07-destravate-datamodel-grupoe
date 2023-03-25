@@ -1,5 +1,3 @@
-import { Usuario } from "./usuario";
-
 export type coordenadas = {
 letra: "X" | "Y" | "Z";
 coordenada: number;
@@ -40,7 +38,7 @@ export type schemaType = {
     geolocalizacion_fin: coordenadas[];
     longitud: number;
     desnivel: number;
-    usuarios: Usuario[];
+    usuarios: ID[];
     tipo_actividad: actividad;
     calificacion: number;
   }[]

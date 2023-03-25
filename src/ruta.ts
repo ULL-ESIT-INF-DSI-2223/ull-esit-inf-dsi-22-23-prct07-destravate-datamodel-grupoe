@@ -1,5 +1,4 @@
 import { coordenadas, actividad, ID, schemaType } from "./types";
-import { Usuario } from "./usuario";
 
 // lowdb
 import * as lowdb from "lowdb";
@@ -9,8 +8,6 @@ export let database: lowdb.LowdbSync<schemaType>;
 // eslint-disable-next-line prefer-const
 database = lowdb(new FileSync("database.json"));
 database.defaults({ rutas: [] }).write();
-
-
 
 /**
  * @class Ruta
@@ -24,15 +21,25 @@ export class Ruta {
   private geolocalizacion_fin_: coordenadas[];
   private longitud_: number;
   private desnivel_: number;
-  private usuarios_: Usuario[];
+  private usuarios_: ID[];
   private tipo_actividad_: actividad;
   private calificacion_: number;
 
-  // private database: lowdb.LowdbSync<schemaType>;
 
-
-
-  constructor(nombre: string, geolocalizacion_inicio: coordenadas[], geolocalizacion_fin: coordenadas[], longitud: number, desnivel: number, usuario: Usuario[], tipo_actividad: actividad, calificacion: number) {
+  /** 
+   * @constructor
+   * @param nombre Nombre de la ruta
+   * @param geolocalizacion_inicio Geolocalizacion de inicio de la ruta
+   * @param geolocalizacion_fin Geolocalizacion de fin de la ruta
+   * @param longitud Longitud de la ruta
+   * @param desnivel Desnivel de la ruta
+   * @param usuario Usuario que crea la ruta
+   * @param tipo_actividad Tipo de actividad de la ruta
+   * @param calificacion Calificacion de la ruta
+   * @param id ID de la ruta (Parámetro opcional).
+   * @description Constructor de la clase Ruta
+  */
+  constructor(nombre: string, geolocalizacion_inicio: coordenadas[], geolocalizacion_fin: coordenadas[], longitud: number, desnivel: number, usuario: ID[], tipo_actividad: actividad, calificacion: number, id?: ID) {
     this.nombre_ = nombre;
     this.geolocalizacion_inicio_ = geolocalizacion_inicio;
     this.geolocalizacion_fin_ = geolocalizacion_fin;
@@ -41,27 +48,22 @@ export class Ruta {
     this.usuarios_ = usuario;
     this.tipo_actividad_ = tipo_actividad;
     this.calificacion_ = calificacion;
-
-    // el id_global hace de contador de la clase, para asignar identificadores únicos a cada ruta
-    // el id_ es el identificador de la ruta
-    // el id_global se incrementa en 1 cada vez que se crea una ruta
-    
     
     //* escribir en lowdb la ruta creada
-    // obtenemos todos los id de la base de datos
-    // si this.id_ está en la base de datos, no se meterá
-    // si this.id_ no está en la base de datos, se meterá
     const id_global = database.get("rutas").map("nombre").value();
     if (id_global.includes(this.nombre_)) {
-      //console.log("El nombre ya existe");
-      // buscar este nombre en el array de rutas y devolver el id
-      console.log("NO HAY NEW RUTA");
       this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
 
     } else {
-      // this.id_ = Ruta.comprobarEstatica();
-      console.log("SI HAY NEW RUTA");
-      this.id_ = database.get("rutas").size().value() + 1;
+      if (id !== undefined) {
+        this.id_ = id;
+      }
+      else {
+        // buscar el id más alto y sumarle 1
+        const id_global = database.get("rutas").map("id").value();
+        id_global.sort((a, b) => a - b);
+        this.id_ = id_global[id_global.length - 1] + 1;
+      }
       database.get("rutas").push({
         id: this.id_,
         nombre: this.nombre_,
@@ -74,56 +76,20 @@ export class Ruta {
         calificacion: this.calificacion_
       }).write();
     }
-
-  
-
-    // meter ruta en la base de datos
-    // database.get("rutas").push({
-    //   id: this.id_,
-    //   nombre: this.nombre_,
-    //   geolocalizacion_inicio: this.geolocalizacion_inicio_,
-    //   geolocalizacion_fin: this.geolocalizacion_fin_,
-    //   longitud: this.longitud_,
-    //   desnivel: this.desnivel_,
-    //   usuarios: this.usuarios_,
-    //   tipo_actividad: this.tipo_actividad_,
-    //   calificacion: this.calificacion_
-    // }).write();
-
   } 
-
-  /**
-   * Método que genera una id única para cada ruta
-   * @returns -- id de la ruta
-   */
-  // public static comprobarEstatica(): ID{
-  //   // en este método comprobamos si el id_global está inicializado
-  //   // si no está inicializado, lo inicializamos a 0
-  //   // si está inicializado, devolvemos el valor de id_global
-
-  //   // buscar el id más alto de la base de datos
-  //   // si no hay ninguna ruta, el id_global será 0
-  //   // si hay rutas, el id_global será el id de la última ruta + 1
-
-  //   if (Ruta.id_global_ == undefined) {
-  //     Ruta.id_global_ = 0;
-      
-  //   }
-  //   // obtener numero de rutas
-  //   Ruta.id_global_ = database.get("rutas").size().value() + 1;
-  //   console.log(Ruta.id_global_-1);
-
-
-  //   return Ruta.id_global_;
-  // }
-
 
   //* GETTERS Y SETTERS
 
+  /**
+   * getter id
+   */
   get getId(): ID {
     return this.id_;
   }
 
+  /**
+   * setter id
+   */
   set setId(id: ID) {
     this.id_ = id;
   }
@@ -212,7 +178,7 @@ export class Ruta {
    * Método que devuelve los usuarios de la ruta
    * @returns 
    */
-  get getUsuarios(): Usuario[] {
+  get getUsuarios(): ID[] {
     return this.usuarios_;
   }
 
@@ -220,7 +186,7 @@ export class Ruta {
    * Método que asigna los usuarios de la ruta
    * @param usuarios
    */
-  set setUsuarios(usuarios: Usuario[]) {
+  set setUsuarios(usuarios: ID[]) {
     this.usuarios_ = usuarios;
   }
   
