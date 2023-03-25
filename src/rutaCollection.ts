@@ -3,7 +3,7 @@ import {ID, coordenadas} from "./types";
 import * as inquirer from "inquirer";
 // import { Usuario } from "./usuario";
 
-import {database} from "./ruta";
+import { database } from "./bd";
 
 
 /**
@@ -804,7 +804,6 @@ class rutaCollection {
 
 
 // ! Borrar después
-
 
 // const coleccion_rutas = new rutaCollection();
 

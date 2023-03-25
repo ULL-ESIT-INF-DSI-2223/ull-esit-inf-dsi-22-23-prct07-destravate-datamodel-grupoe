@@ -1,50 +1,73 @@
 import { actividad,ID,estadisticaEntrenamiento, historicoRutas } from "./types";
+import { database } from "./bd";
+// import { Ruta } from "./ruta";
+
 /**
  * @class Usuario
  * @description Clase que representa un usuario
  */
 export class Usuario {
-  private static id_global_: ID;
+
   private id_: ID;
   private nombre_: string;
   private actividad_: actividad;
   private amigos_: ID[];
-  private grupo_de_amigos_: ID[][]; //? REVISAR ESTO, ESTÁ RARO EN EL GUIÓN.
+  private grupo_de_amigos_: ID[][];
   private estadisticas_: estadisticaEntrenamiento;
-  private rutasFavoritas_: ID[]; //TODO tenemos que hacer un metodo que recorra el historico de rutas cuente las rutas que mas veces se han hecho y las almacene
-  private retos: ID[];
+  private rutasFavoritas_: ID[];
+  private retos_: ID[];
   private historicoRutas_: historicoRutas[];
 
-  constructor(nombre: string, actividad: actividad, amigos: ID[]) {
+
+
+  constructor(nombre: string, actividad: actividad, amigos: ID[], grupo_amigos: ID[][], estadisticas: estadisticaEntrenamiento ,historico_rutas: historicoRutas[], retos: ID[], id?: ID) {
     this.nombre_ = nombre;
     this.actividad_ = actividad;
     this.amigos_ = amigos;
-    this.grupo_de_amigos_ = [];
-    this.rutasFavoritas_ = [];
-    this.historicoRutas_ = [];
+    this.grupo_de_amigos_ = grupo_amigos;
+    this.retos_ = retos;
+    this.historicoRutas_ = historico_rutas;
+    
+    // sacar rutas favoritas
+    this.obtenerRutasFavoritas();
 
+    // sacar estadisticas
+    this.estadisticas_ = estadisticas;
+    //this.obtenerEstadisticas();
 
-    this.id_ = Usuario.comprobarEstatica();
-  }
-
-    /**
-   * Método que genera un id único del usuario
-   * @returns -- id del usuario
-   */
-  public static comprobarEstatica(): ID{
-    // en este método comprobamos si el id_global_ está inicializado
-    // si no está inicializado, lo inicializamos a 0
-    // si está inicializado, devolvemos el valor de id_global_
-    if (Usuario.id_global_ == undefined) {
-      Usuario.id_global_ = 0;
+    const id_global = database.get("rutas").map("nombre").value();
+    if (id_global.includes(this.nombre_)) {
+      this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
     }
-    Usuario.id_global_ += 1; 
-    const identificador: ID = Usuario.id_global_;
-    return identificador;
+    else {
+      if (id != undefined) {
+        this.id_ = id;
+      }
+      else {
+        // buscar el id más alto y sumarle 1
+        const id_global = database.get("usuarios").map("id").value();
+        id_global.sort((a, b) => a - b);
+        this.id_ = id_global[id_global.length - 1] + 1;
+        // escribir en la base de datos
+      }
+      database.get("usuarios").push(
+        {
+          id: this.id_,
+          nombre: this.nombre_,
+          actividad: this.actividad_,
+          amigos: this.amigos_,
+          grupo_de_amigos: this.grupo_de_amigos_,
+          estadisticas: this.estadisticas_,
+          rutasFavoritas: this.rutasFavoritas_,
+          retos: this.retos_,
+          historicoRutas: this.historicoRutas_
+        }
+      ).write();
+    }
   }
+
 
   //* GETTER Y SETTER 
-
   /**
    * Método que devuelve el id del usuario
    * @returns -- id del usuario
@@ -162,7 +185,7 @@ export class Usuario {
    * @returns -- retos del usuario
    */
   get getRetos(): ID[] {
-    return this.retos;
+    return this.retos_;
   }
 
   /**
@@ -170,7 +193,7 @@ export class Usuario {
    * @param retos -- nuevos retos del usuario
    */
   set setRetos(retos: ID[]) {
-    this.retos = retos;
+    this.retos_ = retos;
   }
 
   /**
@@ -188,4 +211,99 @@ export class Usuario {
   set setHistoricoRutas(historicoRutas: historicoRutas[]) {
     this.historicoRutas_ = historicoRutas;
   }
+
+  obtenerRutasFavoritas(): void {
+    // recorrer histórico, contar el número de veces que se repite cada id de ruta y si se repite mas de 2 veces lo metemos en rutas fav
+    const historico = this.historicoRutas_;
+    const rutasFav = [];
+    const rutas = [];
+    for (let i = 0; i < historico.length; i++) {
+      rutas.push(historico[i].id);
+    }
+    // ordenamos por id    
+    rutas.sort((a, b) => a - b);
+    // recorremos el array de rutas y contamos cuantas veces se repite cada id
+    let cont = 1;
+    for (let i = 0; i < rutas.length; i++) {
+      // si el id es igual al siguiente, incrementamos el contador
+      // si ya no es igual, metemos en rutas fav si cumple
+      if (rutas[i] == rutas[i + 1]) {
+        cont++;
+      } 
+      else {
+        if (cont > 2) {
+          rutasFav.push(rutas[i]);
+        }
+        cont = 1;
+      }
+    }
+    // guardamos las rutas favoritas en el usuario
+    console.log('RUTAS FAVORITAS: ' + rutasFav)
+    this.setRutasFavoritas = rutasFav;
+  }
+
+
+  // type estadistica = {
+  //   km: number;
+  //   desnivel: number;
+  // }
+  
+  // export type estadisticaEntrenamiento = {
+  //   semana: estadistica;
+  //   mes: estadistica;
+  //   año: estadistica;
+  // }
+  obtenerEstadisticas(): void { // ! SE QUEDA PENDIENTE HASTA QUE TENGAMOS OBJETOS USUARIOS PARA PROBAR.
+    // Estadísticas de entrenamiento: Cantidad de km y desnivel total acumulados en la semana, mes y año.
+    
+    // sacar estadísticas de este último año
+    // recorrer histórico, sumar km y desnivel si la fecha es del año actual
+    const historico: historicoRutas[] = this.historicoRutas_;
+    const fechaActual = new Date();
+    const anoActual = fechaActual.getFullYear();
+    let km_ano = 0;
+    let desnivel_ano = 0;
+    for (let i = 0; i < historico.length; i++) {
+      // sacar año de la fecha
+      const ano_aux = historico[i].fecha.año;
+      if (ano_aux == anoActual) {
+        // sumamos desnivel y km
+        // buscar ruta en rutas por su id en la base de datos y guardarla en una variable
+        const ruta = database.get("rutas").find({ id: historico[i].id }).value();
+        // const ruta: Ruta = rutas.find(ruta => ruta.id == historico[i].id);
+        km_ano += ruta.longitud;
+        desnivel_ano += ruta.desnivel;
+      }
+    }
+
+    console.log("Km año: " + km_ano + " Desnivel año: " + desnivel_ano + "");
+    
+    // const estadisticas = {
+    //   semana: {
+    //     km: 0,
+    //     desnivel: 0
+    //   },
+    //   mes: {
+    //     km: 0,
+    //     desnivel: 0
+    //   },
+    //   año: {
+    //     km: km_ano,
+    //     desnivel: desnivel_ano
+    //   }
+    // }
+
+
+
+    // sacar estadísticas de este último mes
+
+
+
+    // sacar estadísticas de esta última semana
+  }
+
 }
+
+
+
+

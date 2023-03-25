@@ -1,35 +1,53 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Usuario = void 0;
+var bd_1 = require("./bd");
+// import { Ruta } from "./ruta";
 /**
  * @class Usuario
  * @description Clase que representa un usuario
  */
 var Usuario = /** @class */ (function () {
-    function Usuario(nombre, actividad, amigos) {
+    function Usuario(nombre, actividad, amigos, grupo_amigos, estadisticas, historico_rutas, retos, id) {
         this.nombre_ = nombre;
         this.actividad_ = actividad;
         this.amigos_ = amigos;
-        this.grupo_de_amigos_ = [];
-        this.rutasFavoritas_ = [];
-        this.historicoRutas_ = [];
-        this.id_ = Usuario.comprobarEstatica();
-    }
-    /**
-   * Método que genera un id único del usuario
-   * @returns -- id del usuario
-   */
-    Usuario.comprobarEstatica = function () {
-        // en este método comprobamos si el id_global_ está inicializado
-        // si no está inicializado, lo inicializamos a 0
-        // si está inicializado, devolvemos el valor de id_global_
-        if (Usuario.id_global_ == undefined) {
-            Usuario.id_global_ = 0;
+        this.grupo_de_amigos_ = grupo_amigos;
+        this.retos_ = retos;
+        this.historicoRutas_ = historico_rutas;
+        // sacar rutas favoritas
+        this.obtenerRutasFavoritas();
+        // sacar estadisticas
+        this.estadisticas_ = estadisticas;
+        //this.obtenerEstadisticas();
+        var id_global = bd_1.database.get("rutas").map("nombre").value();
+        if (id_global.includes(this.nombre_)) {
+            this.id_ = bd_1.database.get("rutas").find({ nombre: this.nombre_ }).value().id;
         }
-        Usuario.id_global_ += 1;
-        var identificador = Usuario.id_global_;
-        return identificador;
-    };
+        else {
+            if (id != undefined) {
+                this.id_ = id;
+            }
+            else {
+                // buscar el id más alto y sumarle 1
+                var id_global_1 = bd_1.database.get("usuarios").map("id").value();
+                id_global_1.sort(function (a, b) { return a - b; });
+                this.id_ = id_global_1[id_global_1.length - 1] + 1;
+                // escribir en la base de datos
+            }
+            bd_1.database.get("usuarios").push({
+                id: this.id_,
+                nombre: this.nombre_,
+                actividad: this.actividad_,
+                amigos: this.amigos_,
+                grupo_de_amigos: this.grupo_de_amigos_,
+                estadisticas: this.estadisticas_,
+                rutasFavoritas: this.rutasFavoritas_,
+                retos: this.retos_,
+                historicoRutas: this.historicoRutas_
+            }).write();
+        }
+    }
     Object.defineProperty(Usuario.prototype, "getID", {
         //* GETTER Y SETTER 
         /**
@@ -191,7 +209,7 @@ var Usuario = /** @class */ (function () {
          * @returns -- retos del usuario
          */
         get: function () {
-            return this.retos;
+            return this.retos_;
         },
         enumerable: false,
         configurable: true
@@ -202,7 +220,7 @@ var Usuario = /** @class */ (function () {
          * @param retos -- nuevos retos del usuario
          */
         set: function (retos) {
-            this.retos = retos;
+            this.retos_ = retos;
         },
         enumerable: false,
         configurable: true
@@ -229,6 +247,83 @@ var Usuario = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Usuario.prototype.obtenerRutasFavoritas = function () {
+        // recorrer histórico, contar el número de veces que se repite cada id de ruta y si se repite mas de 2 veces lo metemos en rutas fav
+        var historico = this.historicoRutas_;
+        var rutasFav = [];
+        var rutas = [];
+        for (var i = 0; i < historico.length; i++) {
+            rutas.push(historico[i].id);
+        }
+        // ordenamos por id    
+        rutas.sort(function (a, b) { return a - b; });
+        // recorremos el array de rutas y contamos cuantas veces se repite cada id
+        var cont = 1;
+        for (var i = 0; i < rutas.length; i++) {
+            // si el id es igual al siguiente, incrementamos el contador
+            // si ya no es igual, metemos en rutas fav si cumple
+            if (rutas[i] == rutas[i + 1]) {
+                cont++;
+            }
+            else {
+                if (cont > 2) {
+                    rutasFav.push(rutas[i]);
+                }
+                cont = 1;
+            }
+        }
+        // guardamos las rutas favoritas en el usuario
+        console.log('RUTAS FAVORITAS: ' + rutasFav);
+        this.setRutasFavoritas = rutasFav;
+    };
+    // type estadistica = {
+    //   km: number;
+    //   desnivel: number;
+    // }
+    // export type estadisticaEntrenamiento = {
+    //   semana: estadistica;
+    //   mes: estadistica;
+    //   año: estadistica;
+    // }
+    Usuario.prototype.obtenerEstadisticas = function () {
+        // Estadísticas de entrenamiento: Cantidad de km y desnivel total acumulados en la semana, mes y año.
+        // sacar estadísticas de este último año
+        // recorrer histórico, sumar km y desnivel si la fecha es del año actual
+        var historico = this.historicoRutas_;
+        var fechaActual = new Date();
+        var anoActual = fechaActual.getFullYear();
+        var km_ano = 0;
+        var desnivel_ano = 0;
+        for (var i = 0; i < historico.length; i++) {
+            // sacar año de la fecha
+            var ano_aux = historico[i].fecha.año;
+            if (ano_aux == anoActual) {
+                // sumamos desnivel y km
+                // buscar ruta en rutas por su id en la base de datos y guardarla en una variable
+                var ruta = bd_1.database.get("rutas").find({ id: historico[i].id }).value();
+                // const ruta: Ruta = rutas.find(ruta => ruta.id == historico[i].id);
+                km_ano += ruta.longitud;
+                desnivel_ano += ruta.desnivel;
+            }
+        }
+        console.log("Km año: " + km_ano + " Desnivel año: " + desnivel_ano + "");
+        // const estadisticas = {
+        //   semana: {
+        //     km: 0,
+        //     desnivel: 0
+        //   },
+        //   mes: {
+        //     km: 0,
+        //     desnivel: 0
+        //   },
+        //   año: {
+        //     km: km_ano,
+        //     desnivel: desnivel_ano
+        //   }
+        // }
+        // sacar estadísticas de este último mes
+        // sacar estadísticas de esta última semana
+    };
     return Usuario;
 }());
 exports.Usuario = Usuario;

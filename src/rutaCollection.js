@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ruta_1 = require("./ruta");
 var inquirer = require("inquirer");
 // import { Usuario } from "./usuario";
-var ruta_2 = require("./ruta");
+var bd_1 = require("./bd");
 /**
  * Clase rutaCollection
+ * @description Clase que representa una colección de rutas
  */
 var rutaCollection = /** @class */ (function () {
     /**
@@ -18,6 +19,7 @@ var rutaCollection = /** @class */ (function () {
     Object.defineProperty(rutaCollection.prototype, "getRutas", {
         /**
          * getter coleccion_rutas_
+         * @returns array de rutas
          */
         get: function () {
             return this.coleccion_rutas_;
@@ -28,6 +30,7 @@ var rutaCollection = /** @class */ (function () {
     Object.defineProperty(rutaCollection.prototype, "setRutas", {
         /**
          * setter coleccion_rutas_
+         * @param coleccion_rutas array de rutas
          */
         set: function (coleccion_rutas) {
             this.coleccion_rutas_ = coleccion_rutas;
@@ -39,7 +42,7 @@ var rutaCollection = /** @class */ (function () {
      * Método que lee de la base de datos y actualiza el array de rutas
      */
     rutaCollection.prototype.leerBD = function () {
-        var rutas = ruta_2.database.get("rutas").value();
+        var rutas = bd_1.database.get("rutas").value();
         var array_aux = [];
         rutas.forEach(function (ruta) {
             var ruta_aux = new ruta_1.Ruta(ruta.nombre, ruta.geolocalizacion_inicio, ruta.geolocalizacion_fin, ruta.longitud, ruta.desnivel, ruta.usuarios, ruta.tipo_actividad, ruta.calificacion);
@@ -47,10 +50,14 @@ var rutaCollection = /** @class */ (function () {
         });
         this.setRutas = array_aux;
     };
+    /**
+     * Metodo para borrar un elemento de la base de datos
+     * @param identificador
+     */
     rutaCollection.prototype.borrarElementoBD = function (identificador) {
         this.coleccion_rutas_.forEach(function (ruta, indice) {
             if (ruta.getId == identificador) {
-                ruta_2.database.get("rutas").splice(indice, 1).write();
+                bd_1.database.get("rutas").splice(indice, 1).write();
             }
         });
     };
@@ -63,23 +70,14 @@ var rutaCollection = /** @class */ (function () {
         var _this = this;
         var control_bool = false;
         var ruta_aux;
-        // console.log(`identificador: ${identificador}`)
-        // console.log('TAMAÑO ARRAY:' + this.coleccion_rutas_.length)
         this.coleccion_rutas_.forEach(function (ruta, indice) {
-            // console.log(ruta);
             if (ruta.getId == identificador) {
                 ruta_aux = ruta;
                 _this.coleccion_rutas_.splice(indice, 1);
                 control_bool = true;
-                // borrar de la base de datos la ruta por el id pasado por parametro
-                // const element = identificador -1;
-                ruta_2.database.get("rutas").splice(indice, 1).write();
+                bd_1.database.get("rutas").splice(indice, 1).write();
             }
         });
-        // imprmimir todos los nombres de las rutas restantes
-        // this.coleccion_rutas_.forEach((ruta) => {
-        // console.log(ruta.getNombre);
-        // });
         if (control_bool) {
             return ruta_aux;
         }
@@ -87,6 +85,9 @@ var rutaCollection = /** @class */ (function () {
             return undefined;
         }
     };
+    /**
+     * Metodo para ejecutar el menu de rutas para borrar elementos de la bd
+     */
     rutaCollection.prototype.promptBorrarRuta = function () {
         var _this = this;
         // solicitar id, pasarselo al metodo que borra
@@ -108,6 +109,9 @@ var rutaCollection = /** @class */ (function () {
             _this.manageRutas();
         });
     };
+    /**
+     * Metodo para ejecutar el menu de rutas para modificar elementos de la bd
+     */
     rutaCollection.prototype.promptModificarRuta = function () {
         var _this = this;
         var prompt = inquirer.createPromptModule();
@@ -122,6 +126,10 @@ var rutaCollection = /** @class */ (function () {
             // this.manageRutas();
         });
     };
+    /**
+     * Metodo para modificar una ruta
+     * @param identificador -- id de la ruta a modificar
+     */
     rutaCollection.prototype.modificarRuta = function (identificador) {
         var _this = this;
         // 1. comprobar que el id de la ruta existe
@@ -181,14 +189,9 @@ var rutaCollection = /** @class */ (function () {
                         }
                     ]).then(function (answers) {
                         _this.coleccion_rutas_[indice].setNombre = answers.nombre2;
-                        // console.log(`Nuevo nombre: ${this.coleccion_rutas_[indice].getNombre}`);
                         _this.borrarElementoBD(identificador);
-                        // creamos nuevo elemento y a su vez lo escribimos en la base de datos
                         var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
-                        // lo introducimos en la coleccion
                         _this.coleccion_rutas_.push(ruta_aux);
-                        // borramos la ruta
-                        // this.borrarRuta(identificador);
                         _this.coleccion_rutas_.splice(indice, 1);
                         _this.manageRutas();
                     });
@@ -220,7 +223,6 @@ var rutaCollection = /** @class */ (function () {
                         var ruta_aux = new ruta_1.Ruta(_this.coleccion_rutas_[indice].getNombre, _this.coleccion_rutas_[indice].getGeolocalizacionInicio, _this.coleccion_rutas_[indice].getGeolocalizacionFin, _this.coleccion_rutas_[indice].getLongitud, _this.coleccion_rutas_[indice].getDesnivel, _this.coleccion_rutas_[indice].getUsuarios, _this.coleccion_rutas_[indice].getTipoActividad, _this.coleccion_rutas_[indice].getCalificacion, _this.coleccion_rutas_[indice].getId);
                         _this.coleccion_rutas_.push(ruta_aux);
                         _this.coleccion_rutas_.splice(indice, 1);
-                        console.log('tamaño' + _this.coleccion_rutas_.length);
                         _this.manageRutas();
                     });
                     break;
@@ -292,7 +294,6 @@ var rutaCollection = /** @class */ (function () {
                     break;
                 case 'usuario':
                     // las opciones son añadir una nueva lista de usuarios, eliminar un usuario o añadir un nuevo usuario
-                    console.log("dentro");
                     prompt([
                         {
                             type: 'list',
@@ -411,6 +412,9 @@ var rutaCollection = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Método que maneja el menu para añadir una nueva ruta
+     */
     rutaCollection.prototype.promptAddRuta = function () {
         var _this = this;
         // pedir datos de la nueva ruta
@@ -495,9 +499,11 @@ var rutaCollection = /** @class */ (function () {
             _this.manageRutas();
         });
     };
+    /**
+     * Metodo que gestiona el prompt de la clase Ruta
+     */
     rutaCollection.prototype.manageRutas = function () {
         var _this = this;
-        // console.log(this.coleccion_rutas_)
         var prompt = inquirer.createPromptModule();
         prompt([
             {
@@ -527,13 +533,11 @@ var rutaCollection = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Método que muestra las rutas ordenadas por el criterio que se le pase
+     */
     rutaCollection.prototype.infoRutas = function () {
         var _this = this;
-        // Alfabéticamente por nombre de la ruta, ascendente y descendente.
-        // Cantidad de usuarios que realizan las rutas, ascendente y descendente.
-        // Por longitud de la ruta, ascendente y descendente.
-        // Por la calificación media de la ruta, ascendente y descendente.
-        // Ordenar por actividad: correr o ciclismo.
         var prompt = inquirer.createPromptModule();
         prompt([
             {
@@ -573,6 +577,9 @@ var rutaCollection = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Método que ordena las rutas por nombre
+     */
     rutaCollection.prototype.ordenarRutasPorNombre = function () {
         var _this = this;
         // preguntar ascendente o descendente
@@ -607,11 +614,14 @@ var rutaCollection = /** @class */ (function () {
             });
             // mostrar
             copia_rutas.forEach(function (ruta) {
-                console.log("Nombre: ".concat(ruta.getNombre, ", Longitud: ").concat(ruta.getLongitud));
+                console.log("Nombre: ".concat(ruta.getNombre));
             });
             _this.infoRutas();
         });
     };
+    /**
+     * Método que ordena las rutas por cantidad de usuarios
+     */
     rutaCollection.prototype.ordenarRutasPorCantidadUsuarios = function () {
         var _this = this;
         var ascendente = true; // por defecto ascendente
@@ -648,6 +658,9 @@ var rutaCollection = /** @class */ (function () {
             _this.infoRutas();
         });
     };
+    /**
+     * Método que ordena las rutas por longitud
+     */
     rutaCollection.prototype.ordenarRutasPorLongitud = function () {
         var _this = this;
         var ascendente = true; // por defecto ascendente
@@ -684,6 +697,9 @@ var rutaCollection = /** @class */ (function () {
             _this.infoRutas();
         });
     };
+    /**
+     * Método que ordena las rutas por calificación
+     */
     rutaCollection.prototype.ordenarRutasPorCalificacion = function () {
         var _this = this;
         var ascendente = true; // por defecto ascendente
@@ -720,6 +736,9 @@ var rutaCollection = /** @class */ (function () {
             _this.infoRutas();
         });
     };
+    /**
+     * Método que ordena las rutas por actividad
+     */
     rutaCollection.prototype.ordenarRutasPorActividad = function () {
         var _this = this;
         var ascendente = true; // por defecto ascendente
@@ -758,6 +777,7 @@ var rutaCollection = /** @class */ (function () {
     };
     return rutaCollection;
 }());
-var coleccion_rutas = new rutaCollection();
+// ! Borrar después
+// const coleccion_rutas = new rutaCollection();
 //coleccion_rutas.infoRutas();
-coleccion_rutas.manageRutas();
+// coleccion_rutas.manageRutas();

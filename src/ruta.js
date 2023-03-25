@@ -1,18 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ruta = exports.database = void 0;
-// lowdb
-var lowdb = require("lowdb");
-var FileSync = require("lowdb/adapters/FileSync");
-// eslint-disable-next-line prefer-const
-exports.database = lowdb(new FileSync("database.json"));
-exports.database.defaults({ rutas: [] }).write();
+exports.Ruta = void 0;
+var bd_1 = require("./bd");
 /**
  * @class Ruta
  * @description Clase que representa una ruta
  */
 var Ruta = /** @class */ (function () {
-    // private database: lowdb.LowdbSync<schemaType>;
+    /**
+     * @constructor
+     * @param nombre Nombre de la ruta
+     * @param geolocalizacion_inicio Geolocalizacion de inicio de la ruta
+     * @param geolocalizacion_fin Geolocalizacion de fin de la ruta
+     * @param longitud Longitud de la ruta
+     * @param desnivel Desnivel de la ruta
+     * @param usuario Usuario que crea la ruta
+     * @param tipo_actividad Tipo de actividad de la ruta
+     * @param calificacion Calificacion de la ruta
+     * @param id ID de la ruta (Parámetro opcional).
+     * @description Constructor de la clase Ruta
+    */
     function Ruta(nombre, geolocalizacion_inicio, geolocalizacion_fin, longitud, desnivel, usuario, tipo_actividad, calificacion, id) {
         this.nombre_ = nombre;
         this.geolocalizacion_inicio_ = geolocalizacion_inicio;
@@ -22,43 +29,22 @@ var Ruta = /** @class */ (function () {
         this.usuarios_ = usuario;
         this.tipo_actividad_ = tipo_actividad;
         this.calificacion_ = calificacion;
-        // imprmir usuarios
-        // usuario.forEach(element => {
-        //   console.log("usuarios param:"+element.getNombre);
-        // });
-        // this.usuarios_.forEach(element => {
-        //   console.log("usuarios this:"+element.getNombre);
-        // });
         //* escribir en lowdb la ruta creada
-        // obtenemos todos los id de la base de datos
-        // si this.id_ está en la base de datos, no se meterá
-        // si this.id_ no está en la base de datos, se meterá
-        var id_global = exports.database.get("rutas").map("nombre").value();
-        // imprimir los nombres
-        console.log(id_global);
-        console.log("Nombre actual: " + this.nombre_);
+        var id_global = bd_1.database.get("rutas").map("nombre").value();
         if (id_global.includes(this.nombre_)) {
-            // buscar este nombre en el array de rutas y devolver el id
-            console.log("PARTE 1");
-            this.id_ = exports.database.get("rutas").find({ nombre: this.nombre_ }).value().id;
+            this.id_ = bd_1.database.get("rutas").find({ nombre: this.nombre_ }).value().id;
         }
         else {
-            // si id tiene algo
-            console.log("PARTE 2");
-            console.log("id: " + id);
-            if (id !== undefined) { //? ¿FUNCIONA?
-                this.id_ = id; //?
+            if (id !== undefined) {
+                this.id_ = id;
             }
             else {
                 // buscar el id más alto y sumarle 1
-                var id_global_1 = exports.database.get("rutas").map("id").value();
+                var id_global_1 = bd_1.database.get("rutas").map("id").value();
                 id_global_1.sort(function (a, b) { return a - b; });
-                console.log("id_global: " + id_global_1);
                 this.id_ = id_global_1[id_global_1.length - 1] + 1;
-                console.log("nuevo id: " + this.id_);
-                // this.id_ = database.get("rutas").size().value() + 1;
             }
-            exports.database.get("rutas").push({
+            bd_1.database.get("rutas").push({
                 id: this.id_,
                 nombre: this.nombre_,
                 geolocalizacion_inicio: this.geolocalizacion_inicio_,
@@ -73,6 +59,9 @@ var Ruta = /** @class */ (function () {
     }
     Object.defineProperty(Ruta.prototype, "getId", {
         //* GETTERS Y SETTERS
+        /**
+         * getter id
+         */
         get: function () {
             return this.id_;
         },
@@ -80,6 +69,9 @@ var Ruta = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(Ruta.prototype, "setId", {
+        /**
+         * setter id
+         */
         set: function (id) {
             this.id_ = id;
         },

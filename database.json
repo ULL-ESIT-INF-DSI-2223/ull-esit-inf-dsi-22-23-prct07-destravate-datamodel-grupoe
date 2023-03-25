@@ -123,5 +123,495 @@
       "tipo_actividad": "correr",
       "calificacion": 8
     }
+  ],
+  "usuarios": [
+    {
+      "id": null,
+      "nombre": "user0",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user1",
+      "actividad": "correr",
+      "amigos": [
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user2",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        3,
+        4
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user3",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        4
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user4",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user5",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": null,
+      "nombre": "user6",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    }
   ]
 }

@@ -1,13 +1,6 @@
-import { coordenadas, actividad, ID, schemaType } from "./types";
+import { coordenadas, actividad, ID } from "./types";
 
-// lowdb
-import * as lowdb from "lowdb";
-import * as FileSync from "lowdb/adapters/FileSync";
-
-export let database: lowdb.LowdbSync<schemaType>;
-// eslint-disable-next-line prefer-const
-database = lowdb(new FileSync("database.json"));
-database.defaults({ rutas: [] }).write();
+import { database } from "./bd";
 
 /**
  * @class Ruta
