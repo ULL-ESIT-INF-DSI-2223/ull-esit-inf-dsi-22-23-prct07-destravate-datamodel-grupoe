@@ -4,6 +4,8 @@ En esta práctica se ha llevado a cabo un diseño orientado a objetos del modelo
 
 [![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe?branch=main)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2223_ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2223_ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe)
+
 Cabe destacar por una parte el uso de `schemaType`, que es un tipo que representa el esquema del `Lowdb` para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado. Por otra parte no se han realizado tests en las clases _XCollection_ puesto a que la mayoria de los métodos llaman a `infoX()` o `manageX()` para el correcto funcionamiento del sistema y además, hacen uso del prompt, por lo tanto no se pueden ejecutar con tests. Esta medida se llevó acabo para evitar un porcentaje de cubrimiento bajo relacionado con los ficheros mencionados anteriormente. 
 
 Las dificultades presentadas a lo largo de la práctica fueron la cantidad de problemas por parte del `Inquirer.js` y del `Lowdb`, lo cual desencadenó en una gran pérdida de tiempo, que junto con el poco tiempo disponible para la realización de la misma debido a la carga lectiva del resto de las asignaturas, llevó a la conclusión de que la práctica era muy larga para su realización en tan sólo dos semanas.
