@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>p7</title><meta name="description" content="Documentation for p7"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe</title><meta name="description" content="Documentation for ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base=".">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -6,21 +6,18 @@
 <div id="tsd-toolbar-links"></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">p7</a></div>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe</a></div>
 <div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
 <div class="container container-main">
 <div class="col-8 col-content">
 <div class="tsd-page-title">
-<h2>p7</h2></div>
+<h2>ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe</h2></div>
 <div class="tsd-panel tsd-typography">
 <a href="#informe" id="informe" style="color: inherit; text-decoration: none;">
   <h1>Informe</h1>
 </a>
 <p>En esta práctica se ha llevado a cabo un diseño orientado a objetos del modelo de datos de un sistema de información que permita almacenar registros de actividades deportivas. Para la resolución de este ejercicio se han desarrollado un total de 8 clases junto con un conjunto de tipos y una base de datos, donde para cada una de ellas se han desarrollado pruebas las cuales se pueden observar en el coverage: </p>
-
-<a href="#insertar-coveralls" id="insertar-coveralls" style="color: inherit; text-decoration: none;">
-  <h1>Insertar Coveralls</h1>
-</a>
+<p><a href="https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe?branch=main"><img src="https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe/badge.svg?branch=main" alt="Coverage Status"></a></p>
 <p>Cabe destacar por una parte el uso de <code>schemaType</code>, que es un tipo que representa el esquema del <code>Lowdb</code> para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado. Por otra parte no se han realizado tests en las clases <em>XCollection</em> puesto a que la mayoria de los métodos llaman a <code>infoX()</code> o <code>manageX()</code> para el correcto funcionamiento del sistema y además, hacen uso del prompt, por lo tanto no se pueden ejecutar con tests. Esta medida se llevó acabo para evitar un porcentaje de cubrimiento bajo relacionado con los ficheros mencionados anteriormente. </p>
 <p>Las dificultades presentadas a lo largo de la práctica fueron la cantidad de problemas por parte del <code>Inquirer.js</code> y del <code>Lowdb</code>, lo cual desencadenó en una gran pérdida de tiempo, que junto con el poco tiempo disponible para la realización de la misma debido a la carga lectiva del resto de las asignaturas, llevó a la conclusión de que la práctica era muy larga para su realización en tan sólo dos semanas.</p>
 <p>A continuación se mostrará un índice que corresponderá con los diferentes apartados desarrollados en la práctica:</p>
@@ -435,7 +432,7 @@ Por una parte tenemos <code>borrarElementoBD(identificador: ID)</code> el cual s
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
 <div class="tsd-accordion-details">
 <ul>
-<li class="current selected"><a href="modules.html">p7</a>
+<li class="current selected"><a href="modules.html">ull-<wbr/>esit-<wbr/>inf-<wbr/>dsi-<wbr/>22-<wbr/>23-<wbr/>prct07-<wbr/>destravate-<wbr/>datamodel-<wbr/>grupoe</a>
 <ul>
 <li class="tsd-kind-module"><a href="modules/gestor.html">gestor</a></li>
 <li class="tsd-kind-module"><a href="modules/grupo.html">grupo</a></li>
