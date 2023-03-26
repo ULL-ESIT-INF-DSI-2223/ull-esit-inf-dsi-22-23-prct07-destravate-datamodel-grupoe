@@ -418,15 +418,39 @@ Todos los restantes métodos que suponen una ordenación de dicho atributo reali
 
 ### __Gestor:__ 
 
+`Gestor` consiste en una clase que gestiona el tratamiento de la información del sistema, la cual consta de diferentes métodos cuya explicación constará a continuación.
+
+En primer lugar nos encontramos con `registrarUsuario()`, cuya función es registrar un usuario en el sistema, para ello solicita al usuario sus datos y se llevaraán acabo la creación de los diferentes objetos necesarios para creación del nuevo usuario.
+
+1. Se obtienen todos los nombres de usuarios presentes en el `Lowdb`  y se comprueba que el nombre del usuario no exista, puesto a que no puede haber dos usuarios con el mismo nombre.
+2. Creación de los diferentes elementos para el posterior establecimiento de los mismos como atributos del nuevo usuario.
+3. Creación del usuario y por lo tanto adición del mismo al `Lowdb`.
+
+En segundo lugar nos encontramos con el método `iniciarSesion()`, que como su nombre indica permitirá al usuario iniciar sesión en el sistema mediante la selección de usuario presentes en el `Lowbd`. Seguido a este tenemos el `programaPrincipal()` que maneja el sistema proponiendo al usuario de acción desea realizar y según su respuesta llamando al método determinado:
+
+- Registrarse en el sistema.
+- Iniciar sesión.
+- Funcionamiento del sistema.
+- Salir.
+
+A continuación tenemos el `userManage()` utilizado para la administración de usuarios con una funcionalidad similar al `programaPrincipal()`, esto se debe a que se le muestran al usuario un listado de opciones que puede realizar en función a los usuarios, y según su elección realizará la llamada al método correspondiente:
+
+- Ver listado de usuarios.
+- Modificar mis amigos.
+- Visualizar rutas.
+- Unirse a un grupo.
+- Gestionar grupos.
+- Salir
+
 ## Referencias
 
-[]()
-[]()
-[]()
-[]()
-[]()
-[]()
-[]()
-[]()
-[]()
-[]()
+[Guón de la práctica 7](https://ull-esit-inf-dsi-2223.github.io/prct07-destravate-dataModel/)
+
+
+
+
+
+
+
+
+

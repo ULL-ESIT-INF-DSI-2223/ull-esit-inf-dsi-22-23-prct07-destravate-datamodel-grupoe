@@ -13,6 +13,10 @@ let loggedUser: logueado = {
   logued: false
 }
 
+/**
+ * @class gestor
+ * @description Clase que gestiona el tratamiento de la información del sistema
+ */
 export class gestor {
   /**
    * Método que registra un usuario en el sistema
