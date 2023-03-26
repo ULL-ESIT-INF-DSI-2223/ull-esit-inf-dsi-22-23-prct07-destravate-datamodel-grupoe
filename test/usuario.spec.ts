@@ -119,7 +119,7 @@ describe('Usuario class tests', () => {
     expect(user0.getRetos).to.be.eql([1,2]);
   });
 
-  it('user0.getKMTotales 10127' , () => {
+  it('user0.getKMTotales 1000' , () => {
     expect(user0.getKMTotales()).to.be.eql(10127);
   });
 
