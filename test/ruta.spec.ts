@@ -85,5 +85,6 @@ describe('Ruta class tests', () => {
     const ruta_aux = new Ruta('Almendros en Flor', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1, eje_z1], 1000, 200, [1,2,3], "correr", 9);
     const mi_coleccion = new rutaCollection();
     mi_coleccion.borrarElementoBD(ruta_aux.getId);
+    mi_coleccion.borrarElementoBD(ruta0.getId);
   });
 });

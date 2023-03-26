@@ -103,6 +103,6 @@ describe('Grupo class tests', () => {
     const grupo1 = new Grupo('Moteros Tenerife', [0,1,2,3,4,5,6,7,8,9,10], estadisticas, [historic1,historic2]);
     const mi_coleccion = new GruposCollection();
     mi_coleccion.borrarElementoBD(grupo1.getID);
-
+    mi_coleccion.borrarElementoBD(grupo0.getID);
   });
 });

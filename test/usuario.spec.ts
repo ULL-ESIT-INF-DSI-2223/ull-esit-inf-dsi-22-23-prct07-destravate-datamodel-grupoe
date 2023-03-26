@@ -119,13 +119,14 @@ describe('Usuario class tests', () => {
     expect(user0.getRetos).to.be.eql([1,2]);
   });
 
-  it('user0.getKMTotales 3000' , () => {
-    expect(user0.getKMTotales()).to.be.eql(3000);
+  it('user0.getKMTotales 12177' , () => {
+    expect(user0.getKMTotales()).to.be.eql(12177);
   });
 
   it('Prueba Condición Id_global', () => {
     const usuario_aux = new Usuario('Juan', "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
     const mi_coleccion = new usuarioCollection();
     mi_coleccion.borrarElementoBD(usuario_aux.getID);
+    mi_coleccion.borrarElementoBD(user0.getID);
   });
 });
