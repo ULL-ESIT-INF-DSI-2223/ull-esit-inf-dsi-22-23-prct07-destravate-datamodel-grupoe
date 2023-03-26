@@ -256,7 +256,9 @@ export class Usuario {
     let kmTotales = 0;
     for (let i = 0; i < historico.length; i++) {
       const ruta = database.get('rutas').find({ id: historico[i].id }).value();
-      kmTotales += ruta.longitud;
+      if (ruta != undefined) {
+        kmTotales += ruta.longitud;
+      }
     }
     return kmTotales;
   }

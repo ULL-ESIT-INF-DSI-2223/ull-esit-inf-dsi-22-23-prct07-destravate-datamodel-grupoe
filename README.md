@@ -4,7 +4,7 @@ En esta práctica se ha llevado a cabo un diseño orientado a objetos del modelo
 
 # Insertar Coveralls
 
-Cabe destacar el uso de `schemaType`, que es un tipo que representa el esquema del `Lowdb` para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado.
+Cabe destacar por una parte el uso de `schemaType`, que es un tipo que representa el esquema del `Lowdb` para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado. Por otra paret el motivo del porcentaje tan bajo del cubrimiento se debe a que en la clase *gestor* y en cada clase _XCollection_ la mayoria de los métodos llaman a `infoX()` ó `manageX()` para el correcto funcionamiento del sistema y además, hacen uso del prompt, por lo tanto no podemos probar dichos métodos.
 
 Las dificultades presentadas a lo largo de la práctica fueron la cantidad de problemas por parte del `Inquirer.js` y del `Lowdb`, lo cual desencadenó en una gran pérdida de tiempo, que junto con el poco tiempo disponible para la realización de la misma debido a la carga lectiva del resto de las asignaturas, llevó a la conclusión de que la práctica era muy larga para su realización en tan sólo dos semanas.
 

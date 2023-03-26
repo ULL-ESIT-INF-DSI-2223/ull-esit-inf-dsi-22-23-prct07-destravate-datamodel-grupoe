@@ -31,6 +31,11 @@ export class usuarioCollection {
       array_aux.push(user_aux);
     });
     this.setUsuarios = array_aux;  
+    const array_aux2: ID[] = [];
+    array_aux.forEach((user) => {
+      array_aux2.push(user.getID);
+    });
+    return array_aux2;
   }
   
   /**
@@ -91,7 +96,7 @@ export class usuarioCollection {
    * Método que borra un usuario de la base de datos
    * @param id 
    */
-  borrarUsuario(id: number) {
+  borrarUsuario(id: number): ID | undefined {
     let control_bool = false;
     this.usuarios.forEach((user, indice) => {
       if (user.getID == id) {
@@ -102,9 +107,11 @@ export class usuarioCollection {
     });
     if (control_bool) {
       console.log("Usuario borrado");
+      return id;
     }
     else {
       console.log("No se ha encontrado el usuario");
+      return undefined;
     }
   }
 
@@ -214,13 +221,14 @@ export class usuarioCollection {
    * @param identificador 
    */
     borrarElementoBD(identificador: ID): boolean{
+      let bandera = false;
       this.usuarios.forEach((user, indice) => {
         if (user.getID == identificador) {
           database.get("usuarios").splice(indice,1).write();
-          return true;
+          bandera = true;
         }
       });
-      return false;
+      return bandera;
     }
     
   /**

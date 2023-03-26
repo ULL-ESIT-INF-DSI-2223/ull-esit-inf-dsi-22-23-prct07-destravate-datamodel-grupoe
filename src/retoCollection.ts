@@ -129,7 +129,7 @@ export class RetoCollection {
     });
   }
 
-  eliminarReto(identificador: ID): Reto | undefined{
+  eliminarReto(identificador: ID): ID | undefined{
     let control_bool = false;
     let grupo_aux: Reto | undefined;
 
@@ -142,7 +142,10 @@ export class RetoCollection {
       }
     });
     if (control_bool) {
-      return grupo_aux;
+      if (typeof grupo_aux != "undefined") {
+        return grupo_aux.getId;
+      }
+      return undefined;
     }
     else {
       return undefined;
@@ -357,13 +360,14 @@ export class RetoCollection {
    * @param identificador 
    */
     borrarElementoBD(identificador: ID): boolean{
+      let bandera = false;
       this.retos_.forEach((reto, indice) => {
         if (reto.getId == identificador) {
           database.get("retos").splice(indice,1).write();
-          return true;
+          bandera = true;
         }
       });
-      return false;
+      return bandera;
     }
 
   //* INFO

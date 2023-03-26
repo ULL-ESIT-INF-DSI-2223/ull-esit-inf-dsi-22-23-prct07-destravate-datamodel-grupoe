@@ -28,6 +28,7 @@ export class GruposCollection {
       array_aux.push(group_aux);
     });
     this.setGrupos = array_aux;  
+    
   }
 
   //* INFO
@@ -323,13 +324,14 @@ export class GruposCollection {
    * @param identificador 
    */
   borrarElementoBD(identificador: ID): boolean{
+    let bandera = false;
     this.grupos_.forEach((grp, indice) => {
       if (grp.getID == identificador) {
         database.get("grupos").splice(indice,1).write();
-        return true;
+        bandera = true;
       }
     });
-    return false;
+    return bandera;
   }
 
   /**
@@ -562,7 +564,7 @@ export class GruposCollection {
   /**
    * Método que permite eliminar un grupo
    */
-  eliminarGrupo(identificador: ID): Grupo | undefined {
+  eliminarGrupo(identificador: ID): ID | undefined {
     let control_bool = false;
     let grupo_aux: Grupo | undefined;
 
@@ -575,7 +577,10 @@ export class GruposCollection {
       }
     });
     if (control_bool) {
-      return grupo_aux;
+      if (grupo_aux != undefined) {
+        return grupo_aux.getID;
+      }
+      return undefined;
     }
     else {
       return undefined;
