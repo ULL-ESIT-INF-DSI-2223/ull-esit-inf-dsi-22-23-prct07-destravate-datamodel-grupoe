@@ -822,8 +822,8 @@ export class usuarioCollection {
   }
 }
 
-const coleccion_usuarios = new usuarioCollection();
+// const coleccion_usuarios = new usuarioCollection();
 
-coleccion_usuarios.manageUsuarios();
+// coleccion_usuarios.manageUsuarios();
 // console.log('MARCO SI VES ESTO ACUERDATE DE DESCOMENTAR EL METODO QUE QUIERAS COMPROBAR')
 // Coleccion_usuarios.infoUsuario();

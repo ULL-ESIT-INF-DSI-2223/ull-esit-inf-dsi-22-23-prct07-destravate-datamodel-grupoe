@@ -23,19 +23,18 @@ export class Reto {
    * @param tipo_actividad 
    * @param id 
    */
-  constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, usuarios: ID[], id?: ID) {
+  constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, km_totales: number, usuarios: ID[], id?: ID) {
     this.nombre_ = nombre;
     this.rutas_ = rutas;
     this.tipo_actividad_ = tipo_actividad;
-    this.km_totales_ = this.kmTotales();
+    this.km_totales_ = km_totales;
     this.usuarios_ = usuarios;
 
 
     //* escribir en lowdb el reto creado
     const id_global = database.get("retos").map("nombre").value();
     if (id_global.includes(this.nombre_)) {
-      this.id_ = database.get("rutas").find({ nombre: this.nombre_ }).value().id;
-
+      this.id_ = database.get("retos").find({ nombre: this.nombre_ }).value().id;
     } else {
       if (id !== undefined) {
         this.id_ = id;
@@ -67,17 +66,17 @@ export class Reto {
    * Método que devuelve el número total de km de todas las rutas.
    * @returns KM totales de todas las rutas
    */
-  public kmTotales(): number {
-    // calcular los km totales de todas las rutas
-    let km_totales = 0;
-    for (let i = 0; i < this.rutas_.length; i++) {
-      // obtener ruta con este identificador
-      const ruta = database.get("rutas").find({ id: this.rutas_[i] }).value();
-      km_totales += ruta.longitud;
-      // km_totales += this.rutas_[i].getLongitud;
-    }
-    return km_totales;
-  }
+  // public kmTotales(): number {
+  //   // calcular los km totales de todas las rutas
+  //   let km_totales = 0;
+  //   for (let i = 0; i < this.rutas_.length; i++) {
+  //     // obtener ruta con este identificador
+  //     const ruta = database.get("rutas").find({ id: this.rutas_[i] }).value();
+  //     km_totales += ruta.longitud;
+  //     // km_totales += this.rutas_[i].getLongitud;
+  //   }
+  //   return km_totales;
+  // }
 
   //* getter y setter
 
@@ -127,6 +126,14 @@ export class Reto {
    */
   get getUsuarios(): ID[] {
     return this.usuarios_;
+  }
+
+  /**
+   * Método que modifica el nombre del reto
+   * @param nombre -- nuevo nombre del reto
+   */
+  set setId(identificador: ID) {
+    this.id_ = identificador;
   }
 
   /**

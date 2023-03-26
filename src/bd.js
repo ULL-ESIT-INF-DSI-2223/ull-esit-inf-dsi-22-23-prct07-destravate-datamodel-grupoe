@@ -6,4 +6,4 @@ var lowdb = require("lowdb");
 var FileSync = require("lowdb/adapters/FileSync");
 // eslint-disable-next-line prefer-const
 exports.database = lowdb(new FileSync("database.json"));
-exports.database.defaults({ rutas: [] }, { usuarios: [] }, { grupos: [] }).write();
+exports.database.defaults({ rutas: [] }, { usuarios: [] }, { grupos: [] }, { retos: [] }).write();

@@ -122,6 +122,14 @@ export class Grupo {
   }
 
   /**
+   * Método que devuelve el ranking del grupo
+   * @returns -- ranking del grupo
+   */
+  get getRanking(): ID[] {
+    return this.ranking_;
+  }
+
+  /**
    * Método que devuelve las rutas favoritas del grupo
    * @returns -- rutas favoritas del grupo
    */
@@ -135,6 +143,14 @@ export class Grupo {
    */
   get getHistoricoRutas(): historicoRutas[] {
     return this.historicoRutas_;
+  }
+
+  /**
+   * Método que modifica el id del grupo
+   * @param identificador-- nuevo id del grupo
+   */
+  set setID(identificador: ID) {
+    this.id_ = identificador;
   }
 
   /**
@@ -159,6 +175,14 @@ export class Grupo {
    */
   set setEstadisticasEntrenamiento(estadisticasEntrenamiento: estadisticaEntrenamiento) {
     this.estadisticasEntrenamiento_ = estadisticasEntrenamiento;
+  }
+
+  /**
+   * Método que añade un ranking al ranking del grupo
+   * @param ranking -- ranking que se añade al ranking del grupo
+   */
+  set setRanking(ranking: ID[]) {
+    this.ranking_ = ranking;
   }
 
   /**

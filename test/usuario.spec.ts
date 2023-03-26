@@ -71,7 +71,7 @@ const historic3: historicoRutas = {
 // (nombre: string, actividad: actividad, amigos: ID[], grupo_amigos: ID[][], estadisticas: estadisticaEntrenamiento ,historico_rutas: historicoRutas[], retos: ID[], id?: ID)
 const user0 = new Usuario("user0", "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
 
-describe('', () => {
+describe('Usuario class tests', () => {
  // Getters - Setters
   it('user0.getId returns 2', () => {
     user0.setID = 2;
@@ -99,8 +99,13 @@ describe('', () => {
   });
 
   it('user0.getEstadisticas returns estadisticas2', () => {
-    user0.setEstadisticas = estadisticas2
+    user0.setEstadisticas = estadisticas2;
     expect(user0.getEstadisticas).to.be.eql(estadisticas2);
+  });
+
+  it('user0.getRutasFavoritas returns [1,2]', () => {
+    user0.setRutasFavoritas = [1,2]
+    expect(user0.getRutasFavoritas).to.be.eql([1,2]);
   });
 
   it('user0.getHistoricoRutas returns [historic1,historic2]', () => {

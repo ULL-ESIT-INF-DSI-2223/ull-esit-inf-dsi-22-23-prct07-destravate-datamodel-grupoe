@@ -105,3 +105,12 @@ export type schemaType = {
     usuarios: ID[];
   }[]
 };
+
+/**
+ * Tipo que representa un usuario logueado
+ */
+export type logueado = {
+  nombre: string;
+  id: ID;
+  logued: boolean;
+}

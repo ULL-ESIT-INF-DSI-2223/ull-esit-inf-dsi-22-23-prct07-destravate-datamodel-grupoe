@@ -6,4 +6,4 @@ import { schemaType } from "./types";
 export let database: lowdb.LowdbSync<schemaType>;
 // eslint-disable-next-line prefer-const
 database = lowdb(new FileSync("database.json"));
-database.defaults({ rutas: [] }, {usuarios: [] }, { grupos: []}, {retos: []}).write();
+database.defaults({ rutas: [] }, {usuarios: [] }, { grupos: []}, { retos: []}).write();

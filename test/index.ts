@@ -1,6 +1,6 @@
 import {Grupo} from '../src/grupo';
 // import { Usuario } from '../src/usuario';
-// // import {Reto} from '../src/reto';
+import {Reto} from '../src/reto';
  import {Ruta} from '../src/ruta';
  import {fecha, historicoRutas, estadisticaEntrenamiento, estadistica}  from '../src/types';
  import { coordenadas } from '../src/types';
@@ -310,13 +310,5 @@ const grupo5 = new Grupo('Grupo 5', [0,6,7,8,9,10], estadisticas3, [historic5,hi
 // const ruta7 = new Ruta('Keep Calm and travel On', [eje_x4, eje_y4, eje_z4], [eje_x1, eje_y1, eje_z1], 3100, 200, [1,2,3], "bicicleta", 1);
 // const ruta8 = new Ruta('Wander Rush', [eje_x6, eje_y6, eje_z6], [eje_x3, eje_y3, eje_z3], 1040, 200, [5,6,7], "correr", 9);
 // const ruta9 = new Ruta('My BigFat City Tour', [eje_x8, eje_y8, eje_z8], [eje_x5, eje_y5, eje_z5], 1000, 200, [8,7,6], "bicicleta", 10);
-// // 
-// // // GRUPOS
-// // 
-// // 
-// // 
-// // // RETOS
-// // 
-// // const reto0 = new Reto('Reto 0', [ruta0,ruta2,ruta4,ruta6,ruta8], "correr");
-// // const reto1 = new Reto('Reto 1', [ruta1,ruta3,ruta5,ruta7,ruta9], "bicicleta");
-// // const reto2 = new Reto('Reto 2', [ruta0,ruta2,ruta4], "correr");
+
+// constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, usuarios: ID[], id?: ID)

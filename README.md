@@ -21,7 +21,7 @@ A continuación se mostrará un índice que corresponderá con los diferentes ap
     - 3.2. [gruposCollection](#gruposcollection)
 4. [Reto](#Reto):
     - 4.1. [Reto](#reto)
-    - 4.2. [retosCollection](#retoscollection)
+    - 4.2. [retoCollection](#retocollection)
 5. [Gestor](#Gestor)
 
 ## Desarrollo
@@ -324,7 +324,43 @@ Para finalizar está el método `promptAñadirGrupo()`, cuya funcionalidad es la
 
 #### _Reto_
 
-#### _retosCollection_
+`Reto` consiste en una clase que representa un reto la cual consta de los siguientes atributos privados, de los cuales cabe destacar los tipos `ID` y `actividad`, los cuales fueron desarrollados de manera específica para que por una parte el _id_ fuese un __número__ y la _actividad_ fuese de tipo __correr__ o __bibicleta__:
+
+- __`id_`:__ ID único del reto.
+- __`nombre_`:__ Nombre del reto.
+- __`rutas_`:__ Rutas del reto.
+- __`tipo_actividad_`:__ Tipo de actividad del reto.
+- __`km_totales_`:__ Kilómetros totales del reto.
+- __`usuarios_`:__ Usuarios del reto.
+
+Para crear un objeto ruta se utiliza el __constructor__ de la clase el cual instancia todos los atributos de manera obligatoria, excepto por el _id_, el cual se asigna de manera interna mediante condicionales:
+
+```ts
+  const id_global = database.get("retos").map("nombre").value();
+  if (id_global.includes(this.nombre_)) {
+    this.id_ = database.get("retos").find({ nombre: this.nombre_ }).value().id;
+  } else {
+    if (id !== undefined) {
+      this.id_ = id;
+    }
+    else {
+      // buscar el id más alto y sumarle 1
+      const id_global = database.get("retos").map("id").value();
+      id_global.sort((a, b) => a - b);
+      if (id_global.length === 0) {
+        this.id_ = 1;
+      }
+      else {
+        this.id_ = id_global[id_global.length - 1] + 1;
+      }
+    }
+```
+
+Como se puede observar se declara como constante el `id_global` que es utilizado para definir el id a cada uno de los retos de manera incremental si es que el id que se extrae del reto es de tipo `undefined`. Por último se agrega en el `Lowdb` el reto con todos sus atributos.
+
+Y por último dentro de esta clase se dispone para cada atributo un __getter__ y un __setter__ determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``retoCollection`.
+
+#### _retoCollection_
 
 ### __Gestor:__ 
 
