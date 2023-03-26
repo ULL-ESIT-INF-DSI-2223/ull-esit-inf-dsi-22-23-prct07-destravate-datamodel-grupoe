@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import { Usuario } from '../src/usuario'
+import { usuarioCollection } from '../src/usuarioCollection';
 import { estadistica, estadisticaEntrenamiento, fecha, historicoRutas } from '../src/types'
 
 const semana: estadistica = {
@@ -116,5 +117,15 @@ describe('Usuario class tests', () => {
   it('user0.getRetos returns [1,2]', () => {
     user0.setRetos = [1,2];
     expect(user0.getRetos).to.be.eql([1,2]);
+  });
+
+  it('user0.getKMTotales 3000' , () => {
+    expect(user0.getKMTotales()).to.be.eql(3000);
+  });
+
+  it('Prueba Condición Id_global', () => {
+    const usuario_aux = new Usuario('Juan', "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+    const mi_coleccion = new usuarioCollection();
+    mi_coleccion.borrarElementoBD(usuario_aux.getID);
   });
 });

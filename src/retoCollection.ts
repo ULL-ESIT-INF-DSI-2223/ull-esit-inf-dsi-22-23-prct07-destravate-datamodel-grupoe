@@ -25,7 +25,7 @@ export class RetoCollection {
     const retos_aux = database.get("retos").value();
     const array_aux: Reto[] = [];
     retos_aux.forEach((reto) => {
-      const group_aux: Reto = new Reto(reto.nombre, reto.rutas, reto.tipo_actividad, reto.km_totales, reto.usuarios);
+      const group_aux: Reto = new Reto(reto.nombre, reto.rutas, reto.tipo_actividad, reto.usuarios);
       array_aux.push(group_aux);
     });
     this.setRetos = array_aux;  
@@ -96,18 +96,13 @@ export class RetoCollection {
       },
       {
         type: 'input',
-        name: 'kms_totales',
-        message: '¿Cuántos kms totales tiene el reto?'
-      },
-      {
-        type: 'input',
         name: 'usuarios',
         message: '¿Cuáles son los usuarios que participan?, introduzca los ids separados por comas'
       }
     ]).then((answers) => {
       const rutas: ID[] = answers.rutas.split(","); 
       const usuarios: ID[] = answers.usuarios.split(",");
-      const reto_aux = new Reto(answers.nombre, rutas, answers.actividad,answers.kms_totales, usuarios)
+      const reto_aux = new Reto(answers.nombre, rutas, answers.actividad, usuarios)
       this.retos_.push(reto_aux);
       this.manageRetos();
     });
@@ -216,7 +211,7 @@ export class RetoCollection {
           ]).then((answers) => {
             this.retos_[indice].setNombre = answers.nombre2;
             this.borrarElementoBD(identificador);
-            const grupo_aux = new Reto(answers.nombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
+            const grupo_aux = new Reto(answers.nombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
             this.retos_.push(grupo_aux);
             this.retos_.splice(indice, 1);
             this.manageRetos();
@@ -245,7 +240,7 @@ export class RetoCollection {
                 ]).then((answers) => {
                   this.retos_[indice].getRutas.push(answers.rutas);
                   this.borrarElementoBD(identificador);
-                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
+                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
                   this.retos_.push(grupo_aux);
                   this.retos_.splice(indice, 1);
                   this.manageRetos();
@@ -269,7 +264,7 @@ export class RetoCollection {
                     }
                   });
                   this.borrarElementoBD(identificador);
-                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
+                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
                   this.retos_.push(grupo_aux);
                   this.retos_.splice(indice, 1);
                   this.manageRetos();
@@ -292,7 +287,7 @@ export class RetoCollection {
           ]).then((answers) => {
             this.retos_[indice].setTipoActividad = answers.actividad;
             this.borrarElementoBD(identificador);
-            const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
+            const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
             this.retos_.push(grupo_aux);
             this.retos_.splice(indice, 1);
             this.manageRetos();
@@ -321,7 +316,7 @@ export class RetoCollection {
                 ]).then((answers) => {
                   this.retos_[indice].getUsuarios.push(answers.usuarios);
                   this.borrarElementoBD(identificador);
-                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
+                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);
                   this.retos_.push(grupo_aux);
                   this.retos_.splice(indice, 1);
                   this.manageRetos();
@@ -344,7 +339,7 @@ export class RetoCollection {
                     }
                   });
                   this.borrarElementoBD(identificador);
-                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad,this.retos_[indice].getKmTotales, this.retos_[indice].getUsuarios, this.retos_[indice].getId);  
+                  const grupo_aux = new Reto(this.retos_[indice].getNombre, this.retos_[indice].getRutas, this.retos_[indice].getTipoActividad, this.retos_[indice].getUsuarios, this.retos_[indice].getId);  
                   this.retos_.push(grupo_aux);
                   this.retos_.splice(indice, 1);
                   this.manageRetos();

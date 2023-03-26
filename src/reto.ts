@@ -23,11 +23,11 @@ export class Reto {
    * @param tipo_actividad 
    * @param id 
    */
-  constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, km_totales: number, usuarios: ID[], id?: ID) {
+  constructor(nombre: string, rutas: ID[], tipo_actividad: actividad, usuarios: ID[], id?: ID) {
     this.nombre_ = nombre;
     this.rutas_ = rutas;
     this.tipo_actividad_ = tipo_actividad;
-    this.km_totales_ = km_totales;
+    this.km_totales_ = this.kmTotales();
     this.usuarios_ = usuarios;
 
     const id_global = database.get("retos").map("nombre").value();

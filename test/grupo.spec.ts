@@ -2,6 +2,7 @@ import 'mocha';
 import { expect } from 'chai';
 import { Grupo } from '../src/grupo';
 import { estadistica, estadisticaEntrenamiento, fecha, historicoRutas } from '../src/types'
+import { GruposCollection } from '../src/gruposCollection';
 
 const semana: estadistica = {
   km: 10,
@@ -96,5 +97,12 @@ describe('Grupo class tests', () => {
   it('grupo0.getHistoricoRutas returns [historico1]', () => {
     grupo0.setHistoricoRutas = [historic1];
     expect(grupo0.getHistoricoRutas).to.be.eql([historic1]);
+  });
+
+  it('Prueba Condición Id_global', () => {
+    const grupo1 = new Grupo('Moteros Tenerife', [0,1,2,3,4,5,6,7,8,9,10], estadisticas, [historic1,historic2]);
+    const mi_coleccion = new GruposCollection();
+    mi_coleccion.borrarElementoBD(grupo1.getID);
+
   });
 });

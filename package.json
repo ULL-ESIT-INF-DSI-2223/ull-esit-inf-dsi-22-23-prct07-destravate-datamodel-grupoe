@@ -1,8 +1,8 @@
 {
-  "name": "p7-pe103",
+  "name": "p7",
   "version": "1.0.0",
   "description": "",
-  "main": "gestorjs",
+  "main": "gestor.js",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist/gestor.js\"",
     "doc": "typedoc",

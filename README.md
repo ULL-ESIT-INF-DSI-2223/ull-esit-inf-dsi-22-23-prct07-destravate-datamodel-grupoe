@@ -12,19 +12,21 @@ A continuación se mostrará un índice que corresponderá con los diferentes ap
 
 ## Índice
 
-1. [Rutas](#Rutas):
-    - 1.1. [Ruta](#ruta)
-    - 1.2. [rutaCollection](#rutacollection)
-2. [Usuarios](#Usuarios):
-    - 2.1. [Usuario](#usuario)
-    - 2.2. [usuarioCollection](#usuariocollection)
-3. [Grupos:](#Grupos)
-    - 3.1. [Grupo](#grupo)
-    - 3.2. [gruposCollection](#gruposcollection)
-4. [Reto](#Reto):
-    - 4.1. [Reto](#reto)
-    - 4.2. [retoCollection](#retocollection)
-5. [Gestor](#Gestor)
+1. [Desarrollo](#Desarrollo)
+  1.1. [Rutas](#Rutas):
+    - 1.1.1 [Ruta](#ruta)
+    - 1.1.2 [rutaCollection](#rutacollection)
+  1.2. [Usuarios](#Usuarios):
+    - 1.2.1 [Usuario](#usuario)
+    - 1.2.2 [usuarioCollection](#usuariocollection)
+  1.3 [Grupos:](#Grupos)
+    - 1.3.1 [Grupo](#grupo)
+    - 1.3.2 [gruposCollection](#gruposcollection)
+  1.4 [Reto](#Reto):
+    - 1.4.1 [Reto](#reto)
+    - 1.4.2 [retoCollection](#retocollection)
+  1.5 [Gestor](#Gestor)
+2. [Referencias](#Referencias)
 
 ## Desarrollo
 
@@ -340,7 +342,7 @@ Para finalizar está el método `promptAñadirGrupo()`, cuya funcionalidad es la
 - __`km_totales_`:__ Kilómetros totales del reto.
 - __`usuarios_`:__ Usuarios del reto.
 
-Para crear un objeto ruta se utiliza el __constructor__ de la clase el cual instancia todos los atributos de manera obligatoria, excepto por el _id_, el cual se asigna de manera interna mediante condicionales:
+Para crear un objeto ruta se utiliza el __constructor__ de la clase el cual instancia todos los atributos de manera obligatoria, excepto los *km_totales* que se calculan automáticamente y el _id_, el cual se asigna de manera interna mediante condicionales:
 
 ```ts
   const id_global = database.get("retos").map("nombre").value();
@@ -366,6 +368,8 @@ Para crear un objeto ruta se utiliza el __constructor__ de la clase el cual inst
 ```
 
 Como se puede observar se declara como constante el `id_global` que es utilizado para definir el id a cada uno de los retos de manera incremental si es que el id que se extrae del reto es de tipo `undefined`. Por último se agrega en el `Lowdb` el reto con todos sus atributos.
+
+Además, se dispone de un método *kmTotales()* que se encarga de a partir de todas las rutas que componen el reto, obtener la suma de los kilómetros.
 
 Y por último dentro de esta clase se dispone para cada atributo un __getter__ y un __setter__ determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``retoCollection`.
 
@@ -448,15 +452,35 @@ Después tenemos los métodos `listarUsuarios()` y `modificarAmigos()`, donde `l
 - Eliminar amigo.
 - Salir.
 
+Para __añadir amigo__ se solicitará el _id_ del mismo que se agregará a la lista de amigos del usuario en cuestión y para __eliminar amigo__ se comprobará que el usuario disponga de amigos o de la existencia de los mismos en el `Lowdb`, seguido de la petición del _id_ del mismo y por lo tanto su supresión.
+
+Por otra parte disponemos de `verRutas()` que muestra por pantalla al usuario los datos de la ruta que él seleccione, y de `unierseGrupo()` que permite al usuario la adición de él mismo en un grupo, para ello se pregunta al mismo el grupo al que desea unirse procediendo así a la agregación del usuario en el grupo, actualizando el `Lowdb` y la lista de grupos.
+
+A su vez se permite la gestión de los grupos mediante `gestionarGrupos()`, que la igual que `userManage()` muestra al usuario diferentes opciones, que en función de la respuesta del mismo que llamará a un método o a otro, excepto por __ver grupos__ el cual se ejecutará en este método junto con __salir__:
+
+- Crear grupo.
+- Eliminar grupo.
+- Ver grupos.
+- Salir.
+
+Los dos siguientes métodos son las funcionalidades mencionadas anteriormente del método `gestionarGrupos()`, en primer lugar `eliminarGrupo()`, que solicitará al usuario el grupo a eliminar procediendo a su eliminación según la elección del mismo, y posteriormente `crearGrupo()`, que nuevamente solicita al usuario todos los atributos necesarios para la creación del grupo que desee y a continuación procederá a dicha acción, ambos métodos realizarán los cambios tanto en el `Lowdb` como en el listado de grupos correspondiente.
+
+Para finalizar nos encontramos con `funcionamientoSistema()` cuya funcionalidad es permitir la gestión del funcionamiento del programa, para ello muestra al usuario las diferentes opciones de las que dispone:
+
+- Gestionar rutas.
+- Gestionar usuarios.
+- Gestionar grupos.
+- Gestionar retos.
+- Salir.
+
+Tras recibir la respuesta del usuario se procederá a realizar un nuevo __prompt__ diferente para cada opción donde:
+
+1. Se solicitará al usuario la selección de las nuevas opciones:
+  - Ver información de _X_.
+  - Modificar _X_.
+  - Salir.
+2. En función de la elección se llama a su método correspondiente o se finaliza el proceso con `process.exit(0)`.
+
 ## Referencias
 
 [Guión de la práctica 7](https://ull-esit-inf-dsi-2223.github.io/prct07-destravate-dataModel/)
-
-
-
-
-
-
-
-
-

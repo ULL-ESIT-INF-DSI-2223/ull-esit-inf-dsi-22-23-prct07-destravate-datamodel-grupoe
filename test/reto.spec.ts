@@ -2,9 +2,9 @@ import 'mocha';
 import { expect } from 'chai';
 import { Reto } from '../src/reto'
 
-const reto0 = new Reto('Maraton', [1,2,3,4,5], "correr",200, [1,2]);
-// const reto1 = new Reto('Triatlon', [2,3,4,5,6], "bicicleta",300, [3,4,5,6,7,8,9,10,11,12,13]);
-// const reto2 = new Reto('Iron man', [9,8,7], "correr",50, [14,15,16,17,18,19]);
+import { RetoCollection } from '../src/retoCollection';
+
+const reto0 = new Reto('Maraton', [1,2,3,4,5], "correr", [1,2]);
 
 describe('Reto class tests', () => {
 // Getters - Setters
@@ -28,13 +28,19 @@ describe('Reto class tests', () => {
     expect(reto0.getTipoActividad).to.be.eql('bicicleta');
   });
 
-  it('reto0.getKmTotales returns 500', () => {
-    reto0.setKmTotales = 500;
-    expect(reto0.getKmTotales).to.be.eql(500);
+  it('reto0.getKmTotales returns 3300', () => {
+    reto0.setKmTotales = 3300;
+    expect(reto0.getKmTotales).to.be.eql(3300);
   });
 
   it('reto0.getUsuarios returns estadisticas2', () => {
     reto0.setUsuarios = [1];
     expect(reto0.getUsuarios).to.be.eql([1]);
+  });
+
+  it('Prueba Condición Id_global', () => {
+    const reto_aux = new Reto('Reto Boston', [1,2], "correr", [1]);
+    const mi_coleccion = new RetoCollection();
+    mi_coleccion.borrarElementoBD(reto_aux.getId);
   });
 });

@@ -1,6 +1,47 @@
 {
   "rutas": [
     {
+      "id": 1,
+      "nombre": "San Vicente",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 40
+        },
+        {
+          "letra": "Y",
+          "coordenada": 50
+        },
+        {
+          "letra": "Z",
+          "coordenada": 60
+        }
+      ],
+      "longitud": 10127,
+      "desnivel": 456,
+      "usuarios": [
+        1,
+        2,
+        3
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 9
+    },
+    {
       "id": 2,
       "nombre": "Plaza el charco",
       "geolocalizacion_inicio": [
@@ -10,11 +51,11 @@
         },
         {
           "letra": "Y",
-          "coordenada": 20213
+          "coordenada": 70
         },
         {
           "letra": "Z",
-          "coordenada": 3023
+          "coordenada": 80
         }
       ],
       "geolocalizacion_fin": [
@@ -31,12 +72,12 @@
           "coordenada": 30
         }
       ],
-      "longitud": 2000,
-      "desnivel": 200,
+      "longitud": 2050,
+      "desnivel": 250,
       "usuarios": [
+        2,
         3,
-        4,
-        5
+        4
       ],
       "tipo_actividad": "bicicleta",
       "calificacion": 8
@@ -72,20 +113,101 @@
           "coordenada": 3003
         }
       ],
-      "longitud": 300,
-      "desnivel": 200,
+      "longitud": 30021,
+      "desnivel": 2034,
       "usuarios": [
         6,
         7,
-        8,
-        2
+        8
       ],
       "tipo_actividad": "correr",
       "calificacion": 8
     },
     {
-      "id": 1,
-      "nombre": "San Vicente",
+      "id": 4,
+      "nombre": "Hop-On Hop-off",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 1010
+        },
+        {
+          "letra": "Y",
+          "coordenada": 202
+        },
+        {
+          "letra": "Z",
+          "coordenada": 303
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 1107
+        },
+        {
+          "letra": "Y",
+          "coordenada": 90
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3034
+        }
+      ],
+      "longitud": 4020,
+      "desnivel": 150,
+      "usuarios": [
+        9,
+        10,
+        11
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 4
+    },
+    {
+      "id": 5,
+      "nombre": "Mind the Gap",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 450
+        },
+        {
+          "letra": "Z",
+          "coordenada": 150
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 7
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2013
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3043
+        }
+      ],
+      "longitud": 5300,
+      "desnivel": 200,
+      "usuarios": [
+        12,
+        13,
+        14
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 6
+    },
+    {
+      "id": 6,
+      "nombre": "City Sightseeing",
       "geolocalizacion_inicio": [
         {
           "letra": "X",
@@ -103,31 +225,260 @@
       "geolocalizacion_fin": [
         {
           "letra": "X",
-          "coordenada": 12435
+          "coordenada": 7
         },
         {
           "letra": "Y",
-          "coordenada": 1234325436
+          "coordenada": 2013
         },
         {
           "letra": "Z",
-          "coordenada": 1232
+          "coordenada": 3043
         }
       ],
-      "longitud": 1000,
-      "desnivel": 200,
+      "longitud": 6150,
+      "desnivel": 2300,
+      "usuarios": [
+        15,
+        16,
+        17
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 7
+    },
+    {
+      "id": 7,
+      "nombre": "La ruta real",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 214
+        },
+        {
+          "letra": "Y",
+          "coordenada": 70
+        },
+        {
+          "letra": "Z",
+          "coordenada": 80
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 1107
+        },
+        {
+          "letra": "Y",
+          "coordenada": 90
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3034
+        }
+      ],
+      "longitud": 1220,
+      "desnivel": 1700,
+      "usuarios": [
+        18,
+        19
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 5
+    },
+    {
+      "id": 8,
+      "nombre": "Keep Calm and travel On",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 1010
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2020
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3030
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 40
+        },
+        {
+          "letra": "Y",
+          "coordenada": 50
+        },
+        {
+          "letra": "Z",
+          "coordenada": 60
+        }
+      ],
+      "longitud": 31020,
+      "desnivel": 450,
       "usuarios": [
         1,
-        2
+        2,
+        3
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 1
+    },
+    {
+      "id": 9,
+      "nombre": "Wander Rush",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 1010
+        },
+        {
+          "letra": "Y",
+          "coordenada": 202
+        },
+        {
+          "letra": "Z",
+          "coordenada": 303
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "longitud": 1040,
+      "desnivel": 2970,
+      "usuarios": [
+        5,
+        6,
+        7
       ],
       "tipo_actividad": "correr",
       "calificacion": 9
+    },
+    {
+      "id": 10,
+      "nombre": "My BigFat City Tour",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 450
+        },
+        {
+          "letra": "Z",
+          "coordenada": 150
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 1001
+        },
+        {
+          "letra": "Y",
+          "coordenada": 2002
+        },
+        {
+          "letra": "Z",
+          "coordenada": 3003
+        }
+      ],
+      "longitud": 10970,
+      "desnivel": 130,
+      "usuarios": [
+        8,
+        7,
+        6
+      ],
+      "tipo_actividad": "bicicleta",
+      "calificacion": 10
     }
   ],
   "usuarios": [
     {
+      "id": 1,
+      "nombre": "Pepe",
+      "actividad": "bicicleta",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
       "id": 2,
-      "nombre": "user1",
+      "nombre": "Lola",
       "actividad": "correr",
       "amigos": [
         2,
@@ -163,8 +514,6 @@
       },
       "rutasFavoritas": [],
       "retos": [
-        1,
-        2,
         3
       ],
       "historicoRutas": [
@@ -196,7 +545,7 @@
     },
     {
       "id": 3,
-      "nombre": "user2",
+      "nombre": "Juan",
       "actividad": "correr",
       "amigos": [
         1,
@@ -265,8 +614,8 @@
     },
     {
       "id": 4,
-      "nombre": "user3",
-      "actividad": "correr",
+      "nombre": "Maria",
+      "actividad": "bicicleta",
       "amigos": [
         1,
         2,
@@ -335,7 +684,7 @@
     },
     {
       "id": 5,
-      "nombre": "user4",
+      "nombre": "Josefa",
       "actividad": "correr",
       "amigos": [
         1,
@@ -346,14 +695,6 @@
         [
           0,
           1
-        ],
-        [
-          2,
-          3
-        ],
-        [
-          5,
-          6
         ]
       ],
       "estadisticas": {
@@ -372,7 +713,6 @@
       },
       "rutasFavoritas": [],
       "retos": [
-        1,
         2,
         3
       ],
@@ -405,7 +745,7 @@
     },
     {
       "id": 6,
-      "nombre": "user5",
+      "nombre": "Roberta",
       "actividad": "correr",
       "amigos": [
         1,
@@ -443,7 +783,6 @@
       "rutasFavoritas": [],
       "retos": [
         1,
-        2,
         3
       ],
       "historicoRutas": [
@@ -475,11 +814,10 @@
     },
     {
       "id": 7,
-      "nombre": "user6",
+      "nombre": "Juliana",
       "actividad": "correr",
       "amigos": [
         1,
-        2,
         3
       ],
       "grupo_de_amigos": [
@@ -544,53 +882,115 @@
       ]
     },
     {
-      "id": 1,
-      "nombre": "marco",
-      "actividad": "Bicicleta",
+      "id": 8,
+      "nombre": "Dolores",
+      "actividad": "bicicleta",
       "amigos": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
+        1,
+        2,
+        3
       ],
       "grupo_de_amigos": [
         [
-          1,
-          2
+          0,
+          1
         ],
         [
-          3,
-          4
+          2,
+          3
         ],
         [
-          5,
-          6
+          4,
+          5
         ]
       ],
       "estadisticas": {
         "semana": {
-          "km": "1",
-          "desnivel": "1"
+          "km": 20,
+          "desnivel": 200
         },
         "mes": {
-          "km": "1",
-          "desnivel": "1"
+          "km": 30,
+          "desnivel": 3000
         },
         "año": {
-          "km": "1",
-          "desnivel": "1"
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        4,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nombre": "Ricardo",
+      "actividad": "correr",
+      "amigos": [
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
         }
       },
       "rutasFavoritas": [],
       "retos": [
         1,
         2,
-        3
+        4
       ],
       "historicoRutas": [
         {
@@ -616,20 +1016,12 @@
             "año": 2021
           },
           "id": 3
-        },
-        {
-          "fecha": {
-            "dia": "12",
-            "mes": "23",
-            "año": "3060"
-          },
-          "id": "20"
         }
       ]
     },
     {
-      "id": 8,
-      "nombre": "user0",
+      "id": 10,
+      "nombre": "Rodrigo",
       "actividad": "correr",
       "amigos": [
         1,
@@ -638,16 +1030,230 @@
       ],
       "grupo_de_amigos": [
         [
-          1,
-          2
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        3,
+        4
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "nombre": "Antonio",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nombre": "Puchapa",
+      "actividad": "bicicleta",
+      "amigos": [
+        1,
+        2
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
         ],
         [
           3,
-          4
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nombre": "Ignacio",
+      "actividad": "bicicleta",
+      "amigos": [
+        1,
+        4,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
         ],
         [
-          5,
-          6
+          2,
+          3
+        ],
+        [
+          4,
+          5
         ]
       ],
       "estadisticas": {
@@ -667,8 +1273,7 @@
       "rutasFavoritas": [],
       "retos": [
         1,
-        2,
-        3
+        2
       ],
       "historicoRutas": [
         {
@@ -698,108 +1303,426 @@
       ]
     },
     {
-      "id": 9,
-      "nombre": "EVA",
-      "actividad": "Ciclismo",
+      "id": 14,
+      "nombre": "Michael",
+      "actividad": "bicicleta",
       "amigos": [
-        "1",
-        "2",
-        "3"
+        1,
+        3
       ],
       "grupo_de_amigos": [
-        "1,2,3",
-        "4,5,6",
-        "7,8,9"
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          5
+        ]
       ],
       "estadisticas": {
         "semana": {
-          "km": 10,
+          "km": 20,
           "desnivel": 200
         },
         "mes": {
           "km": 30,
-          "desnivel": 200
+          "desnivel": 3000
         },
         "año": {
           "km": 40,
-          "desnivel": 200
+          "desnivel": 4000
         }
       },
       "rutasFavoritas": [],
       "retos": [
-        "1"
+        3,
+        4
       ],
       "historicoRutas": [
-        "1",
-        "2"
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
       ]
     },
     {
-      "id": 10,
-      "nombre": "Adrian",
-      "actividad": "Running",
+      "id": 15,
+      "nombre": "Josue",
+      "actividad": "bicicleta",
       "amigos": [
-        "1",
-        "2",
-        "3"
+        1,
+        2,
+        3
       ],
       "grupo_de_amigos": [
-        "1,2,3,4,5,6,7,8",
-        "1,2"
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          5
+        ]
       ],
       "estadisticas": {
         "semana": {
-          "km": 200,
-          "desnivel": 200
+          "km": 30,
+          "desnivel": 300
         },
         "mes": {
-          "km": 4000,
-          "desnivel": 200
+          "km": 40,
+          "desnivel": 4000
         },
         "año": {
-          "km": 50000,
-          "desnivel": 200
+          "km": 50,
+          "desnivel": 5000
         }
       },
       "rutasFavoritas": [],
       "retos": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
+        4
       ],
       "historicoRutas": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "nombre": "Silvia",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        2,
+        4
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "nombre": "Alba",
+      "actividad": "bicicleta",
+      "amigos": [
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "nombre": "Julián",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        5
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 30,
+          "desnivel": 300
+        },
+        "mes": {
+          "km": 40,
+          "desnivel": 4000
+        },
+        "año": {
+          "km": 50,
+          "desnivel": 5000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        4,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "nombre": "Mario",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 3
+        }
       ]
     }
   ],
   "grupos": [
     {
       "id": 1,
-      "nombre": "Grupo 0",
+      "nombre": "Pachanga",
       "participantes": [
-        0,
         1,
         2,
         3,
-        4,
-        5,
         6,
-        7,
-        8,
         9,
         10
       ],
@@ -840,14 +1763,17 @@
     },
     {
       "id": 2,
-      "nombre": "Grupo 1",
+      "nombre": "Sandia",
       "participantes": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
+        7,
+        10,
+        12,
+        14,
+        13,
+        15,
+        17,
+        19,
+        20
       ],
       "estadisticasEntrenamiento": {
         "semana": {
@@ -886,13 +1812,16 @@
     },
     {
       "id": 3,
-      "nombre": "Grupo 2",
+      "nombre": "Remolacha",
       "participantes": [
-        0,
+        1,
+        2,
+        3,
+        15,
+        19,
+        20,
         6,
-        7,
         8,
-        9,
         10
       ],
       "estadisticasEntrenamiento": {
@@ -932,15 +1861,13 @@
     },
     {
       "id": 4,
-      "nombre": "Grupo 3",
+      "nombre": "Kinder Bueno",
       "participantes": [
-        0,
         4,
         5,
         6,
         7,
         8,
-        9,
         10
       ],
       "estadisticasEntrenamiento": {
@@ -980,19 +1907,14 @@
     },
     {
       "id": 5,
-      "nombre": "Grupo 4",
+      "nombre": "Judias Verdes",
       "participantes": [
-        0,
-        1,
         2,
         3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10
+        10,
+        13,
+        17,
+        20
       ],
       "estadisticasEntrenamiento": {
         "semana": {
@@ -1031,29 +1953,35 @@
     },
     {
       "id": 6,
-      "nombre": "GRUPO 6",
+      "nombre": "Napolitana de chocolate",
       "participantes": [
-        0,
+        1,
+        2,
+        3,
+        4,
+        5,
         6,
         7,
         8,
         9,
         10,
-        "1",
-        "2"
+        12,
+        14,
+        16,
+        18
       ],
       "estadisticasEntrenamiento": {
         "semana": {
-          "km": "10",
-          "desnivel": "10"
+          "km": 30,
+          "desnivel": 300
         },
         "mes": {
-          "km": "20",
-          "desnivel": "3000"
+          "km": 40,
+          "desnivel": 4000
         },
         "año": {
-          "km": "2321",
-          "desnivel": "312321"
+          "km": 50,
+          "desnivel": 5000
         }
       },
       "ranking": [],
@@ -1074,14 +2002,6 @@
             "año": 2021
           },
           "id": 3
-        },
-        {
-          "fecha": {
-            "dia": "1",
-            "mes": "1",
-            "año": "1"
-          },
-          "id": "1"
         }
       ]
     }
@@ -1089,7 +2009,7 @@
   "retos": [
     {
       "id": 1,
-      "nombre": "Maraton",
+      "nombre": "Reto de Invierno",
       "rutas": [
         1,
         2,
@@ -1098,36 +2018,116 @@
         5
       ],
       "tipo_actividad": "correr",
-      "km_totales": 200,
+      "km_totales": 0,
       "usuarios": [
         1,
-        2
+        3,
+        4,
+        6,
+        7,
+        9,
+        11,
+        13,
+        17,
+        20
       ]
     },
     {
       "id": 2,
-      "nombre": "Triatlon",
+      "nombre": "Reto de Verano",
       "rutas": [
+        1,
         2,
         3,
         4,
-        5,
-        6
+        5
       ],
       "tipo_actividad": "bicicleta",
-      "km_totales": 300,
+      "km_totales": 0,
       "usuarios": [
+        4,
+        5,
+        7,
+        9,
+        11,
+        12,
+        13,
+        16,
+        17,
+        19,
+        20
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Reto de Otoño",
+      "rutas": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "correr",
+      "km_totales": 0,
+      "usuarios": [
+        1,
+        2,
         3,
         4,
         5,
         6,
         7,
-        8,
-        9,
         10,
         11,
         12,
-        13
+        14,
+        19
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Reto de Primavera",
+      "rutas": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "bicicleta",
+      "km_totales": 0,
+      "usuarios": [
+        8,
+        9,
+        10,
+        12,
+        14,
+        15,
+        16,
+        18,
+        20
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Reto de Año Nuevo",
+      "rutas": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "correr",
+      "km_totales": 0,
+      "usuarios": [
+        8,
+        11,
+        12,
+        17,
+        18,
+        20
       ]
     }
   ]
