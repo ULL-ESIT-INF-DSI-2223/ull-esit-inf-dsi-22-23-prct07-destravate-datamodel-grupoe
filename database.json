@@ -1712,6 +1712,76 @@
           "id": 3
         }
       ]
+    },
+    {
+      "id": 20,
+      "nombre": "user0",
+      "actividad": "correr",
+      "amigos": [
+        1,
+        2,
+        3
+      ],
+      "grupo_de_amigos": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "estadisticas": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "rutasFavoritas": [],
+      "retos": [
+        1,
+        2,
+        3
+      ],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        },
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        }
+      ]
     }
   ],
   "grupos": [
@@ -1758,55 +1828,6 @@
             "año": 2021
           },
           "id": 2
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "nombre": "Sandia",
-      "participantes": [
-        7,
-        10,
-        12,
-        14,
-        13,
-        15,
-        17,
-        19,
-        20
-      ],
-      "estadisticasEntrenamiento": {
-        "semana": {
-          "km": 20,
-          "desnivel": 200
-        },
-        "mes": {
-          "km": 30,
-          "desnivel": 3000
-        },
-        "año": {
-          "km": 40,
-          "desnivel": 4000
-        }
-      },
-      "ranking": [],
-      "rutas_favoritas": [],
-      "historicoRutas": [
-        {
-          "fecha": {
-            "dia": 3,
-            "mes": 3,
-            "año": 2021
-          },
-          "id": 3
-        },
-        {
-          "fecha": {
-            "dia": 4,
-            "mes": 4,
-            "año": 2021
-          },
-          "id": 1
         }
       ]
     },
@@ -2004,34 +2025,60 @@
           "id": 3
         }
       ]
-    }
-  ],
-  "retos": [
+    },
     {
-      "id": 1,
-      "nombre": "Reto de Invierno",
-      "rutas": [
+      "id": 7,
+      "nombre": "Grupo 0",
+      "participantes": [
+        0,
         1,
         2,
         3,
         4,
-        5
-      ],
-      "tipo_actividad": "correr",
-      "km_totales": 0,
-      "usuarios": [
-        1,
-        3,
-        4,
+        5,
         6,
         7,
+        8,
         9,
-        11,
-        13,
-        17,
-        20
+        10
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 10,
+          "desnivel": 1000
+        },
+        "mes": {
+          "km": 20,
+          "desnivel": 2000
+        },
+        "año": {
+          "km": 30,
+          "desnivel": 3000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 1,
+            "mes": 1,
+            "año": 2021
+          },
+          "id": 1
+        },
+        {
+          "fecha": {
+            "dia": 2,
+            "mes": 2,
+            "año": 2021
+          },
+          "id": 2
+        }
       ]
-    },
+    }
+  ],
+  "retos": [
     {
       "id": 2,
       "nombre": "Reto de Verano",

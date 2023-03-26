@@ -74,9 +74,9 @@ const user0 = new Usuario("user0", "correr", [1,2,3], [[1,2],[3,4],[5,6]], estad
 
 describe('Usuario class tests', () => {
  // Getters - Setters
-  it('user0.getId returns 2', () => {
-    user0.setID = 2;
-    expect(user0.getID).to.be.eql(2);
+  it('user0.getId returns 30', () => {
+    user0.setID = 30;
+    expect(user0.getID).to.be.eql(30);
   });
 
   it('user0.getNombre returns "Juan"', () => {
@@ -119,12 +119,12 @@ describe('Usuario class tests', () => {
     expect(user0.getRetos).to.be.eql([1,2]);
   });
 
-  it('user0.getKMTotales 1000' , () => {
-    expect(user0.getKMTotales()).to.be.eql(10127);
+  it('user0.getKMTotales 12177', () => {
+    expect(user0.getKMTotales()).to.be.eql(12177);
   });
 
   it('Prueba Condición Id_global', () => {
-    const usuario_aux = new Usuario('Juan', "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+    const usuario_aux = new Usuario('Felipe Cuarto', "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
     const mi_coleccion = new usuarioCollection();
     mi_coleccion.borrarElementoBD(usuario_aux.getID);
     mi_coleccion.borrarElementoBD(user0.getID);

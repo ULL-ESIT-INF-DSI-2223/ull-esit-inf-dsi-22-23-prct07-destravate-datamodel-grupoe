@@ -36,9 +36,9 @@ const ruta0 = new Ruta('San Vicente', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1,
 
 describe('Ruta class tests', () => {
   // Getters - Setters
-  it('ruta0.getId returns 2', () => {
-    ruta0.setId = 2;
-    expect(ruta0.getId).to.be.eql(2);
+  it('ruta0.getId returns 30', () => {
+    ruta0.setId = 30;
+    expect(ruta0.getId).to.be.eql(30);
   });
 
   it('ruta0.getNombre returns "La Laguna"', () => {
