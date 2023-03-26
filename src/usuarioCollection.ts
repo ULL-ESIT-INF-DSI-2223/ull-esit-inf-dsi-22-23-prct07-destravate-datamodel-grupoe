@@ -168,9 +168,7 @@ export class usuarioCollection {
       const amigos_aux = answers.amigos.split(",");
       const historicoRutas_aux = answers.historicoRutas.split(",");
       const retos_aux = answers.retos.split(",");
-      // sacar grupos de amigos
       const grupos_aux = answers.grupo_de_amigos.split(";");
-      // sacar estadisticas
       const estadisticas_aux = [];
       estadisticas_aux.push(answers.estadisticas1.split(","));
       estadisticas_aux.push(answers.estadisticas2.split(","));
@@ -186,9 +184,7 @@ export class usuarioCollection {
         año: est3
       }
 
-      // crear usuario
       const user_aux = new Usuario(answers.nombre, answers.actividad, amigos_aux, grupos_aux, estadisticas, historicoRutas_aux, retos_aux);
-      // añadir usuario
       this.usuarios.push(user_aux);
       this.manageUsuarios();
     });
@@ -233,10 +229,6 @@ export class usuarioCollection {
    * @returns 
    */
   modificarUsuario(identificador: ID) {
-    // 1. comprobar que el id de la ruta existe
-    // 2. preguntar que se quiere modificar
-    // 3. modificarlo
-    // 4. devolver true si se ha modificado o false si no se ha modificado
     let id_existe_en_coleccion = false;
     let indice = -1;
     this.usuarios.forEach((user, index) => {
@@ -362,8 +354,6 @@ export class usuarioCollection {
                   this.usuarios.splice(indice, 1);
                   this.manageUsuarios();
                 });
-
-
               break;
 
               case 'nuevo':
@@ -443,7 +433,6 @@ export class usuarioCollection {
           });
           break;
         case 'estadisticas':
-          // solicitar kms y desnivel para semana mes y año
           prompt([
             {
               type: 'input',
@@ -527,13 +516,11 @@ export class usuarioCollection {
               message: 'Introduce el id de la ruta',
             }
           ]).then((answers) => {
-            // generar una fecha nueva
             const new_fecha = {
               dia: answers.dia,
               mes: answers.mes,
               año: answers.año,
             }
-            // crear un nuevo historico e insertarlo en el array de historicos de la clase
             const new_historico = {
               fecha: new_fecha,
               id: answers.id,
@@ -627,9 +614,7 @@ export class usuarioCollection {
      if (answers.opcion === 'descendente') {
        ascendente = false;
      }
-     // ordenar
      const copia_rutas = this.usuarios;
-     // ordenar de forma ascendete o descendente según el valor de la variable ascendente
      copia_rutas.sort((a, b) => {
        if (ascendente) {
          return a.getNombre.localeCompare(b.getNombre);
@@ -638,7 +623,6 @@ export class usuarioCollection {
          return b.getNombre.localeCompare(a.getNombre);
        }
      });
-     // mostrar
      copia_rutas.forEach((ruta) => {
        console.log(`Nombre: ${ruta.getNombre}`);
      });
@@ -666,9 +650,7 @@ export class usuarioCollection {
      if (answers.opcion === 'descendente') {
        ascendente = false;
      }
-     // ordenar
      const copia_rutas = this.usuarios;
-     // ordenar de forma ascendete o descendente según el valor de la variable ascendente
      copia_rutas.sort((a, b) => {
        if (ascendente) {
          return a.getEstadisticas.semana.km - b.getEstadisticas.semana.km;
@@ -705,9 +687,7 @@ export class usuarioCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.usuarios;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getEstadisticas.mes.km - b.getEstadisticas.mes.km;
@@ -744,9 +724,7 @@ export class usuarioCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.usuarios;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getEstadisticas.año.km - b.getEstadisticas.año.km;
@@ -755,7 +733,6 @@ export class usuarioCollection {
           return b.getEstadisticas.año.km - a.getEstadisticas.año.km;
         }
       });
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Kms anuales: ${ruta.getEstadisticas.año.km}`);
       });
@@ -796,7 +773,6 @@ export class usuarioCollection {
           this.ordenarPorKmsAnuales();
           break;
         case 'Salir':
-          // cerrar prompt
           process.exit(0);
           break;
       }

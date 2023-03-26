@@ -7,6 +7,9 @@ import { Grupo } from "./grupo";
 import { RetoCollection } from "./retoCollection";
 import { ID, estadistica, estadisticaEntrenamiento, logueado} from "./types";
 
+/**
+ * Variable global de tipo logueado, sirve para guardar los datos principales del usuario logueado.
+ */
 let loggedUser: logueado = {
   nombre: "",
   id: 0,
@@ -281,12 +284,6 @@ export class gestor {
                 message: "Introduce el ID del amigo que quieres añadir"
               }
             ]).then((respuesta) => {
-              // obtener usuario, el nombre está en logged
-              // const usuario_actual = coleccion_usuarios.getUsuarios.find((usuario) => {
-              //   return usuario.getNombre === loggedUser.nombre;
-              // });
-
-              // añadir amigo a la lista de amigos
               if (typeof usuario_actual !== 'undefined') {
                 usuario_actual.setAmigos = usuario_actual.getAmigos.concat(respuesta.nombre); // añadir amigo
                 // actualizar la base de datos
@@ -330,7 +327,6 @@ export class gestor {
                 }
               });
               usuario_actual.setAmigos = amigos_aux;
-              // actualizar la base de datos
               coleccion_usuarios.borrarElementoBD(usuario_actual.getID);
               const nuevo_usuario = new Usuario(usuario_actual.getNombre, usuario_actual.getActividad, usuario_actual.getAmigos, usuario_actual.getGrupoAmigos, usuario_actual.getEstadisticas, usuario_actual.getHistoricoRutas, usuario_actual.getRetos, usuario_actual.getID);
               coleccion_usuarios.getUsuarios.push(nuevo_usuario);
@@ -398,29 +394,20 @@ export class gestor {
         });
 
         if(typeof grupo_seleccionado !== 'undefined') {
-          // comprobar que el id no está en el grupo
           let bandera = false;
           grupo_seleccionado.getParticipantes.forEach((id) => {
-            // console.log("Id del usuario actual: " + loggedUser.id);
-            // console.log("ids de los usuarios del grupo:" + id)
             if (id === loggedUser.id) {
-              // console.log("Ya estás en este grupo");
               bandera = true;
-              // this.userManage();
             }
           });
           if (bandera === false) {
-            // INSERTAR AL USUARIO EN EL GRUPO
             grupo_seleccionado.setParticipantes = grupo_seleccionado.getParticipantes.concat(loggedUser.id);
-            // actualizar la base de datos
             grupos_coleccion.borrarElementoBD(grupo_seleccionado.getID);
             const nuevo_grupo = new Grupo(grupo_seleccionado.getNombre, grupo_seleccionado.getParticipantes, grupo_seleccionado.getEstadisticasEntrenamiento, grupo_seleccionado.getHistoricoRutas, grupo_seleccionado.getID);
             grupos_coleccion.getGrupos.push(nuevo_grupo);
             console.log();
 
-  
             console.log("Te has unido al grupo correctamente");
-            // mostrar tu id
             console.log("Tu ID: " + loggedUser.id);
             console.log("Grupo seleccionado: " + grupo_seleccionado.getNombre);
             console.log("Miembros: " + grupo_seleccionado.getParticipantes);
@@ -439,7 +426,6 @@ export class gestor {
    * Método que permite gestionar los grupos
    */
   gestionarGrupos() {
-    const coleccion_usuarios = new usuarioCollection();
     const coleccion_grupos = new GruposCollection();
     const prompt = inquirer.createPromptModule();
     // * ACLARACIÓN: Por defecto, consideramos que el dueño del grupo es el primer usuario que se encuentra en el grupo.
@@ -488,7 +474,7 @@ export class gestor {
         })
       }
     ]).then((respuesta) => {
-      // comprobar si el usuario es el propietario del grupo
+      // comprobamos si el usuario es el propietario del grupo
       const grupo_seleccionado = coleccion_grupos.getGrupos.find((grupo) => {
         return grupo.getNombre === respuesta.opcion;
       }
@@ -499,7 +485,6 @@ export class gestor {
       }
       else {
         if (grupo_seleccionado.getParticipantes[0] === loggedUser.id) {
-          // eliminar el grupo
           coleccion_grupos.borrarElementoBD(grupo_seleccionado.getID);
           console.log("Grupo eliminado correctamente");
           this.userManage();
@@ -518,7 +503,6 @@ export class gestor {
    */
   crearGrupo() {
     const prompt = inquirer.createPromptModule();
-    // solicitar parametros del grupo
     prompt([
       {
         type: 'input',
@@ -569,7 +553,7 @@ export class gestor {
         año: est3
       }
 
-      // COMPROBAR QUE EL GRUPO NO EXISTE EN LA BASE DE DATOS
+      // Comprobamos que el grupo no exista en la base de datos.
       const coleccion_grupos = new GruposCollection();
       const grupo = coleccion_grupos.getGrupos.find((grupo) => {
         return grupo.getNombre === answers.nombre;

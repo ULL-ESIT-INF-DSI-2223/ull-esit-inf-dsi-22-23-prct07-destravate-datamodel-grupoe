@@ -14,7 +14,7 @@ export class Grupo {
   private participantes_: ID[];
   private estadisticasEntrenamiento_: estadisticaEntrenamiento;
   private ranking_: ID[];
-  private rutas_favoritas_ : ID[]; //? EXPLICAR EN EL INFORME QUE HEMOS DECIDIDO HACER UN ARRAY DE RUTAS PARA REALIZARLO DE LA MISMA MANERA QUE LA CLASE USUARIO
+  private rutas_favoritas_ : ID[];
   private historicoRutas_: historicoRutas[];
   
   /**
@@ -44,7 +44,7 @@ export class Grupo {
         this.id_ = id;
       }
       else {
-        // buscar el id más alto y sumarle 1
+        // se busca el id más alto y se le suma 1
         const id_global = database.get("grupos").map("id").value();
         id_global.sort((a, b) => a - b);
         if (id_global.length === 0) {

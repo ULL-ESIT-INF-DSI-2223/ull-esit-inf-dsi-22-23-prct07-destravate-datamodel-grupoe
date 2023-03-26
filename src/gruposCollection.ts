@@ -96,9 +96,7 @@ export class GruposCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_grupos = this.grupos_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_grupos.sort((a, b) => {
         if (ascendente) {
           return a.getNombre.localeCompare(b.getNombre);
@@ -107,9 +105,9 @@ export class GruposCollection {
           return b.getNombre.localeCompare(a.getNombre);
         }
       });
-      // mostrar
+      console.log("Grupos: ")
       copia_grupos.forEach((ruta) => {
-        console.log(`Nombre: ${ruta.getNombre}`);
+        console.log(ruta.getNombre);
       });
       this.infoGrupo();
     });
@@ -135,9 +133,7 @@ export class GruposCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_grupos = this.grupos_
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_grupos.sort((a, b) => {
         if (ascendente) {
           return a.getEstadisticasEntrenamiento.semana.km - b.getEstadisticasEntrenamiento.semana.km;
@@ -174,9 +170,7 @@ export class GruposCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_grupos = this.grupos_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_grupos.sort((a, b) => {
         if (ascendente) {
           return a.getEstadisticasEntrenamiento.mes.km - b.getEstadisticasEntrenamiento.mes.km;
@@ -185,7 +179,6 @@ export class GruposCollection {
           return b.getEstadisticasEntrenamiento.mes.km - a.getEstadisticasEntrenamiento.mes.km;
         }
       });
-      // mostrar
       copia_grupos.forEach((ruta) => {
         console.log(`Kms mensuales: ${ruta.getEstadisticasEntrenamiento.mes.km}`);
       });
@@ -213,9 +206,7 @@ export class GruposCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_grupos = this.grupos_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_grupos.sort((a, b) => {
         if (ascendente) {
           return a.getEstadisticasEntrenamiento.año.km - b.getEstadisticasEntrenamiento.año.km;
@@ -252,9 +243,7 @@ export class GruposCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_grupos = this.grupos_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_grupos.sort((a, b) => {
         if (ascendente) {
           return a.getParticipantes.length - b.getParticipantes.length;
@@ -302,7 +291,6 @@ export class GruposCollection {
           this.promptModificarGrupo();
           break;
         case 'Salir':
-          // cerrar prompt
           process.exit(0);
           break;
       }
@@ -326,7 +314,8 @@ export class GruposCollection {
         )
       }
     ]).then((answers) => {
-      this.modificarGrupo(answers.opcion);    });
+      this.modificarGrupo(answers.opcion);    
+    });
   }
 
   /**
@@ -349,10 +338,6 @@ export class GruposCollection {
    * @returns 
    */
   modificarGrupo(identificador: ID) {
-    // 1. comprobar que el id de la ruta existe
-    // 2. preguntar que se quiere modificar
-    // 3. modificarlo
-    // 4. devolver true si se ha modificado o false si no se ha modificado
     let id_existe_en_coleccion = false;
     let indice = -1;
     this.grupos_.forEach((grp, index) => {
@@ -400,7 +385,6 @@ export class GruposCollection {
           );
           break;
         case 'participantes':
-          // preguntar que se quiere hacer si añadir o eliminar participantes
           prompt([
             {
               type: 'list',
@@ -483,7 +467,6 @@ export class GruposCollection {
               message: 'Introduce el desnivel del año',
             }
           ]).then((answers5) => {
-            // generar 3 estadisticas con los nuevos datos
             const new_estadistica_semana: estadistica = {
               km: answers5.kms_semana,
               desnivel: answers5.desnivel_semana,
@@ -496,7 +479,6 @@ export class GruposCollection {
               km: answers5.kms_año,
               desnivel: answers5.desnivel_año,
             }
-            // crear un nuevo array de estadisticas e insertarlo en el array de estadisticas de la clase
             const new_estadisticas: estadisticaEntrenamiento = {
               semana: new_estadistica_semana,
               mes: new_estadistica_mes,
@@ -540,12 +522,10 @@ export class GruposCollection {
               mes: answers.mes,
               año: answers.año,
             }
-            // crear un nuevo historico e insertarlo en el array de historicos de la clase
             const new_historico = {
               fecha: new_fecha,
               id: answers.id,
             }
-            // añadirlo y modificar la base de datos
             this.grupos_[indice].getHistoricoRutas.push(new_historico);
             this.borrarElementoBD(identificador);
             const ruta_aux = new Grupo(this.grupos_[indice].getNombre, this.grupos_[indice].getParticipantes, this.grupos_[indice].getEstadisticasEntrenamiento, this.grupos_[indice].getHistoricoRutas, this.grupos_[indice].getID);
@@ -554,7 +534,6 @@ export class GruposCollection {
             this.manageGrupos();
           });
           break;
-        
       }
     });
   }
@@ -588,7 +567,6 @@ export class GruposCollection {
     let grupo_aux: Grupo | undefined;
 
     this.grupos_.forEach((grupo, indice) => {
-
       if (grupo.getID == identificador) {
         grupo_aux = grupo;
         this.grupos_.splice(indice, 1);
@@ -642,7 +620,6 @@ export class GruposCollection {
         message: 'Introduce el histórico de rutas del grupo: "id1,id2,..."',
       },
     ]).then((answers) => {
-      // sacar participantes
       const participantes: ID[] = answers.participantes.split(',');
       const estadisticas_aux = [];
       const historico2 = answers.historico.split(',');

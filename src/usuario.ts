@@ -38,7 +38,6 @@ export class Usuario {
     this.historicoRutas_ = historico_rutas;
     this.obtenerRutasFavoritas();
     this.estadisticas_ = estadisticas;
-    //this.obtenerEstadisticas();
 
     const id_global = database.get("usuarios").map("nombre").value();
     if (id_global.includes(this.nombre_)) {
@@ -49,9 +48,6 @@ export class Usuario {
         this.id_ = id;
       }
       else {
-        /**
-         * Buscar el id más alto y sumarle 1
-         */
         const id_global = database.get("usuarios").map("id").value();
         id_global.sort((a, b) => a - b);
         if (id_global.length === 0) {
@@ -229,20 +225,15 @@ export class Usuario {
    * Método que calcula las rutas favoritas del usuario
    */
   obtenerRutasFavoritas(): void {
-    // recorrer histórico, contar el número de veces que se repite cada id de ruta y si se repite mas de 2 veces lo metemos en rutas fav
     const historico = this.historicoRutas_;
     const rutasFav = [];
     const rutas = [];
     for (let i = 0; i < historico.length; i++) {
       rutas.push(historico[i].id);
-    }
-    // ordenamos por id    
+    } 
     rutas.sort((a, b) => a - b);
-    // recorremos el array de rutas y contamos cuantas veces se repite cada id
     let cont = 1;
     for (let i = 0; i < rutas.length; i++) {
-      // si el id es igual al siguiente, incrementamos el contador
-      // si ya no es igual, metemos en rutas fav si cumple
       if (rutas[i] == rutas[i + 1]) {
         cont++;
       } 
@@ -253,8 +244,6 @@ export class Usuario {
         cont = 1;
       }
     }
-    // guardamos las rutas favoritas en el usuario
-    // console.log('RUTAS FAVORITAS: ' + rutasFav)
     this.setRutasFavoritas = rutasFav;
   }
 
@@ -263,7 +252,6 @@ export class Usuario {
    * @returns número de km totales recorridos por el usuario
    */
   getKMTotales(): number {
-    // para cada ruta del histórico, sacar id y buscar esa ruta, obtener los km y sumarlos
     const historico = this.historicoRutas_;
     let kmTotales = 0;
     for (let i = 0; i < historico.length; i++) {

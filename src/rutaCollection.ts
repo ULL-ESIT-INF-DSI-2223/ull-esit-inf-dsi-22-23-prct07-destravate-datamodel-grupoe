@@ -136,7 +136,6 @@ export class rutaCollection {
       }
     ]).then((answers) => {
       this.modificarRuta(answers.id);
-      // this.manageRutas();
     });
   }
 

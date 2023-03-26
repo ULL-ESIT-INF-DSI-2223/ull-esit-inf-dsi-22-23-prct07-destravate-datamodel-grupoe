@@ -30,8 +30,6 @@ export class Reto {
     this.km_totales_ = km_totales;
     this.usuarios_ = usuarios;
 
-
-    //* escribir en lowdb el reto creado
     const id_global = database.get("retos").map("nombre").value();
     if (id_global.includes(this.nombre_)) {
       this.id_ = database.get("retos").find({ nombre: this.nombre_ }).value().id;
@@ -66,17 +64,22 @@ export class Reto {
    * Método que devuelve el número total de km de todas las rutas.
    * @returns KM totales de todas las rutas
    */
-  // public kmTotales(): number {
-  //   // calcular los km totales de todas las rutas
-  //   let km_totales = 0;
-  //   for (let i = 0; i < this.rutas_.length; i++) {
-  //     // obtener ruta con este identificador
-  //     const ruta = database.get("rutas").find({ id: this.rutas_[i] }).value();
-  //     km_totales += ruta.longitud;
-  //     // km_totales += this.rutas_[i].getLongitud;
-  //   }
-  //   return km_totales;
-  // }
+  public kmTotales(): number {
+    // calcular los km totales de todas las rutas
+    let km_totales = 0;
+    const rutas = database.get("rutas").value();
+    // recorrer todas las rutas
+    for (let i = 0; i < rutas.length; i++) {
+      // si la ruta está en el reto
+      this.rutas_.forEach((ruta) => {
+        if (ruta === rutas[i].id) {
+          km_totales += rutas[i].longitud;
+        }
+      }
+      );
+    }
+    return km_totales;
+  }
 
   //* getter y setter
 

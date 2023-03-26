@@ -442,9 +442,15 @@ A continuación tenemos el `userManage()` utilizado para la administración de u
 - Gestionar grupos.
 - Salir
 
+Después tenemos los métodos `listarUsuarios()` y `modificarAmigos()`, donde `listarUsuarios()` muestra por pantalla los usuarios presentes en el `Lowdb`, y `modificarAmigos()` en primer lugar le pregunta al usuario que acción desea realizar para en función de la misma realizar los cambios:
+
+- Añadir amigo.
+- Eliminar amigo.
+- Salir.
+
 ## Referencias
 
-[Guón de la práctica 7](https://ull-esit-inf-dsi-2223.github.io/prct07-destravate-dataModel/)
+[Guión de la práctica 7](https://ull-esit-inf-dsi-2223.github.io/prct07-destravate-dataModel/)
 
 
 
