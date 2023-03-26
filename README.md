@@ -2,7 +2,7 @@
 
 En esta práctica se ha llevado a cabo un diseño orientado a objetos del modelo de datos de un sistema de información que permita almacenar registros de actividades deportivas. Para la resolución de este ejercicio se han desarrollado un total de 8 clases junto con un conjunto de tipos y una base de datos, donde para cada una de ellas se han desarrollado pruebas las cuales se pueden observar en el coverage: 
 
-# Insertar Coveralls
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe?branch=main)
 
 Cabe destacar por una parte el uso de `schemaType`, que es un tipo que representa el esquema del `Lowdb` para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado. Por otra parte no se han realizado tests en las clases _XCollection_ puesto a que la mayoria de los métodos llaman a `infoX()` o `manageX()` para el correcto funcionamiento del sistema y además, hacen uso del prompt, por lo tanto no se pueden ejecutar con tests. Esta medida se llevó acabo para evitar un porcentaje de cubrimiento bajo relacionado con los ficheros mencionados anteriormente. 
 
