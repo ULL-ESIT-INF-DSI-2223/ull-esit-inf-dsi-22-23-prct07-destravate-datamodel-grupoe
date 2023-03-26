@@ -1,8 +1,11 @@
 import * as inquirer from "inquirer";
-import { database } from "./bd";
 import { Usuario } from "./usuario";
 import { usuarioCollection } from "./usuarioCollection";
-import {estadistica, estadisticaEntrenamiento, logueado} from "./types";
+import { rutaCollection } from "./rutaCollection";
+import { GruposCollection } from "./gruposCollection";
+import { Grupo } from "./grupo";
+import { RetoCollection } from "./retoCollection";
+import { ID, estadistica, estadisticaEntrenamiento, logueado} from "./types";
 
 let loggedUser: logueado = {
   nombre: "",
@@ -11,25 +14,9 @@ let loggedUser: logueado = {
 }
 
 export class gestor {
-  //1.Registrarse en el sistema. Un usuario que se conecte por primera vez al sistema deberá poder incluir 
-  // su información para ser almacenada en el sistema. Asimismo, un usuario podrá visualizar el listado 
-  // de usuarios existentes dentro del sistema y añadir/borrar amigos.
-
-  //2.Visualizar todas las rutas existentes dentro del sistema. En este apartado se deben poder consultar 
-  //el listado de rutas así como acceder a la información completa de cada una de ellas.
-
-  //3.Unirse a un grupo existente. Este apartado considera la opción de un usuario que desea incluirse dentro de un 
-  //grupo ya existente en el sistema.
-
-  //4.Visualizar, crear y borrar grupos. Un usuario podrá borrar un grupo, pero solo si esta ha sido creado por él, 
-  // es decir, no se podrá borrar un grupo pre-cargado en el sistema. Por otro lado, los grupos se podrán guardar usando 
-  // el mismo sistema empleado para guardar la información cargada en el sistema. Por último, considere que en 
-  // posteriores conexiones al sistema, el usuario podrá desear borrar un grupo que haya creado anteriormente. Debido 
-  // a esto, se deberá distinguir entre los grupos creados por el usuario y los creados por el sistema con el 
-  // objetivo de evitar borrar información sin permiso.
-
-
-  
+  /**
+   * Método que registra un usuario en el sistema
+   */
   registrarUsuario(): void {
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -122,6 +109,9 @@ export class gestor {
     });
   }
 
+  /**
+   * Método para iniciar sesión en el sistema
+   */
   iniciarSesion(): void {
     const prompt = inquirer.createPromptModule();
     // obtener usuarios
@@ -149,7 +139,7 @@ export class gestor {
           id: usuario_actual.getID,
           logued: true
         }
-        this.programaPrincipal();
+        this.userManage();
       }
       else {
         console.log("Error!, el usuario no existe en la base de datos");
@@ -160,7 +150,7 @@ export class gestor {
   }
 
   /**
-   * 
+   *  Método para el manejo del programa principal
    */
   programaPrincipal() {
     const prompt = inquirer.createPromptModule();
@@ -172,7 +162,8 @@ export class gestor {
         choices: [
           "Registrarse en el sistema",
           "Iniciar sesión",
-          "salir"
+          "Funcionamiento del sistema",
+          "Salir"
         ]
       }
     ]).then((respuesta) => {
@@ -183,12 +174,518 @@ export class gestor {
         case "Iniciar sesión":
           this.iniciarSesion();
           break;
+        case "Funcionamiento del sistema":
+          this.funcionamientoSistema();
+          break;
         case "salir":
           console.log("Hasta pronto");
           process.exit(0);
           break;
       }
     });
+  }
+
+  /**
+   * Método para el manejo de usuarios
+   */
+  userManage() {
+    // 1. ver listado de usuario dentro del sistema
+    // 2. Añadir y borrar amigo
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué desea hacer?",
+        choices: [
+          "Ver listado de usuarios",
+          "Modificar mis amigos",
+          "Visualizar rutas",
+          "Unirse a un grupo",
+          "Gestionar grupos",
+          "Salir"
+        ]
+      }]).then((respuesta) => {
+        switch (respuesta.opcion) {
+          case "Ver listado de usuarios":
+            // mostrar todos los usuarios del sistema
+            this.listarUsuarios();
+            break;
+          case "Modificar mis amigos":
+            // añadir y borrar amigos
+            this.modificarAmigos();
+            break;
+          case "Visualizar rutas":
+            this.verRutas();
+            break;
+          case "Unirse a un grupo":
+            this.unirseGrupo();
+            break;
+          case "Gestionar grupos":
+            this.gestionarGrupos();
+            break;
+          case "Salir":
+            console.log("Hasta pronto");
+            process.exit(0);
+            break;
+        }
+      });
+  }
+
+  /**
+   * Método que permite al usuario ver los usuarios de la base de datos
+   */
+  listarUsuarios() {
+    console.log("Usuarios: ");
+    const coleccion_usuarios = new usuarioCollection();
+    coleccion_usuarios.getUsuarios.forEach((usuario) => {
+      console.log(usuario.getNombre);
+    });
+    console.log();
+    this.userManage();
+  }
+  
+  /**
+   * Método que permite al usuario añadir o eliminar amigos
+   */
+  modificarAmigos() {
+    // cogemos del usuario que ha iniciado sesión su grupo de amigos de la base de datos
+    const coleccion_usuarios = new usuarioCollection();
+    const prompt = inquirer.createPromptModule();
+    // preguntar si quiere añadir o eliminar amigo
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué desea hacer?",
+        choices: [
+          "Añadir amigo",
+          "Eliminar amigo",
+          "Salir"
+        ]
+      }]).then((respuesta) => {
+
+        const usuario_actual = coleccion_usuarios.getUsuarios.find((usuario) => {
+          return usuario.getNombre === loggedUser.nombre;
+        });
+        switch (respuesta.opcion) {
+          case "Añadir amigo":
+            prompt([
+              {
+                type: "input",
+                name: "nombre",
+                message: "Introduce el ID del amigo que quieres añadir"
+              }
+            ]).then((respuesta) => {
+              // obtener usuario, el nombre está en logged
+              // const usuario_actual = coleccion_usuarios.getUsuarios.find((usuario) => {
+              //   return usuario.getNombre === loggedUser.nombre;
+              // });
+
+              // añadir amigo a la lista de amigos
+              if (typeof usuario_actual !== 'undefined') {
+                usuario_actual.setAmigos = usuario_actual.getAmigos.concat(respuesta.nombre); // añadir amigo
+                // actualizar la base de datos
+                coleccion_usuarios.borrarElementoBD(usuario_actual.getID);
+                const nuevo_usuario = new Usuario(usuario_actual.getNombre, usuario_actual.getActividad, usuario_actual.getAmigos, usuario_actual.getGrupoAmigos, usuario_actual.getEstadisticas, usuario_actual.getHistoricoRutas, usuario_actual.getRetos, usuario_actual.getID);
+                coleccion_usuarios.getUsuarios.push(nuevo_usuario);
+                console.log("Amigo añadido correctamente");
+                this.userManage();
+              }
+            });
+            break;
+          case "Eliminar amigo":
+            
+            if (typeof usuario_actual === 'undefined') {
+              console.log("Error!, el usuario no existe en la base de datos");
+              process.exit(0);
+            }
+            if(usuario_actual.getAmigos.length === 0) {
+              console.log("No tienes amigos");
+              this.userManage();
+            }
+            
+            prompt([
+              {
+                type: "list",
+                name: "nombre",
+                message: "Elige el ID del amigo que quieres eliminar",
+                choices: usuario_actual.getAmigos.map((amigo) => {
+                  return {name: amigo, value: amigo};
+                }
+                )
+                
+
+              }
+            ]).then((respuesta) => {
+              // eliminar amigo de la lista de amigos
+              const amigos_aux: number[] = usuario_actual.getAmigos;
+              amigos_aux.forEach((amigo, index) => {
+                if (amigo === respuesta.nombre) {
+                  amigos_aux.splice(index, 1);
+                }
+              });
+              usuario_actual.setAmigos = amigos_aux;
+              // actualizar la base de datos
+              coleccion_usuarios.borrarElementoBD(usuario_actual.getID);
+              const nuevo_usuario = new Usuario(usuario_actual.getNombre, usuario_actual.getActividad, usuario_actual.getAmigos, usuario_actual.getGrupoAmigos, usuario_actual.getEstadisticas, usuario_actual.getHistoricoRutas, usuario_actual.getRetos, usuario_actual.getID);
+              coleccion_usuarios.getUsuarios.push(nuevo_usuario);
+              console.log("Amigo eliminado correctamente");
+              this.userManage();
+            });
+            break;
+        }
+      });
+  }
+  
+  /**
+   * Muestra las rutas disponibles en la base de datos
+   */
+  verRutas() {
+    const prompt = inquirer.createPromptModule();
+    const rutas_coleccion = new rutaCollection();
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué ruta desea seleccionar?",
+        choices: rutas_coleccion.getRutas.map((ruta) => {
+          return {name: ruta.getNombre, value: ruta.getNombre};
+        }
+        )
+      }]).then((respuesta) => {
+        const ruta_seleccionada = rutas_coleccion.getRutas.find((ruta) => {
+          return ruta.getNombre === respuesta.opcion;
+        });
+
+        if(typeof ruta_seleccionada !== 'undefined') {
+          console.log("Ruta seleccionada: " + ruta_seleccionada.getNombre);
+          console.log('Geolocalizacion inicial:  ' + ruta_seleccionada.getGeolocalizacionInicio[0].letra + ": " + ruta_seleccionada.getGeolocalizacionInicio[0].coordenada + ', ' + ruta_seleccionada.getGeolocalizacionInicio[1].letra + ": " +  ruta_seleccionada.getGeolocalizacionInicio[1].coordenada + ', ' + ruta_seleccionada.getGeolocalizacionInicio[2].letra + ": " +  ruta_seleccionada.getGeolocalizacionInicio[2].coordenada);
+          console.log('Geolocalizacion final:  ' + ruta_seleccionada.getGeolocalizacionFin[0].letra + ':' + ruta_seleccionada.getGeolocalizacionFin[0].coordenada + ', ' + ruta_seleccionada.getGeolocalizacionFin[1].letra + ':' + ruta_seleccionada.getGeolocalizacionFin[1].coordenada + ', ' + ruta_seleccionada.getGeolocalizacionFin[2].letra + ": " +  ruta_seleccionada.getGeolocalizacionFin[2].coordenada);
+          console.log("Longitud: " + ruta_seleccionada.getLongitud);
+          console.log("Desnivel: " + ruta_seleccionada.getDesnivel);
+          console.log("Participantes: " + ruta_seleccionada.getUsuarios);
+          console.log("Actividad: " + ruta_seleccionada.getTipoActividad);
+          console.log('Calificación ruta:' + ruta_seleccionada.getCalificacion);
+          console.log();
+        }
+        this.userManage();
+      });
+  }
+
+  /**
+   * Método que permite al usuario unirse a un grupo
+   */
+  unirseGrupo() {
+    const prompt = inquirer.createPromptModule();
+    const grupos_coleccion = new GruposCollection();
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿A qué grupo desea unirse?",
+        choices: grupos_coleccion.getGrupos.map((grupo) => {
+          return {name: grupo.getNombre, value: grupo.getNombre};
+        }
+        )
+      }]).then((respuesta) => {
+        const grupo_seleccionado = grupos_coleccion.getGrupos.find((grupo) => {
+          return grupo.getNombre === respuesta.opcion;
+        });
+
+        if(typeof grupo_seleccionado !== 'undefined') {
+          // comprobar que el id no está en el grupo
+          let bandera = false;
+          grupo_seleccionado.getParticipantes.forEach((id) => {
+            // console.log("Id del usuario actual: " + loggedUser.id);
+            // console.log("ids de los usuarios del grupo:" + id)
+            if (id === loggedUser.id) {
+              // console.log("Ya estás en este grupo");
+              bandera = true;
+              // this.userManage();
+            }
+          });
+          if (bandera === false) {
+            // INSERTAR AL USUARIO EN EL GRUPO
+            grupo_seleccionado.setParticipantes = grupo_seleccionado.getParticipantes.concat(loggedUser.id);
+            // actualizar la base de datos
+            grupos_coleccion.borrarElementoBD(grupo_seleccionado.getID);
+            const nuevo_grupo = new Grupo(grupo_seleccionado.getNombre, grupo_seleccionado.getParticipantes, grupo_seleccionado.getEstadisticasEntrenamiento, grupo_seleccionado.getHistoricoRutas, grupo_seleccionado.getID);
+            grupos_coleccion.getGrupos.push(nuevo_grupo);
+            console.log();
+
+  
+            console.log("Te has unido al grupo correctamente");
+            // mostrar tu id
+            console.log("Tu ID: " + loggedUser.id);
+            console.log("Grupo seleccionado: " + grupo_seleccionado.getNombre);
+            console.log("Miembros: " + grupo_seleccionado.getParticipantes);
+            this.userManage();
+          }
+          else {
+            console.log("Ya estás en este grupo");
+            this.userManage();
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * Método que permite gestionar los grupos
+   */
+  gestionarGrupos() {
+    const coleccion_usuarios = new usuarioCollection();
+    const coleccion_grupos = new GruposCollection();
+    const prompt = inquirer.createPromptModule();
+    // * ACLARACIÓN: Por defecto, consideramos que el dueño del grupo es el primer usuario que se encuentra en el grupo.
+    // * De esta forma, si el propietario se va del grupo, el dueño del grupo será el siguiente usuario que se encuentre en el grupo.
+
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué desea hacer?",
+        choices: ["Crear grupo", "Eliminar grupo", "Ver grupos", "Salir"]
+      }]).then((respuesta) => {
+        switch (respuesta.opcion) {
+          case "Crear grupo":
+            this.crearGrupo();
+            break;
+          case "Eliminar grupo":
+            this.eliminarGrupo();
+            break;
+          case "Ver grupos":
+            coleccion_grupos.getGrupos.forEach((grupo) => {
+              console.log("Nombre del grupo: " + grupo.getNombre);
+            });
+            this.userManage();
+            break;
+          case "Salir":
+            process.exit(0);
+            break;
+        }
+      });
+  }
+
+  /**
+   * Método que permite eliminar un grupo
+   */
+  eliminarGrupo () {
+    const prompt = inquirer.createPromptModule();
+    const coleccion_grupos = new GruposCollection();
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué grupo desea eliminar?",
+        choices: coleccion_grupos.getGrupos.map((grupo) => {
+          return {name: grupo.getNombre, value: grupo.getNombre};
+        })
+      }
+    ]).then((respuesta) => {
+      // comprobar si el usuario es el propietario del grupo
+      const grupo_seleccionado = coleccion_grupos.getGrupos.find((grupo) => {
+        return grupo.getNombre === respuesta.opcion;
+      }
+      );
+      if (typeof grupo_seleccionado === 'undefined') {
+        console.log("No existe el grupo");
+        this.userManage();
+      }
+      else {
+        if (grupo_seleccionado.getParticipantes[0] === loggedUser.id) {
+          // eliminar el grupo
+          coleccion_grupos.borrarElementoBD(grupo_seleccionado.getID);
+          console.log("Grupo eliminado correctamente");
+          this.userManage();
+        }
+        else {
+          console.log("No es propietario del grupo, no puedo realizar esta acción");
+          this.userManage();
+        }
+      }
+    });
+  
+  }
+  
+  /**
+   * Método que permite crear un grupo
+   */
+  crearGrupo() {
+    const prompt = inquirer.createPromptModule();
+    // solicitar parametros del grupo
+    prompt([
+      {
+        type: 'input',
+        name: 'nombre',
+        message: 'Introduce el nombre del grupo',
+      },
+      {
+        type: 'input',
+        name: 'participantes',
+        message: 'Introduce los participantes del grupo "id1,id2,...". NOTA: Recuerde poner su id primero para ser el admin del grupo',
+      },
+      {
+        type: 'input',
+        name: 'estadisticas1',
+        message: 'Introduce las estadísticas de la semana: "km,desnivel"',
+      },
+      {
+        type: 'input',
+        name: 'estadisticas2',
+        message: 'Introduce las estadísticas del mes: "km,desnivel"',
+      },
+      {
+        type: 'input',
+        name: 'estadisticas3',
+        message: 'Introduce las estadísticas del año: "km,desnivel"',
+      },
+      {
+        type: 'input',
+        name: 'historico',
+        message: 'Introduce el histórico de rutas del grupo: "id1,id2,..."',
+      },
+    ]).then((answers) => {
+      const participantes: ID[] = answers.participantes.split(',');      
+        
+      const estadisticas_aux = [];
+      const historico2 = answers.historico.split(',');
+      estadisticas_aux.push(answers.estadisticas1.split(","));
+      estadisticas_aux.push(answers.estadisticas2.split(","));
+      estadisticas_aux.push(answers.estadisticas3.split(","));
+      
+      const est1: estadistica = {km: parseInt(estadisticas_aux[0][0]), desnivel: parseInt(estadisticas_aux[0][1])};
+      const est2: estadistica = {km: parseInt(estadisticas_aux[1][0]), desnivel: parseInt(estadisticas_aux[1][1])};
+      const est3: estadistica = {km: parseInt(estadisticas_aux[2][0]), desnivel: parseInt(estadisticas_aux[2][1])};
+
+      const estadisticas: estadisticaEntrenamiento = {
+        semana: est1,
+        mes: est2,
+        año: est3
+      }
+
+      // COMPROBAR QUE EL GRUPO NO EXISTE EN LA BASE DE DATOS
+      const coleccion_grupos = new GruposCollection();
+      const grupo = coleccion_grupos.getGrupos.find((grupo) => {
+        return grupo.getNombre === answers.nombre;
+      }
+      );
+      if (typeof grupo === 'undefined') {
+        // crear el grupo
+        const nuevo_grupo = new Grupo(answers.nombre, participantes, estadisticas, historico2);
+        this.userManage();
+      } else {
+        console.log("El grupo ya existe");
+        this.userManage();
+      }
+    });
+  }
+
+  /**
+   * Método que permite gestionar el funcionamiento del programa 
+   */
+  funcionamientoSistema() {
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        type: "list",
+        name: "opcion",
+        message: "¿Qué desea hacer?",
+        choices: ["Gestionar rutas", "Gestionar usuarios", "Gestionar grupos", "Gestionar Retos", "Salir"]
+      }]).then((respuesta) => {
+        const mis_rutas = new rutaCollection();
+        const mis_grupos = new GruposCollection();
+        const mis_usuarios = new usuarioCollection();
+        const mis_retos = new RetoCollection();
+        switch(respuesta.opcion) {
+          case "Gestionar rutas":
+            prompt([
+              {
+                type: "list",
+                name: "opcion",
+                message: "¿Qué desea hacer?",
+                choices: ["Ver información de las rutas", "Modificar Rutas","Salir"]
+              }]).then((respuesta) => {
+                switch(respuesta.opcion) {
+                  case "Ver información de las rutas":
+                    mis_rutas.infoRutas();
+                    break;
+                  case "Modificar Rutas":
+                    mis_rutas.manageRutas();
+                    break;
+                  case "Salir":
+                    process.exit(0);
+                    break;
+                }});
+          break;
+
+          case "Gestionar usuarios":
+            prompt([
+              {
+                type: "list",
+                name: "opcion",
+                message: "¿Qué desea hacer?",
+                choices: ["Ver información de los usuarios", "Modificar Usuarios","Salir"]
+              }]).then((respuesta) => {
+                switch(respuesta.opcion) {
+                  case "Ver información de los usuarios":
+                    mis_usuarios.infoUsuario();
+                    break;
+                  case "Modificar Usuarios":
+                    mis_usuarios.manageUsuarios();
+                    break;
+                  case "Salir":
+                    process.exit(0);
+                    break;
+                }});
+
+          break;
+
+          case "Gestionar grupos":
+            prompt([
+              {
+                type: "list",
+                name: "opcion",
+                message: "¿Qué desea hacer?",
+                choices: ["Ver información de los grupos", "Modificar Grupos","Salir"]
+              }]).then((respuesta) => {
+                switch(respuesta.opcion) {
+                  case "Ver información de los grupos":
+                    mis_grupos.infoGrupo();
+                    break;
+                  case "Modificar Grupos":
+                    mis_grupos.manageGrupos();
+                    break;
+                  case "Salir":
+                    process.exit(0);
+                    break;
+                }});
+
+          break;
+
+          case "Gestionar Retos":
+            prompt([
+              {
+                type: "list",
+                name: "opcion",
+                message: "¿Qué desea hacer?",
+                choices: ["Ver información de los retos", "Modificar Retos","Salir"]
+              }]).then((respuesta) => {
+                switch(respuesta.opcion) {
+                  case "Ver información de los retos":
+                    mis_retos.infoReto();
+                    break;
+                  case "Modificar Retos":
+                    mis_retos.manageRetos();
+                    break;
+                  case "Salir":
+                    process.exit(0);
+                    break;
+                }});
+          break;
+        }
+      });
   }
 }
 

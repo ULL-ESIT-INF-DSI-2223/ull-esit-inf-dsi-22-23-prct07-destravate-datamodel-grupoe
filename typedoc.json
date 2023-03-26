@@ -1,13 +1,14 @@
 {
   "entryPoints": [
-    "./src/ejercicio-1.ts",
-    "./src/ejercicio-2.ts",
-    "./src/ejercicio-3.ts",
-    "./src/ejercicio-4.ts",
-    "./src/ejercicio-5.ts",
-    "./src/ejercicio-6.ts",
-    "./src/ejercicio-7.ts",
-    "./src/ejercicio-8.ts"       
+    "./src/ruta.ts",
+    "./src/usuario.ts",
+    "./src/grupo.ts",
+    "./src/reto.ts",
+    "./src/rutaCollection.ts",
+    "./src/usuarioCollection.ts",
+    "./src/gruposCollection.ts",
+    "./src/retoCollection.ts",
+    "./src/gestor.ts"
   ], 
   "out": "./docs"
 }

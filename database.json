@@ -1,46 +1,6 @@
 {
   "rutas": [
     {
-      "id": 1,
-      "nombre": "San Vicente",
-      "geolocalizacion_inicio": [
-        {
-          "letra": "X",
-          "coordenada": 10
-        },
-        {
-          "letra": "Y",
-          "coordenada": 20
-        },
-        {
-          "letra": "Z",
-          "coordenada": 30
-        }
-      ],
-      "geolocalizacion_fin": [
-        {
-          "letra": "X",
-          "coordenada": 12435
-        },
-        {
-          "letra": "Y",
-          "coordenada": 1234325436
-        },
-        {
-          "letra": "Z",
-          "coordenada": 1232
-        }
-      ],
-      "longitud": 1000,
-      "desnivel": 200,
-      "usuarios": [
-        1,
-        2
-      ],
-      "tipo_actividad": "correr",
-      "calificacion": 9
-    },
-    {
       "id": 2,
       "nombre": "Plaza el charco",
       "geolocalizacion_inicio": [
@@ -122,6 +82,46 @@
       ],
       "tipo_actividad": "correr",
       "calificacion": 8
+    },
+    {
+      "id": 1,
+      "nombre": "San Vicente",
+      "geolocalizacion_inicio": [
+        {
+          "letra": "X",
+          "coordenada": 10
+        },
+        {
+          "letra": "Y",
+          "coordenada": 20
+        },
+        {
+          "letra": "Z",
+          "coordenada": 30
+        }
+      ],
+      "geolocalizacion_fin": [
+        {
+          "letra": "X",
+          "coordenada": 12435
+        },
+        {
+          "letra": "Y",
+          "coordenada": 1234325436
+        },
+        {
+          "letra": "Z",
+          "coordenada": 1232
+        }
+      ],
+      "longitud": 1000,
+      "desnivel": 200,
+      "usuarios": [
+        1,
+        2
+      ],
+      "tipo_actividad": "correr",
+      "calificacion": 9
     }
   ],
   "usuarios": [
@@ -741,8 +741,7 @@
       "amigos": [
         "1",
         "2",
-        "3",
-        ""
+        "3"
       ],
       "grupo_de_amigos": [
         "1,2,3,4,5,6,7,8",
@@ -1129,25 +1128,6 @@
         11,
         12,
         13
-      ]
-    },
-    {
-      "id": 3,
-      "nombre": "Iron man",
-      "rutas": [
-        9,
-        8,
-        7
-      ],
-      "tipo_actividad": "correr",
-      "km_totales": 50,
-      "usuarios": [
-        14,
-        15,
-        16,
-        17,
-        18,
-        19
       ]
     }
   ]

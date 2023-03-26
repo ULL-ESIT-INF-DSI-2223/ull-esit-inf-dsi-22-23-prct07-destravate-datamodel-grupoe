@@ -822,8 +822,140 @@ export class usuarioCollection {
   }
 }
 
-// const coleccion_usuarios = new usuarioCollection();
+// const semana: estadistica = {
+//   km: 10,
+//   desnivel: 1000
+// }
 
-// coleccion_usuarios.manageUsuarios();
-// console.log('MARCO SI VES ESTO ACUERDATE DE DESCOMENTAR EL METODO QUE QUIERAS COMPROBAR')
-// Coleccion_usuarios.infoUsuario();
+// const semana2: estadistica = {
+//   km: 20,
+//   desnivel: 200
+// }
+
+// const semana3: estadistica = {
+//   km: 30,
+//   desnivel: 300
+// }
+
+// const mes: estadistica = {
+//   km: 20,
+//   desnivel: 2000
+// }
+
+// const mes2: estadistica = {
+//   km: 30,
+//   desnivel: 3000
+// }
+
+// const mes3: estadistica = {
+//   km: 40,
+//   desnivel: 4000
+// }
+
+// const año: estadistica = {
+//   km: 30,
+//   desnivel: 3000
+// }
+
+// const año2: estadistica = {
+//   km: 40,
+//   desnivel: 4000
+// }
+
+// const año3: estadistica = {
+//   km: 50,
+//   desnivel: 5000
+// }
+
+// const estadisticas: estadisticaEntrenamiento = {
+//   semana: semana,
+//   mes: mes,
+//   año: año
+// }
+
+// const estadisticas2: estadisticaEntrenamiento = {
+//   semana: semana2,
+//   mes: mes2,
+//   año: año2
+// }
+
+// const estadisticas3: estadisticaEntrenamiento = {
+//   semana: semana3,
+//   mes: mes3,
+//   año: año3
+// }
+
+// const fecha1: fecha = {
+//   dia: 1,
+//   mes: 1,
+//   año: 2021
+// }
+
+// const fecha2: fecha = {
+//   dia: 2,
+//   mes: 2,
+//   año: 2021
+// }
+
+// const fecha3: fecha = {
+//   dia: 3,
+//   mes: 3,
+//   año: 2021
+// }
+
+// const fecha4: fecha = {
+//   dia: 4,
+//   mes: 4,
+//   año: 2021
+// }
+
+// const historic1: historicoRutas = {
+//   fecha: fecha1,
+//   id: 1
+// }
+
+// const historic2: historicoRutas = {
+//   fecha: fecha2,
+//   id: 2
+// }
+
+// const historic3: historicoRutas = {
+//   fecha: fecha3,
+//   id: 3
+// }
+
+// const historic4: historicoRutas = {
+//   fecha: fecha4,
+//   id: 1
+// }
+
+// const historic5: historicoRutas = {
+//   fecha: fecha1,
+//   id: 2
+// }
+
+// const historic6: historicoRutas = {
+//   fecha: fecha2,
+//   id: 3
+// }
+
+// const user0 = new Usuario("user0", "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+// const user1 = new Usuario("user1", "correr", [2,3], [[0,2],[3,4],[5,6]], estadisticas2, [historic4,historic5,historic6], [1,2,3]);
+// const user2 = new Usuario("user2", "correr", [1,3,4], [[0,1],[3,4],[5,6]], estadisticas3, [historic1,historic2,historic3], [1,3]);
+// const user3 = new Usuario("user3", "correr", [1,2,4], [[0,1],[2,4],[5,6]], estadisticas, [historic4,historic5,historic6], [1,2,3]);
+// const user4 = new Usuario("user4", "correr", [1,2,3], [[0,1],[2,3],[5,6]], estadisticas2, [historic1,historic2,historic3], [1,2,3]);
+// const user5 = new Usuario("user5", "correr", [1,2,3], [[0,1],[2,3],[4,6]], estadisticas3, [historic4,historic5,historic6], [1,2,3]);
+// const user6 = new Usuario("user6", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+// const user7 = new Usuario("user7", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas2, [historic4,historic5,historic6], [1,2,3]);
+// const user8 = new Usuario("user8", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas3, [historic1,historic2,historic3], [1,2,3]);
+// const user9 = new Usuario("user9", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas, [historic4,historic5,historic6], [1,2,3]);
+// const user10 = new Usuario("user10", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas2, [historic1,historic2,historic3], [1,2,3]);
+// const user11 = new Usuario("user11", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas3, [historic4,historic5,historic6], [1,2,3]);
+// const user12 = new Usuario("user12", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+// const user13 = new Usuario("user13", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas2, [historic4,historic5,historic6], [1,2,3]);
+// const user14 = new Usuario("user14", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas3, [historic1,historic2,historic3], [1,2,3]);
+// const user15 = new Usuario("user15", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas, [historic4,historic5,historic6], [1,2,3]);
+// const user16 = new Usuario("user16", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas2, [historic1,historic2,historic3], [1,2,3]);
+// const user17 = new Usuario("user17", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas3, [historic4,historic5,historic6], [1,2,3]);
+// const user18 = new Usuario("user18", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
+// const user19 = new Usuario("user19", "correr", [1,2,3], [[0,1],[2,3],[4,5]], estadisticas2, [historic4,historic5,historic6], [1,2,3]);

@@ -1,10 +1,8 @@
 import {Ruta} from "./ruta";
 import {ID, coordenadas} from "./types";
 import * as inquirer from "inquirer";
-// import { Usuario } from "./usuario";
 
 import { database } from "./bd";
-
 
 /**
  * Clase rutaCollection
@@ -14,23 +12,23 @@ export class rutaCollection {
   private coleccion_rutas_: Ruta[];
   /**
    * Constructor por defecto
-   * @param coleccion_rutas_ array de rutas
+   * @param coleccion_rutas_ Array de rutas
    */
   constructor() {
     this.leerBD();
   }
 
   /**
-   * getter coleccion_rutas_
-   * @returns array de rutas
+   * Método que devuelve la colección de rutas
+   * @returns Colección de rutas
    */
   get getRutas(): Ruta[] {
     return this.coleccion_rutas_;
   } 
 
   /**
-   * setter coleccion_rutas_
-   * @param coleccion_rutas array de rutas
+   * Método que asigna la colección de rutas
+   * @param coleccion_rutas Colección de rutas
    */
   set setRutas(coleccion_rutas: Ruta[]) {
     this.coleccion_rutas_ = coleccion_rutas;
@@ -38,7 +36,7 @@ export class rutaCollection {
 
   /**
    * Método que lee de la base de datos y actualiza el array de rutas
-   * @returns array de ids de las rutas, para las pruebas.
+   * @returns Array de ids de las rutas para las pruebas
    */
   leerBD(): ID[] {
     const rutas = database.get("rutas").value();
@@ -52,18 +50,15 @@ export class rutaCollection {
     array_aux.forEach((ruta) => {
       array_aux2.push(ruta.getId);
     });
-    // console.log(array_aux2);
     return array_aux2;
   }
 
   /**
    * Metodo para borrar un elemento de la base de datos
-   * @param identificador 
+   * @param identificador Identificador del elemento a borrar
    */
   borrarElementoBD(identificador: ID): boolean{
-    console.log("parte 1");
     this.coleccion_rutas_.forEach((ruta, indice) => {
-      console.log("getid: " + ruta.getId + " identificador: " + identificador);
       if (ruta.getId == identificador) {
         database.get("rutas").splice(indice,1).write();
         return true;
@@ -73,9 +68,9 @@ export class rutaCollection {
   }
 
   /**
-   * Método que borra una ruta
-   * @param identificador identificador de la ruta a borrar
-   * @returns retorna la ruta eliminada o undefined en caso de que no existiera.
+   * Método que borra una ruta de la colección de rutas y de la base de datos
+   * @param identificador Identificador de la ruta a borrar
+   * @returns Ruta eliminada o undefined en caso de que no existiera
    */
   borrarRuta(identificador: ID): Ruta | undefined {
     let control_bool = false;
@@ -99,16 +94,19 @@ export class rutaCollection {
   }
 
   /**
-   * Metodo para ejecutar el menu de rutas para borrar elementos de la bd
+   * Metodo para ejecutar el menú de rutas para borrar rutas de la base de datos
    */
   promptBorrarRuta(): void {
-    // solicitar id, pasarselo al metodo que borra
     const prompt = inquirer.createPromptModule();
     prompt([
       {
-        type: 'input',
+        type: 'list',
         name: 'id',
-        message: 'Introduce el id de la ruta a borrar',
+        message: 'Elige la ruta a borrar',
+        choices: this.getRutas.map((ruta) => {
+          return {name: ruta.getNombre, value: ruta.getId};
+        }
+        )
       }
     ]).then((answers) => {
       const ruta_aux: Ruta | undefined = this.borrarRuta(answers.id);
@@ -123,15 +121,18 @@ export class rutaCollection {
   }
 
   /**
-   * Metodo para ejecutar el menu de rutas para modificar elementos de la bd
+   * Metodo para ejecutar el menú de rutas para modificar rutas de la base de datos
    */
   promptModificarRuta():void {
     const prompt = inquirer.createPromptModule();
     prompt([
       {
-        type: 'input',
+        type: 'list',
         name: 'id',
-        message: 'Introduce el id de la ruta a modificar',
+        message: 'Elige la ruta a modificar',
+        choices: this.getRutas.map((ruta) => {
+          return {name: ruta.getNombre, value: ruta.getId};
+        })
       }
     ]).then((answers) => {
       this.modificarRuta(answers.id);
@@ -141,13 +142,9 @@ export class rutaCollection {
 
   /**
    * Metodo para modificar una ruta
-   * @param identificador -- id de la ruta a modificar
+   * @param identificador Id de la ruta a modificar
    */
   modificarRuta(identificador: ID): void {
-    // 1. comprobar que el id de la ruta existe
-    // 2. preguntar que se quiere modificar
-    // 3. modificarlo
-    // 4. devolver true si se ha modificado o false si no se ha modificado
     let id_existe_en_coleccion = false;
     let indice = -1;
     this.coleccion_rutas_.forEach((ruta, index) => {
@@ -161,7 +158,6 @@ export class rutaCollection {
       console.log('No existe la ruta que se intenta modificar');
       return;
     }
-
 
     const prompt = inquirer.createPromptModule();
     prompt([
@@ -213,7 +209,6 @@ export class rutaCollection {
           );
           break;
         case 'geolocalizacion_inicio':
-          // introducir las 3 coordenadas x,y,z
           prompt([
             {
               type: 'input',
@@ -246,7 +241,6 @@ export class rutaCollection {
           );
           break;
         case 'geolocalizacion_fin':
-          // introducir las 3 coordenadas x,y,z
           prompt([
             {
               type: 'input',
@@ -287,12 +281,8 @@ export class rutaCollection {
           ]).then((answers) => {
             this.coleccion_rutas_[indice].setLongitud = answers.longitud2;
             this.borrarElementoBD(identificador);
-            // creamos nuevo elemento y a su vez lo escribimos en la base de datos
             const ruta_aux = new Ruta(this.coleccion_rutas_[indice].getNombre, this.coleccion_rutas_[indice].getGeolocalizacionInicio, this.coleccion_rutas_[indice].getGeolocalizacionFin, this.coleccion_rutas_[indice].getLongitud, this.coleccion_rutas_[indice].getDesnivel, this.coleccion_rutas_[indice].getUsuarios, this.coleccion_rutas_[indice].getTipoActividad, this.coleccion_rutas_[indice].getCalificacion, this.coleccion_rutas_[indice].getId);
-            // lo introducimos en la coleccion
             this.coleccion_rutas_.push(ruta_aux);
-            // borramos la ruta
-            // this.borrarRuta(identificador);
             this.coleccion_rutas_.splice(indice, 1);
             this.manageRutas();
           }
@@ -317,7 +307,6 @@ export class rutaCollection {
           break;
 
         case 'usuario':
-          // las opciones son añadir una nueva lista de usuarios, eliminar un usuario o añadir un nuevo usuario
           prompt([
             {
               type: 'list',
@@ -349,7 +338,6 @@ export class rutaCollection {
               break;
 
               case 'Eliminar un usuario':
-                // imprimir usuarios de la ruta
                 console.log("Usuarios de la ruta: " + this.coleccion_rutas_[indice].getUsuarios);
                 prompt([
                   {
@@ -380,7 +368,6 @@ export class rutaCollection {
                   }
                 ]).then((answers) => {
                   const usuarios = this.coleccion_rutas_[indice].getUsuarios;
-                  // comprobar que no está repetido
                   if (usuarios.indexOf(answers.usuario) != -1) {
                     console.log("El usuario ya está en la lista");
                     this.manageRutas();
@@ -442,10 +429,9 @@ export class rutaCollection {
   }
 
   /**
-   * Método que maneja el menu para añadir una nueva ruta
+   * Método que maneja el menú para añadir una nueva ruta
    */
   promptAddRuta() {
-    // pedir datos de la nueva ruta
     const prompt = inquirer.createPromptModule();
     let coordenadas_inicio = [];
     let coordenadas_fin = [];
@@ -456,7 +442,6 @@ export class rutaCollection {
         message: 'Introduce el nombre de la nueva ruta',
       },
       {
-        // pedir las 3 coordenadas
         type: 'input',
         name: 'geolocalizacion_inicioX',
         message: 'Introduce la geolocalización de inicio, X: ',
@@ -472,7 +457,6 @@ export class rutaCollection {
         message: 'Introduce la geolocalización de inicio, Z: ',
       },
       {
-        // pedir las 3 coordenadas
         type: 'input',
         name: 'geolocalizacion_finX',
         message: 'Introduce la geolocalización de fin, X: ',
@@ -517,13 +501,11 @@ export class rutaCollection {
         message: 'Introduce la calificacion de la nueva ruta',
       }
     ]).then((answers) => {
-      // crear nueva ruta
       coordenadas_inicio = [answers.geolocalizacion_inicioX, answers.geolocalizacion_inicioY, answers.geolocalizacion_inicioZ];
       coordenadas_fin = [answers.geolocalizacion_finX, answers.geolocalizacion_finY, answers.geolocalizacion_finZ];
       const array_usuarios: ID[] = answers.usuario.split(',');
       const nueva_ruta = new Ruta(answers.nombre, coordenadas_inicio, coordenadas_fin, answers.longitud, answers.desnivel, array_usuarios, answers.tipo_actividad, answers.calificacion);
       this.coleccion_rutas_.push(nueva_ruta);
-      // escribir en la base
       this.manageRutas();
     });
   }
@@ -553,10 +535,9 @@ export class rutaCollection {
         this.promptBorrarRuta(); 
       }
       else if (answers.opcion === 'modify') {
-        this.promptModificarRuta();// espera un seg
-      } // la estoy usando yo, estamos comprobando que funciona un metodo tocho
+        this.promptModificarRuta();
+      }
       else if (answers.opcion === 'Salir') {
-        // cerrar prompt
         process.exit(0);
       }
     });
@@ -599,7 +580,6 @@ export class rutaCollection {
           this.ordenarRutasPorActividad();
           break;
         case 'Salir':
-          // cerrar prompt
           process.exit(0);
           break;
       }
@@ -610,10 +590,7 @@ export class rutaCollection {
    * Método que ordena las rutas por nombre
    */
   ordenarRutasPorNombre() {
-    // preguntar ascendente o descendente
-    // ordenar
-    // mostrar
-    let ascendente = true; // por defecto ascendente
+    let ascendente = true;
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -629,9 +606,7 @@ export class rutaCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.coleccion_rutas_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getNombre.localeCompare(b.getNombre);
@@ -640,7 +615,6 @@ export class rutaCollection {
           return b.getNombre.localeCompare(a.getNombre);
         }
       });
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}`);
       });
@@ -652,7 +626,7 @@ export class rutaCollection {
    * Método que ordena las rutas por cantidad de usuarios
    */
   ordenarRutasPorCantidadUsuarios(){
-    let ascendente = true; // por defecto ascendente
+    let ascendente = true;
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -668,9 +642,7 @@ export class rutaCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.coleccion_rutas_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getUsuarios.length - b.getUsuarios.length;
@@ -680,7 +652,6 @@ export class rutaCollection {
         }
       }
       );
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}, Cantidad de usuarios: ${ruta.getUsuarios.length}`);
       }
@@ -693,7 +664,7 @@ export class rutaCollection {
    * Método que ordena las rutas por longitud
    */
   ordenarRutasPorLongitud(){
-    let ascendente = true; // por defecto ascendente
+    let ascendente = true;
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -709,9 +680,7 @@ export class rutaCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.coleccion_rutas_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getLongitud - b.getLongitud;
@@ -720,7 +689,6 @@ export class rutaCollection {
           return b.getLongitud - a.getLongitud;
         }
       });
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}, Longitud: ${ruta.getLongitud}`);
       });
@@ -732,7 +700,7 @@ export class rutaCollection {
    * Método que ordena las rutas por calificación
    */
   ordenarRutasPorCalificacion(){
-    let ascendente = true; // por defecto ascendente
+    let ascendente = true;
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -748,9 +716,7 @@ export class rutaCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.coleccion_rutas_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getCalificacion - b.getCalificacion;
@@ -759,7 +725,6 @@ export class rutaCollection {
           return b.getCalificacion - a.getCalificacion;
         }
       });
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}, Calificación: ${ruta.getCalificacion}`);
       });
@@ -771,7 +736,7 @@ export class rutaCollection {
    * Método que ordena las rutas por actividad
    */
   ordenarRutasPorActividad(){
-    let ascendente = true; // por defecto ascendente
+    let ascendente = true;
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -789,9 +754,7 @@ export class rutaCollection {
       if (answers.opcion === 'descendente') {
         ascendente = false;
       }
-      // ordenar
       const copia_rutas = this.coleccion_rutas_;
-      // ordenar de forma ascendete o descendente según el valor de la variable ascendente
       copia_rutas.sort((a, b) => {
         if (ascendente) {
           return a.getTipoActividad.localeCompare(b.getTipoActividad);
@@ -800,7 +763,6 @@ export class rutaCollection {
           return b.getTipoActividad.localeCompare(a.getTipoActividad);
         }
       });
-      // mostrar
       copia_rutas.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}, Actividad: ${ruta.getTipoActividad}`);
       });
@@ -808,3 +770,151 @@ export class rutaCollection {
     });
   }
 }
+
+// const eje_x0:coordenadas = {
+//   letra : "X",
+//   coordenada : 10
+// }
+// const eje_y0: coordenadas = {
+//   letra : "Y",
+//   coordenada : 20
+// }
+// const eje_z0: coordenadas = {
+//   letra : "Z",
+//   coordenada : 30
+// }
+
+
+// const eje_x1:coordenadas = {
+//   letra : "X",
+//   coordenada : 12435
+// }
+// const eje_y1: coordenadas = {
+//   letra : "Y",
+//   coordenada : 1234325436
+// }
+// const eje_z1: coordenadas = {
+//   letra : "Z",
+//   coordenada : 1232
+// }
+
+
+// const eje_x2:coordenadas = {
+//   letra : "X",
+//   coordenada : 214
+// }
+// const eje_y2: coordenadas = {
+//   letra : "Y",
+//   coordenada : 20213
+// }
+// const eje_z2: coordenadas = {
+//   letra : "Z",
+//   coordenada : 3023
+// }
+
+// const eje_x3:coordenadas = {
+//   letra : "X",
+//   coordenada : 10
+// }
+// const eje_y3: coordenadas = {
+//   letra : "Y",
+//   coordenada : 20
+// }
+// const eje_z3: coordenadas = {
+//   letra : "Z",
+//   coordenada : 30
+// }
+
+
+// const eje_x4:coordenadas = {
+//   letra : "X",
+//   coordenada : 1010
+// }
+// const eje_y4: coordenadas = {
+//   letra : "Y",
+//   coordenada : 2020
+// }
+// const eje_z4: coordenadas = {
+//   letra : "Z",
+//   coordenada : 3030
+// }
+
+
+// const eje_x5:coordenadas = {
+//   letra : "X",
+//   coordenada : 1001
+// }
+// const eje_y5: coordenadas = {
+//   letra : "Y",
+//   coordenada : 2002
+// }
+// const eje_z5: coordenadas = {
+//   letra : "Z",
+//   coordenada : 3003
+// }
+
+// const eje_x6:coordenadas = {
+//   letra : "X",
+//   coordenada : 101010
+// }
+// const eje_y6: coordenadas = {
+//   letra : "Y",
+//   coordenada : 202020
+// }
+// const eje_z6: coordenadas = {
+//   letra : "Z",
+//   coordenada : 3030330
+// }
+
+
+// const eje_x7:coordenadas = {
+//   letra : "X",
+//   coordenada : 1001010110
+// }
+// const eje_y7: coordenadas = {
+//   letra : "Y",
+//   coordenada : 2020202020
+// }
+// const eje_z7: coordenadas = {
+//   letra : "Z",
+//   coordenada : 303403030
+// }
+
+
+// const eje_x8:coordenadas = {
+//   letra : "X",
+//   coordenada : 101231
+// }
+// const eje_y8: coordenadas = {
+//   letra : "Y",
+//   coordenada : 2021314
+// }
+// const eje_z8: coordenadas = {
+//   letra : "Z",
+//   coordenada : 301324
+// }
+
+
+// const eje_x9:coordenadas = {
+//   letra : "X",
+//   coordenada : 10000001
+// }
+// const eje_y9: coordenadas = {
+//   letra : "Y",
+//   coordenada : 202020202
+// }
+// const eje_z9: coordenadas = {
+//   letra : "Z",
+//   coordenada : 30000003
+// }
+
+// const ruta0 = new Ruta('San Vicente', [eje_x0, eje_y0, eje_z0], [eje_x1, eje_y1, eje_z1], 1000, 200, [1,2,3], "correr", 9);
+// const ruta1 = new Ruta('Plaza el charco', [eje_x2, eje_y2, eje_z2], [eje_x3, eje_y3, eje_z3], 2000, 200, [2,3 ,4 ], "bicicleta", 8);
+// const ruta2 = new Ruta('Adventour', [eje_x4, eje_y4, eje_z4], [eje_x5, eje_y5, eje_z5], 300, 200, [6,7,8], "correr", 8);
+// const ruta3 = new Ruta('Hop-On Hop-off', [eje_x6, eje_y6, eje_z6], [eje_x7, eje_y7, eje_z7], 400, 200, [9,10,11], "bicicleta", 5);
+// const ruta4 = new Ruta('Mind the Gap', [eje_x8, eje_y8, eje_z8], [eje_x9, eje_y9, eje_z9], 5000, 200, [12,13,14], "correr", 6);
+// const ruta5 = new Ruta('City Sightseeing', [eje_x0, eje_y0, eje_z0], [eje_x9, eje_y9, eje_z9], 6100, 200, [15,16,17], "bicicleta", 7);
+// const ruta6 = new Ruta('La ruta real', [eje_x2, eje_y2, eje_z2], [eje_x7, eje_y7, eje_z7], 1200, 200, [18,19], "correr", 5);
+// const ruta7 = new Ruta('Keep Calm and travel On', [eje_x4, eje_y4, eje_z4], [eje_x1, eje_y1, eje_z1], 3100, 200, [1,2,3], "bicicleta", 1);
+// const ruta8 = new Ruta('Wander Rush', [eje_x6, eje_y6, eje_z6], [eje_x3, eje_y3, eje_z3], 1040, 200, [5,6,7], "correr", 9);
+// const ruta9 = new Ruta('My BigFat City Tour', [eje_x8, eje_y8, eje_z8], [eje_x5, eje_y5, eje_z5], 1000, 200, [8,7,6], "bicicleta", 10);

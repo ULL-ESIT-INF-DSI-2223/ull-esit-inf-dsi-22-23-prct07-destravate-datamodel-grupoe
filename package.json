@@ -2,24 +2,24 @@
   "name": "p7-pe103",
   "version": "1.0.0",
   "description": "",
-  "main": "rutaCollection.js",
+  "main": "gestorjs",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node dist/rutaCollection.js\"",
+    "start": "tsc-watch --onSuccess \"node dist/gestor.js\"",
     "doc": "typedoc",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_output",
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Marcant97/P7-PE103.git"
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Marcant97/P7-PE103/issues"
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe.git"
   },
-  "homepage": "https://github.com/Marcant97/P7-PE103#readme",
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupoe.git",
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/inquirer": "^9.0.3",

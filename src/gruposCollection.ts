@@ -35,7 +35,7 @@ export class GruposCollection {
   /**
    * Método que muestra la información de los grupos.
    */
-  infoUsuario() {
+  infoGrupo() {
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -43,7 +43,7 @@ export class GruposCollection {
         name: 'opcion',
         message: '¿Qué deseas ver?',
         choices: [
-          {name:'Mostrar por orden alfabético los usuarios', value: 'alfabetico'},
+          {name:'Mostrar por orden alfabético los grupos', value: 'alfabetico'},
           {name:'Ordenar por kms semanales', value: 'kms_semanales'},
           {name:'Ordenar por kms mensuales', value: 'kms_mensuales'},
           {name:'Ordenar por kms anuales', value:'kms_anuales'},
@@ -111,7 +111,7 @@ export class GruposCollection {
       copia_grupos.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}`);
       });
-      this.infoUsuario();
+      this.infoGrupo();
     });
   }
 
@@ -150,7 +150,7 @@ export class GruposCollection {
       copia_grupos.forEach((ruta) => {
         console.log(`Kms semanales: ${ruta.getEstadisticasEntrenamiento.semana.km}`);
       });
-      this.infoUsuario();
+      this.infoGrupo();
     });
   }
 
@@ -189,7 +189,7 @@ export class GruposCollection {
       copia_grupos.forEach((ruta) => {
         console.log(`Kms mensuales: ${ruta.getEstadisticasEntrenamiento.mes.km}`);
       });
-      this.infoUsuario();
+      this.infoGrupo();
     });
   }
 
@@ -228,7 +228,7 @@ export class GruposCollection {
       copia_grupos.forEach((ruta) => {
         console.log(`Kms anuales: ${ruta.getEstadisticasEntrenamiento.año.km}`);
       });
-      this.infoUsuario();
+      this.infoGrupo();
     });
   }
 
@@ -267,7 +267,7 @@ export class GruposCollection {
       copia_grupos.forEach((ruta) => {
         console.log(`Número de usuarios: ${ruta.getParticipantes.length}`);
       });
-      this.infoUsuario();
+      this.infoGrupo();
     });
   }
 
@@ -685,12 +685,6 @@ export class GruposCollection {
 
 }
 
-
-
-
-//? PRUEBAS
-
-
 // const semana: estadistica = {
 //   km: 10,
 //   desnivel: 1000
@@ -814,9 +808,3 @@ export class GruposCollection {
 // const grupo3 = new Grupo('Grupo 3', [0,4,5,6,7,8,9,10], estadisticas, [historic1,historic2]);
 // const grupo4 = new Grupo('Grupo 4', [0,1,2,3,4,5,6,7,8,9,10], estadisticas2, [historic3,historic4]);
 // const grupo5 = new Grupo('Grupo 5', [0,6,7,8,9,10], estadisticas3, [historic5,historic6]);
-
-
-const gruposCollection = new GruposCollection();
-
-// gruposCollection.infoUsuario();
-gruposCollection.manageGrupos();

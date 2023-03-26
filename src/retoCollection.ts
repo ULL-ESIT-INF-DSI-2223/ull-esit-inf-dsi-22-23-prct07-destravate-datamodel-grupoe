@@ -45,7 +45,7 @@ export class RetoCollection {
         message: '¿Qué deseas hacer?',
         choices: [
           {name:'Añadir reto', value: 'añadir'},
-          {name:'Eliminar retos', value: 'eliminar'},
+          {name:'Eliminar retos', value: 'eliminar'}, // reto*
           {name: 'Modificar', value: 'modificar'},
           {name:'Salir', value: 'Salir'},
         ]
@@ -376,7 +376,7 @@ export class RetoCollection {
   /**
   * Método que muestra la información de los retos.
   */
-  infoUsuario() {
+  infoReto() {
     const prompt = inquirer.createPromptModule();
     prompt([
       {
@@ -384,7 +384,7 @@ export class RetoCollection {
         name: 'opcion',
         message: '¿Qué deseas ver?',
         choices: [
-          {name:'Mostrar por orden alfabético los usuarios', value: 'alfabetico'},
+          {name:'Mostrar por orden alfabético los retos', value: 'alfabetico'},
           {name:'Ordenar por kms', value: 'kms'},
           {name:'Ordenar por nº de usuarios', value: 'num_usuarios'},
           {name:'Salir', value: 'Salir'},
@@ -444,7 +444,7 @@ export class RetoCollection {
       retos_grupos.forEach((ruta) => {
         console.log(`Nombre: ${ruta.getNombre}`);
       });
-      this.infoUsuario();
+      this.infoReto();
     });
   }
 
@@ -483,7 +483,7 @@ export class RetoCollection {
       retos_grupos.forEach((retos) => {
         console.log(`Kms semanales: ${retos.getKmTotales}`);
       });
-      this.infoUsuario();
+      this.infoReto();
     });
   } 
 
@@ -522,7 +522,7 @@ export class RetoCollection {
       retos_grupos.forEach((retos) => {
         console.log(`Número de usuarios: ${retos.getUsuarios.length}`);
       });
-      this.infoUsuario();
+      this.infoReto();
     });
   }
 
@@ -544,14 +544,7 @@ export class RetoCollection {
     this.retos_ = retos;
   }
 }
-
-// ! TENEMOS QUE PROBAR LOS RETOS
 // nombre: string, rutas: ID[], tipo_actividad: actividad, km_totales: number, usuarios: ID[]
 // const reto0 = new Reto('Maraton', [1,2,3,4,5], "correr",200, [1,2]);
 // const reto1 = new Reto('Triatlon', [2,3,4,5,6], "bicicleta",300, [3,4,5,6,7,8,9,10,11,12,13]);
 // const reto2 = new Reto('Iron man', [9,8,7], "correr",50, [14,15,16,17,18,19]);
-
-const retos = new RetoCollection();
-
-//retos.infoUsuario();
-retos.manageRetos();
