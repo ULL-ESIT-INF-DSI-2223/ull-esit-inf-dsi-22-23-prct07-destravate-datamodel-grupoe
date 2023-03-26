@@ -200,4 +200,15 @@ export class Grupo {
   set setHistoricoRutas(historicoRutas: historicoRutas[]) {
     this.historicoRutas_ = historicoRutas;
   }
+
+
+  /**
+   * Método que elimina un grupo de la base de datos
+   * @returns True para las pruebas
+   */
+  autoborrarseBD(): boolean {
+    database.get("grupos").remove({ id: this.id_ }).write();
+    return true;
+  }
+
 }

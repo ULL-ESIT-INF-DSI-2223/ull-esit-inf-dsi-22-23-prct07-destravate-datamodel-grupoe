@@ -262,4 +262,13 @@ export class Usuario {
     }
     return kmTotales;
   }
+
+  /**
+   * Método que elimina un usuario de la base de datos
+   * @returns True para las pruebas
+   */
+  autoborrarseBD(): boolean {
+    database.get('usuarios').remove({ id: this.id_ }).write();
+    return true;
+  }
 }

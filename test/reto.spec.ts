@@ -40,8 +40,6 @@ describe('Reto class tests', () => {
 
   it('Prueba Condición Id_global', () => {
     const reto_aux = new Reto('Reto Boston', [1,2], "correr", [1]);
-    const mi_coleccion = new RetoCollection();
-    mi_coleccion.borrarElementoBD(reto_aux.getId);
-    mi_coleccion.borrarElementoBD(reto0.getId);
+    reto_aux.autoborrarseBD();
   });
 });

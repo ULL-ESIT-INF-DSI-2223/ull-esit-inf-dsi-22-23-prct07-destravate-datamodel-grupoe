@@ -125,8 +125,6 @@ describe('Usuario class tests', () => {
 
   it('Prueba Condición Id_global', () => {
     const usuario_aux = new Usuario('Felipe Cuarto', "correr", [1,2,3], [[1,2],[3,4],[5,6]], estadisticas, [historic1,historic2,historic3], [1,2,3]);
-    const mi_coleccion = new usuarioCollection();
-    mi_coleccion.borrarElementoBD(usuario_aux.getID);
-    mi_coleccion.borrarElementoBD(user0.getID);
+    usuario_aux.autoborrarseBD();
   });
 });

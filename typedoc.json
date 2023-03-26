@@ -1,5 +1,6 @@
 {
   "entryPoints": [
+    "./src/types.ts",
     "./src/ruta.ts",
     "./src/usuario.ts",
     "./src/grupo.ts",

@@ -59,6 +59,15 @@ export class Reto {
     }
   }
 
+  /**
+   * Método que elimina un reto de la base de datos
+   * @returns True para las pruebas
+   */
+  autoborrarseBD(): boolean {
+    database.get("retos").remove({ id: this.id_ }).write();
+    return true;
+  }
+
 
   /**
    * Método que devuelve el número total de km de todas las rutas.

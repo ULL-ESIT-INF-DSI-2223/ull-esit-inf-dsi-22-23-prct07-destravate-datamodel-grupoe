@@ -1,0 +1,452 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>p7</title><meta name="description" content="Documentation for p7"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">p7</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>p7</h2></div>
+<div class="tsd-panel tsd-typography">
+<a href="#informe" id="informe" style="color: inherit; text-decoration: none;">
+  <h1>Informe</h1>
+</a>
+<p>En esta práctica se ha llevado a cabo un diseño orientado a objetos del modelo de datos de un sistema de información que permita almacenar registros de actividades deportivas. Para la resolución de este ejercicio se han desarrollado un total de 8 clases junto con un conjunto de tipos y una base de datos, donde para cada una de ellas se han desarrollado pruebas las cuales se pueden observar en el coverage: </p>
+
+<a href="#insertar-coveralls" id="insertar-coveralls" style="color: inherit; text-decoration: none;">
+  <h1>Insertar Coveralls</h1>
+</a>
+<p>Cabe destacar por una parte el uso de <code>schemaType</code>, que es un tipo que representa el esquema del <code>Lowdb</code> para los objetos rutas, usuarios, grupos y retos almacenados en el mismo. Este tipo contiene diferentes subtipos desarrollados por nuestro grupo, los cuales se argumentarán en cada apartado. Por otra parte no se han realizado tests en las clases <em>XCollection</em> puesto a que la mayoria de los métodos llaman a <code>infoX()</code> o <code>manageX()</code> para el correcto funcionamiento del sistema y además, hacen uso del prompt, por lo tanto no se pueden ejecutar con tests. Esta medida se llevó acabo para evitar un porcentaje de cubrimiento bajo relacionado con los ficheros mencionados anteriormente. </p>
+<p>Las dificultades presentadas a lo largo de la práctica fueron la cantidad de problemas por parte del <code>Inquirer.js</code> y del <code>Lowdb</code>, lo cual desencadenó en una gran pérdida de tiempo, que junto con el poco tiempo disponible para la realización de la misma debido a la carga lectiva del resto de las asignaturas, llevó a la conclusión de que la práctica era muy larga para su realización en tan sólo dos semanas.</p>
+<p>A continuación se mostrará un índice que corresponderá con los diferentes apartados desarrollados en la práctica:</p>
+
+<a href="#índice" id="índice" style="color: inherit; text-decoration: none;">
+  <h2>Índice</h2>
+</a>
+<ol>
+<li><a href="#Desarrollo">Desarrollo</a>
+  1.1. <a href="#Rutas">Rutas</a>:<ul>
+<li>1.1.1 <a href="#ruta">Ruta</a></li>
+<li>1.1.2 <a href="#rutacollection">rutaCollection</a>
+  1.2. <a href="#Usuarios">Usuarios</a>:</li>
+<li>1.2.1 <a href="#usuario">Usuario</a></li>
+<li>1.2.2 <a href="#usuariocollection">usuarioCollection</a>
+  1.3 <a href="#Grupos">Grupos:</a></li>
+<li>1.3.1 <a href="#grupo">Grupo</a></li>
+<li>1.3.2 <a href="#gruposcollection">gruposCollection</a>
+  1.4 <a href="#Reto">Reto</a>:</li>
+<li>1.4.1 <a href="#reto">Reto</a></li>
+<li>1.4.2 <a href="#retocollection">retoCollection</a>
+  1.5 <a href="#Gestor">Gestor</a></li>
+</ul>
+</li>
+<li><a href="#Referencias">Referencias</a></li>
+</ol>
+
+<a href="#desarrollo" id="desarrollo" style="color: inherit; text-decoration: none;">
+  <h2>Desarrollo</h2>
+</a>
+
+<a href="#rutas" id="rutas" style="color: inherit; text-decoration: none;">
+  <h3><strong>Rutas:</strong></h3>
+</a>
+
+<a href="#ruta" id="ruta" style="color: inherit; text-decoration: none;">
+  <h4><em>Ruta</em></h4>
+</a>
+<p><code>Ruta</code> consiste en una clase que representa una ruta la cual consta de los siguientes atributos privados, de los cuales cabe destacar los tipos <code>ID</code>, <code>coordenadas</code> y <code>actividad</code>, los cuales fueron desarrollados de manera específica para que por una parte el <em>id</em> fuese un <strong>número</strong>, las <em>coordenadas</em> fuesen de un <strong>eje</strong> específico(X, Y o Z) junto con su <strong>valor</strong> numérico, y la <em>actividad</em> fuese de tipo <strong>correr</strong> o <strong>bibicleta</strong>:</p>
+<ul>
+<li><strong><code>id_</code>:</strong> ID único de la ruta.</li>
+<li><strong><code>nombre_</code>:</strong> Nombre de la ruta.</li>
+<li><strong><code>geolocalizacion_inicio_</code>:</strong> Coordenadas de inicio de la ruta.</li>
+<li><strong><code>geolocalizacion_fin_</code>:</strong> Coordenadas del final de la ruta.</li>
+<li><strong><code>longitud_</code>:</strong> Longitud de la ruta.</li>
+<li><strong><code>desnivel_</code>:</strong> Desnivel de la ruta.</li>
+<li><strong><code>usuarios_</code>:</strong> Usuarios de la ruta.</li>
+<li><strong><code>tipo_actividad_</code>:</strong> Tipo de actividad de la ruta.</li>
+<li><strong><code>calificacion_</code>:</strong> Calificación de la ruta.</li>
+</ul>
+<p>Para crear un objeto ruta se utiliza el <strong>constructor</strong> de la clase el cual instancia todos los atributos de manera obligatoria excepto por el <em>id</em>, el cual se asigna de manera interna mediante condicionales:</p>
+<pre><code class="language-ts"><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;rutas&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;nombre&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">  </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">includes</span><span class="hl-0">(</span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0">)) {</span><br/><span class="hl-0">    </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;rutas&quot;</span><span class="hl-0">).</span><span class="hl-4">find</span><span class="hl-0">({ </span><span class="hl-3">nombre:</span><span class="hl-0"> </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0"> }).</span><span class="hl-4">value</span><span class="hl-0">().</span><span class="hl-3">id</span><span class="hl-0">;</span><br/><br/><span class="hl-0">  } </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id</span><span class="hl-0"> !== </span><span class="hl-1">undefined</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-7">/**</span><br/><span class="hl-7">         * Buscar el id más alto y sumarle 1</span><br/><span class="hl-7">         */</span><br/><span class="hl-0">      </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;rutas&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;id&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">sort</span><span class="hl-0">((</span><span class="hl-3">a</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0"> - </span><span class="hl-3">b</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> === </span><span class="hl-8">0</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id_global</span><span class="hl-0">[</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">] + </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span>
+</code></pre>
+<p>Como se puede observar se declara como constante el <code>id_global</code> que es utilizado para definir el id a cada una de las rutas de manera incremental si es que el id que se extrae de la ruta es de tipo <code>undefined</code>. Por último se agrega en el <code>Lowdb</code> la ruta con todos sus atributos.</p>
+<p>Y por último dentro de esta clase se dispone para cada atributo un <strong>getter</strong> y un <strong>setter</strong> determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``rutaCollection`.</p>
+
+<a href="#rutacollection" id="rutacollection" style="color: inherit; text-decoration: none;">
+  <h4><em>rutaCollection:</em></h4>
+</a>
+<p><code>rutaCollection</code> consiste en una clase que representa una colección de rutas las cuales son de tipo <code>Ruta</code>, es decir, de la clase anteriormente mencionada:</p>
+<ul>
+<li><strong><code>coleccion_rutas</code>:</strong> Colección de rutas.</li>
+</ul>
+<p>Esta clase consta de un <strong>constructor</strong> el cual realiza una llamada al método <code>leerBD()</code>, donde se realiza una lectura de las diferentes rutas presentes en el <code>Lowdb</code> y actualiza así el atributo <code>coleccion_rutas_</code> con todas las rutas presentes en dicho <code>Lowdb</code>. Para poder acceder al atributo mencionado se recurre a su <strong>getter</strong> y <strong>setter</strong> específico, donde seguido al mismo tenemos dos métodos con funcionalidades similares.
+Por una parte tenemos <code>borrarElementoBD(identificador: ID)</code> el cual se encargará de eliminar la ruta del <em>identificador</em> pasado por parámetro del <code>Lowdb</code>, mientras que por la otra parte tenemos el método <code>borrarRuta(identificador: ID)</code> que se encargará de borrar la ruta con dicho <em>identificador</em> pero en este caso tanto de <code>Lowdb</code> como del atributo <code>coleccion_rutas_</code>. </p>
+<p>Estos dos métodos a pesar de ser similares se llevaron a cabo debido a que en ciertas ocasiones se debía eliminar la ruta únicamente del <code>Lowdb</code> y no de ambos, puesto a que el algunos escenarios el método <code>borrarRuta(identificador: ID)</code> generaba errores al eliminar la ruta en ambos lugares.</p>
+<p>Para que el usuario pueda recurrir a la acción de <code>borrarRutas(identificador: ID)</code> se desarrolló el método <code>promptBorrarRuta()</code> que permitirá la inserción del <em>id</em> de la ruta a eliminar, dando dos posibles resultados:</p>
+<ol>
+<li>El id de la ruta existe en el <code>Lowdb</code> y por lo tanto la acción resulta exitosa y envía al usuario el mensaje <em>&quot;Ruta borrada: &quot;</em> junto con el id de dicha ruta suprimida.</li>
+<li>El id de la ruta es inexistente en el <code>Lowdb</code> y por ello se procede al fracaso de la acción retornando al usuario el mensaje <em>&quot;La ruta no existe&quot;</em>.</li>
+</ol>
+<p>Por otra parte tenemos la funcionalidad <code>modificarRuta(identificador: ID)</code> la cual es accesible para el usuario mediante el método <code>promptModificarRuta()</code>. En primer lugar nos encontramos con dicha funcionalidad, que consiste en el análisis del <em>id</em> de la ruta a modificar pasado por parámetro, que puede resultar en error si la misma no existe, o en éxito accediendo a una nueva elección del usuario, específicamente del atributo que desee modificar:</p>
+<ul>
+<li>Nombre.</li>
+<li>Geolocalización inicio.</li>
+<li>Geolocalización fin.</li>
+<li>Longitud.</li>
+<li>Desnivel.</li>
+<li>Usuario.</li>
+<li>Tipo de actividad.</li>
+<li>Calificación.</li>
+</ul>
+<p>En función de la elección del usuario se procederá a un nuevo <strong>prompt</strong> en el cual se insertarán los nuevos datos a modificar, en todos los casos tendremos que realizar los siguientes pasos para la exitosa modificación:</p>
+<ol>
+<li>Cambio de la característica en su ruta correspondiente mediante su setter, todo ello dentro del atributo <code>coleccion_rutas_</code>.</li>
+<li>Eliminación del elemento en el <code>Lowdb</code>.</li>
+<li>Construcción de una ruta auxiliar con los nuevos datos de la ruta en cuestión, añadiendo así dicho elemento en el <code>Lowdb</code>.</li>
+<li>Inserción de dicha ruta auxiliar en el atributo <code>coleccion_rutas_</code>.</li>
+<li>Supresión de la antigüa ruta del atributo <code>coleccion_rutas_</code>.</li>
+</ol>
+<p>Como se mencionó anteriormente el usuario accederá a dicha funcionalidad mediante <code>promptModificarRuta()</code>, que solicita al usuario el <em>id</em> de la ruta que desee modificar llamando así con el mismo al método <code>modificarRuta(identificador: ID)</code>.</p>
+<p>A este le sigue el método <code>promptAddRuta()</code>, cuya funcionalidad es la adicción de una ruta insertada por el usuario en el <code>Lowdb</code> y en el atributo <code>coleccion_rutas_</code>. Para ello se solicitan al usuario todos los datos necesarios para la creación de un objeto <code>Ruta</code> a excepción del <em>id</em>, puesto a que será asignado mediante el <strong>id global</strong> mencionado en el constructor de la clase <code>Ruta</code>. Una vez obtenidos los datos se procede a la creación de las coordenadas de inicio y de fin, de los usuarios, y de la ruta en cuestión con todos los elementos excepto el <em>id</em>, la cual será insertada en el <code>Lowdb</code>, debido a la creación de la misma, y en el atributo <code>coleccion_rutas_</code>, debido a un <em>push</em>.</p>
+<p>Todas estas funcionalidades serán invocadas en <code>manageRutas()</code> el cual mostrará al usuario todas las opciones:</p>
+<ul>
+<li>Añadir ruta.</li>
+<li>Borrar ruta.</li>
+<li>Modificar ruta.</li>
+<li>Salir.</li>
+</ul>
+<p>Según la respuesta del usuario se llamará al prompt <em>X</em> Ruta correspondiente, o bien si la respuesta es <em>Salir</em> se finalizará el proceso <code>process.exit(0)</code>.</p>
+<p>Como últimos métodos de esta clase nos encontramos <code>infoRutas()</code>, <code>ordenarRutasPorNombre()</code>, <code>ordenarRutasPorCantidadUsuarios()</code>, <code>ordenarRutasPorLongitud()</code>, <code>ordenarRutasPorCalificacion()</code> y <code>ordenarRutasPorActividad()</code>. Donde <code>infoRutas()</code> tiene la misma funcionalidad que <code>manageRutas()</code> pero con respecto al orden en el que se desee mostras el atributo <code>coleccion_rutas_</code>.</p>
+<p>Todos los restantes métodos que suponen una ordenación de dicho atributo realizan en primer lugar una petición al usuario que consiste en la selección de un orden <em>ascendente</em> o <em>descendente</em>, seguida de:</p>
+<ol>
+<li>Se realiza una copia del atributo <code>coleccion_rutas_</code>.</li>
+<li>Se ordena dicha copia según la respuesta del usuario, <em>ascendete</em> o <em>descendente</em>.</li>
+<li>Se muestra al usuario la copia del atributo <code>coleccion_rutas_</code> según el orden que haya solicitado el mismo.</li>
+</ol>
+
+<a href="#usuarios" id="usuarios" style="color: inherit; text-decoration: none;">
+  <h3><strong>Usuarios:</strong></h3>
+</a>
+
+<a href="#usuario" id="usuario" style="color: inherit; text-decoration: none;">
+  <h4><em>Usuario</em></h4>
+</a>
+<p><code>Usuario</code> consiste en una clase que representa un usuario el cual consta de los siguientes atributos privados, de los cuales cabe destacar los tipos <code>ID</code>, <code>actividad</code>, <code>estadisticaEntrenamiento</code> e <code>historicoRutas</code>, los cuales fueron desarrollados de manera específica para que por una parte el <em>id</em> fuese un <strong>número</strong>, la <em>actividad</em> fuese de tipo <strong>correr</strong> o <strong>bibicleta</strong>, la <em>estadisticaEntrenamiento</em> fuese un conjunto de <strong>semana</strong>, <strong>mes</strong> y <strong>año</strong> de tipo <code>estadistica</code>, el cual consta de dos características numéricas <strong>km</strong> y <strong>desnivel</strong>, y el <em>historicoRutas</em> que consta de <strong>fecha</strong> y <strong>id</strong>, donde el id es númerico pero fechas es de tipo <code>fecha</code>, es decir, con las características numéricas <strong>dia</strong>, <strong>mes</strong> y <strong>año</strong>:</p>
+<ul>
+<li><strong><code>id_</code>:</strong> ID único del usuario.</li>
+<li><strong><code>nombre_</code>:</strong> Nombre del usuario.</li>
+<li><strong><code>actividad_</code>:</strong> Actividad del usuario.</li>
+<li><strong><code>amigos_</code>:</strong> Amigos del usuario.</li>
+<li><strong><code>grupo_de_amigos_</code>:</strong> Grupo de amigos del usuario.</li>
+<li><strong><code>estadisticas_</code>:</strong> Estadísticas del usuario.</li>
+<li><strong><code>rutasFavoritas_</code>:</strong> Rutas favoritas del usuario.</li>
+<li><strong><code>retos_</code>:</strong> Retos del usuario.</li>
+<li><strong><code>historicoRutas_</code>:</strong> Histórico de rutas del usuario.</li>
+</ul>
+<p>Para crear un objeto ruta se utiliza el <strong>constructor</strong> de la clase el cual instancia todos los atributos de manera obligatoria excepto por las <em>rutas favoritas</em>, que se obtienen mediante el método <code>obtenerRutasFavoritas()</code>, y el <em>id</em>, el cual se asigna de manera interna mediante condicionales:</p>
+<pre><code class="language-ts"><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;usuarios&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;nombre&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">  </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">includes</span><span class="hl-0">(</span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0">)) {</span><br/><span class="hl-0">    </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;usuarios&quot;</span><span class="hl-0">).</span><span class="hl-4">find</span><span class="hl-0">({ </span><span class="hl-3">nombre:</span><span class="hl-0"> </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0"> }).</span><span class="hl-4">value</span><span class="hl-0">().</span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">  </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id</span><span class="hl-0"> !== </span><span class="hl-1">undefined</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-7">/**</span><br/><span class="hl-7">       * Buscar el id más alto y sumarle 1</span><br/><span class="hl-7">       */</span><br/><span class="hl-0">      </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;usuarios&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;id&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">sort</span><span class="hl-0">((</span><span class="hl-3">a</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0"> - </span><span class="hl-3">b</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> === </span><span class="hl-8">0</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id_global</span><span class="hl-0">[</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">] + </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span>
+</code></pre>
+<p>Como se puede observar se declara como constante el <code>id_global</code> que es utilizado para definir el id a cada uno de los usuarios de manera incremental si es que el id que se extrae del usuario es de tipo <code>undefined</code>. Por último se agrega en el <code>Lowdb</code> el usuario con todos sus atributos.</p>
+<p>Para proseguir dentro de esta clase se dispone para cada atributo un <strong>getter</strong> y un <strong>setter</strong> determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``usuarioCollection<code>. Junto con el método </code>obtenerRutasFavoritas()` mencionado anteriormente, que según el histórico del usuario calculas sus rutas favoritas en función de si ha realizado las mismas más de dos veces:</p>
+<ol>
+<li>Almacena el histórico del usuario en la variable constante <code>historico</code> e instancia dos arrays vacíos <code>rutasFav</code> y <code>rutas</code>.</li>
+<li>En rutas procederá a insertar los <em>id</em> de todos los históricos presentes en <code>historico</code>.</li>
+<li>Ordenará los <em>id</em> de <code>rutas</code>.</li>
+<li>Recorrerá <code>rutas</code> y por cada <em>id</em> igual al siguiente incrementará la variable <code>cont</code>, pero sino analizará si <code>cont</code> es mayor que dos.</li>
+<li>Si <code>cont</code> es mayor que dos añadirá a <code>rutasFav</code> el <em>id</em> de la ruta en cuestión, sino establecerá <code>cont</code> a uno.</li>
+<li>Establecerá el atributo <code>rutasFavoritas</code> como <code>rutasFav</code> mediante su <em>setter</em>.</li>
+</ol>
+<p>Por último tenemos el método <code>getKMTotales()</code>, el cual se encarga de calcular el número total de kilómetros recorricos por el usuario según su histórico. Para ello extrae de cada histórico el número de kilómetros de la ruta en cuestion para añadirlo a la variable <code>kmTotales</code>, retornada tras finalizar el análisis de los históricos.</p>
+
+<a href="#usuariocollection" id="usuariocollection" style="color: inherit; text-decoration: none;">
+  <h4><em>usuarioCollection</em></h4>
+</a>
+<p><code>usuarioCollection</code> consiste en una clase que representa una colección de usuarios los cuales son de tipo <code>Usuario</code>, es decir, de la clase anteriormente mencionada:</p>
+<ul>
+<li><strong><code>usuarios</code>:</strong> Colección de usuarios.</li>
+</ul>
+<p>Esta clase consta de un <strong>constructor</strong> el cual realiza una llamada al método <code>leerBD()</code>, donde se realiza una lectura de los diferentes usuarios presentes en el <code>Lowdb</code> y actualiza así el atributo <code>usuarios</code> con todos los usuarios presentes en dicho <code>Lowdb</code>. Para poder acceder al atributo mencionado se recurre a su <strong>getter</strong> y <strong>setter</strong> específico, donde seguido al mismo tenemos el método <code>manageUsuarios()</code> que invoca todas las funcionalidades de esta clase, mostrando al usuario todas las opciones:</p>
+<ul>
+<li>Añadir usuario.</li>
+<li>Borrar usuario.</li>
+<li>Modificar usuario.</li>
+<li>Salir.</li>
+</ul>
+<p>Según la respuesta del usuario se llamará al prompt <em>X</em> User correspondiente, o bien si la respuesta es <em>Salir</em> se finalizará el proceso <code>process.exit(0)</code>.</p>
+<p>A continuación tenemos dos métodos una de las funcionalidades mencionadas anteriormente seguida de su método, <code>promptBorrarUser()</code> y <code>borrarUsuario(id: number)</code>. Tenemos <code>promptBorrarUser()</code>, que permitirá la inserción del <em>id</em> del usuario a eliminar, para así poder llamar al método <code>borrarUsuario(id: number)</code> que se encargará de borrar el usuario con dicho <em>identificador</em> pero en este caso tanto de <code>Lowdb</code> como del atributo <code>usuarios</code>, dando dos posibles resultados:</p>
+<ol>
+<li>El id del usuario existe en el <code>Lowdb</code> y por lo tanto la acción resulta exitosa y envía al usuario el mensaje <em>&quot;Usuario borrado&quot;</em>.</li>
+<li>El id del usuario es inexistente en el <code>Lowdb</code> y por ello se procede al fracaso de la acción retornando al usuario el mensaje <em>&quot;No se ha encontrado el usuario&quot;</em>.</li>
+</ol>
+<p>A este le sigue el método <code>promptAddUser()</code>, cuya funcionalidad es la adicción de un usuario insertado en el <code>Lowdb</code> y en el atributo <code>usuarios</code>. Para ello se solicitan al usuario todos los datos necesarios para la creación de un objeto <code>Usuario</code> a excepción del <em>id</em> y de las <em>rutas favoritas</em>, puesto a que serán asignados u obtenidos en el constructor de la clase <code>Usuario</code>. Una vez obtenidos los datos se procede a la creación del usuario en cuestión con todos los elementos excepto el <em>id</em> y las <em>rutas favoritas</em>, el cual será insertado en el <code>Lowdb</code>, debido a la creación del mismo, y en el atributo <code>usuarios</code>, debido a un <em>push</em>.</p>
+<p>Después nos encontramos con <code>promptModificarUser()</code>, que solicita al usuario el <em>id</em> del usuario que desee modificar llamando así con el mismo al método <code>modificarUsuario(identificador: ID)</code>, seguido de <code>borrarElementoBD(identificador: ID)</code> el cual se encargará de eliminar el usuario del <em>identificador</em> pasado por parámetro del <code>Lowdb</code>.</p>
+<p>Con respecto al <code>promptModificarUser()</code> obtenemos su funcionalidad debido al método <code>modificarUsuario(identificador: ID)</code>. En primer lugar nos encontramos con el análisis del <em>id</em> del usuario a modificar pasado por parámetro, que puede resultar en error si el mismo no existe, o en éxito accediendo a una nueva elección del usuario, específicamente del atributo que desee modificar:</p>
+<ul>
+<li>Nombre.</li>
+<li>Actividad.</li>
+<li>Amigos.</li>
+<li>Grupos de amigos.</li>
+<li>Estadísticas.</li>
+<li>Histórico de rutas.</li>
+<li>Retos.</li>
+</ul>
+<p>En función de la elección del usuario se procederá a un nuevo <strong>prompt</strong> en el cual se insertarán los nuevos datos a modificar, en todos los casos tendremos que realizar los siguientes pasos para la exitosa modificación:</p>
+<ol>
+<li>Cambio de la característica en su usuario correspondiente mediante su setter, todo ello dentro del atributo <code>usuarios</code>.</li>
+<li>Eliminación del elemento en el <code>Lowdb</code>.</li>
+<li>Construcción de un usuario auxiliar con los nuevos datos del usuario en cuestión, añadiendo así dicho elemento en el <code>Lowdb</code>.</li>
+<li>Inserción de dicho usuario auxiliar en el atributo <code>usuarios</code>.</li>
+<li>Supresión del antigüo usuario del atributo <code>usuarios</code>.</li>
+</ol>
+<p>Como últimos métodos de esta clase nos encontramos <code>infoUsuario()</code>, <code>ordenarUsuarioPorNombre()</code>, <code>ordenarPorKmsSemanales()</code>, <code>ordenarPorKmsMensuales()</code> y <code>ordenarPorKmsAnuales()</code>. Donde <code>infoUsuario()</code> tiene la misma funcionalidad que <code>manageUsuarios()</code> pero con respecto al orden en el que se desee mostras el atributo <code>usuarios</code>.</p>
+<p>Todos los restantes métodos que suponen una ordenación de dicho atributo realizan en primer lugar una petición al usuario que consiste en la selección de un orden <em>ascendente</em> o <em>descendente</em>, seguida de:</p>
+<ol>
+<li>Se realiza una copia del atributo <code>usuarios</code>.</li>
+<li>Se ordena dicha copia según la respuesta del usuario, <em>ascendete</em> o <em>descendente</em>.</li>
+<li>Se muestra al usuario la copia del atributo <code>usuarios</code> según el orden que haya solicitado el mismo.</li>
+</ol>
+
+<a href="#grupos" id="grupos" style="color: inherit; text-decoration: none;">
+  <h3><strong>Grupos:</strong></h3>
+</a>
+
+<a href="#grupo" id="grupo" style="color: inherit; text-decoration: none;">
+  <h4><em>Grupo</em></h4>
+</a>
+<p><code>Grupo</code> consiste en una clase que representa un grupo el cual consta de los siguientes atributos privados, de los cuales cabe destacar los tipos <code>ID</code>, <code>estadisticaEntrenamiento</code> e <code>historicoRutas</code>, los cuales fueron desarrollados de manera específica para que por una parte el <em>id</em> fuese un <strong>número</strong>, la <em>estadisticaEntrenamiento</em> fuese un conjunto de <strong>semana</strong>, <strong>mes</strong> y <strong>año</strong> de tipo <code>estadistica</code>, el cual consta de dos características numéricas <strong>km</strong> y <strong>desnivel</strong>, y el <em>historicoRutas</em> que consta de <strong>fecha</strong> y <strong>id</strong>, donde el id es númerico pero fechas es de tipo <code>fecha</code>, es decir, con las características numéricas <strong>dia</strong>, <strong>mes</strong> y <strong>año</strong>:</p>
+<ul>
+<li><strong><code>id_</code>:</strong> ID único del grupo.</li>
+<li><strong><code>nombre_</code>:</strong> Nombre del grupo.</li>
+<li><strong><code>participantes_</code>:</strong> Participantes del grupo.</li>
+<li><strong><code>estadisticasEntrenamiento_</code>:</strong> Estadísticas del grupo.</li>
+<li><strong><code>ranking_</code>:</strong> Ranking del grupo.</li>
+<li><strong><code>rutasFavoritas_</code>:</strong> Rutas favoritas del grupo.</li>
+<li><strong><code>historicoRutas_</code>:</strong> Histórico de rutas del usuario.</li>
+</ul>
+<p>Para crear un objeto ruta se utiliza el <strong>constructor</strong> de la clase el cual instancia todos los atributos de manera obligatoria excepto por el <em>id</em>, el cual se asigna de manera interna mediante condicionales:</p>
+<pre><code class="language-ts"><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;grupos&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;nombre&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">  </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">includes</span><span class="hl-0">(</span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0">)) {</span><br/><span class="hl-0">    </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;grupos&quot;</span><span class="hl-0">).</span><span class="hl-4">find</span><span class="hl-0">({ </span><span class="hl-3">nombre:</span><span class="hl-0"> </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0"> }).</span><span class="hl-4">value</span><span class="hl-0">().</span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">  } </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id</span><span class="hl-0"> !== </span><span class="hl-1">undefined</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-7">/**</span><br/><span class="hl-7">       * Buscar el id más alto y sumarle 1</span><br/><span class="hl-7">       */</span><br/><span class="hl-0">      </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;grupos&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;id&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">sort</span><span class="hl-0">((</span><span class="hl-3">a</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0"> - </span><span class="hl-3">b</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> === </span><span class="hl-8">0</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id_global</span><span class="hl-0">[</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">] + </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span>
+</code></pre>
+<p>Como se puede observar se declara como constante el <code>id_global</code> que es utilizado para definir el id a cada uno de los grupos de manera incremental si es que el id que se extrae del grupo es de tipo <code>undefined</code>. Por último se agrega en el <code>Lowdb</code> el grupo con todos sus atributos.</p>
+<p>Y por último dentro de esta clase se dispone para cada atributo un <strong>getter</strong> y un <strong>setter</strong> determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``gruposCollection`.</p>
+
+<a href="#gruposcollection" id="gruposcollection" style="color: inherit; text-decoration: none;">
+  <h4><em>gruposCollection</em></h4>
+</a>
+<p><code>gruposCollection</code> consiste en una clase que representa una colección de grupos los cuales son de tipo <code>Grupo</code>, es decir, de la clase anteriormente mencionada:</p>
+<ul>
+<li><strong><code>grupos_</code>:</strong> Colección de grupos.</li>
+</ul>
+<p>Esta clase consta de un <strong>constructor</strong> el cual realiza una llamada al método <code>leerBD()</code>, donde se realiza una lectura de los diferentes grupos presentes en el <code>Lowdb</code> y actualiza así el atributo <code>grupos_</code> con todos los grupos presentes en dicho <code>Lowdb</code>. Para poder acceder al atributo mencionado se recurre a su <strong>getter</strong> y <strong>setter</strong> específico.</p>
+<p>Para comenzar tenemos los métodos <code>infoUsuario()</code>, <code>ordenarGruposPorNombre()</code>, <code>ordenarPorKmsSemanales()</code>, <code>ordenarPorKmsMensuales()</code>, <code>ordenarPorKmsAnuales()</code> y <code>ordenarPorNumUsuarios()</code>. Donde <code>infoUsuario()</code> tiene la misma funcionalidad que <code>manageGrupos()</code> pero con respecto al orden en el que se desee mostras el atributo <code>grupos_</code>.</p>
+<p>Todos los restantes métodos que suponen una ordenación de dicho atributo realizan en primer lugar una petición al usuario que consiste en la selección de un orden <em>ascendente</em> o <em>descendente</em>, seguida de:</p>
+<ol>
+<li>Se realiza una copia del atributo <code>grupos_</code>.</li>
+<li>Se ordena dicha copia según la respuesta del usuario, <em>ascendete</em> o <em>descendente</em>.</li>
+<li>Se muestra al usuario la copia del atributo <code>grupos_</code> según el orden que haya solicitado el mismo.</li>
+</ol>
+<p>Este método <code>manageGrupos()</code> mencionado anteriormente invoca todas las funcionalidades de esta clase, mostrando al usuario todas las opciones:</p>
+<ul>
+<li>Añadir grupo.</li>
+<li>Eliminar grupo.</li>
+<li>Modificar.</li>
+<li>Salir.</li>
+</ul>
+<p>Según la respuesta del usuario se llamará al prompt <em>X</em> Grupo correspondiente, o bien si la respuesta es <em>Salir</em> se finalizará el proceso <code>process.exit(0)</code>.</p>
+<p>Tras este método nos encontramos con <code>promptModificarGrupo()</code>, que solicita al usuario el <em>id</em> del grupo que desee modificar llamando así con el mismo al método <code>modificarGrupo(identificador: ID)</code>, seguido de <code>borrarElementoBD(identificador: ID)</code> el cual se encargará de eliminar el grupo del <em>identificador</em> pasado por parámetro del <code>Lowdb</code>.</p>
+<p>Con respecto al <code>promptModificarGrupo()</code> obtenemos su funcionalidad debido al método <code>modificarGrupo(identificador: ID)</code>. En primer lugar nos encontramos con el análisis del <em>id</em> del grupo a modificar pasado por parámetro, que puede resultar en error si el mismo no existe, o en éxito accediendo a una nueva elección del usuario, específicamente del atributo que desee modificar:</p>
+<ul>
+<li>Nombre.</li>
+<li>Participantes.</li>
+<li>Estadísticas.</li>
+<li>Histórico de rutas.</li>
+</ul>
+<p>En función de la elección del usuario se procederá a un nuevo <strong>prompt</strong> en el cual se insertarán los nuevos datos a modificar, en todos los casos tendremos que realizar los siguientes pasos para la exitosa modificación:</p>
+<ol>
+<li>Cambio de la característica en su grupo correspondiente mediante su setter, todo ello dentro del atributo <code>grupos_</code>.</li>
+<li>Eliminación del elemento en el <code>Lowdb</code>.</li>
+<li>Construcción de un grupo auxiliar con los nuevos datos del grupo en cuestión, añadiendo así dicho elemento en el <code>Lowdb</code>.</li>
+<li>Inserción de dicho grupo auxiliar en el atributo <code>grupos_</code>.</li>
+<li>Supresión del antigüo grupo del atributo <code>grupos_</code>.</li>
+</ol>
+<p>A continuación tenemos dos métodos una de las funcionalidades mencionadas anteriormente seguida de su método, <code>promptEliminarGrupo()</code> y <code>eliminarGrupo(identificador: ID)</code>. Tenemos <code>promptEliminarGrupo()</code>, que permitirá la inserción del <em>id</em> del grupo a eliminar, para así poder llamar al método <code>eliminarGrupo(identificador: ID)</code> que se encargará de borrar el grupo con dicho <em>identificador</em> pero en este caso tanto de <code>Lowdb</code> como del atributo <code>grupos_</code>, dando dos posibles resultados:</p>
+<ol>
+<li>El id del grupo existe en el <code>Lowdb</code> y por lo tanto la acción resulta exitosa retornando el grupo auxiliar utilizado.</li>
+<li>El id del grupo es inexistente en el <code>Lowdb</code> y por ello se procede al fracaso de la acción retornando así undefined.</li>
+</ol>
+<p>Para finalizar está el método <code>promptAñadirGrupo()</code>, cuya funcionalidad es la adicción de un grupo insertado en el <code>Lowdb</code> y en el atributo <code>grupos_</code>. Para ello se solicitan al usuario todos los datos necesarios para la creación de un objeto <code>Grupo</code> a excepción del <em>id</em>, de las <em>rutas favoritas</em> y del <em>ranking</em>, puesto a que serán asignados u obtenidos en el constructor de la clase <code>Grupo</code>. Una vez obtenidos los datos se procede a la creación del grupo en cuestión con todos los elementos excepto el <em>id</em>, las <em>rutas favoritas</em> y el <em>ranking</em>, el cual será insertado en el <code>Lowdb</code>, debido a la creación del mismo, y en el atributo <code>grupos_</code>, debido a un <em>push</em>.</p>
+
+<a href="#reto" id="reto" style="color: inherit; text-decoration: none;">
+  <h3><strong>Reto:</strong></h3>
+</a>
+
+<a href="#reto-1" id="reto-1" style="color: inherit; text-decoration: none;">
+  <h4><em>Reto</em></h4>
+</a>
+<p><code>Reto</code> consiste en una clase que representa un reto la cual consta de los siguientes atributos privados, de los cuales cabe destacar los tipos <code>ID</code> y <code>actividad</code>, los cuales fueron desarrollados de manera específica para que por una parte el <em>id</em> fuese un <strong>número</strong> y la <em>actividad</em> fuese de tipo <strong>correr</strong> o <strong>bibicleta</strong>:</p>
+<ul>
+<li><strong><code>id_</code>:</strong> ID único del reto.</li>
+<li><strong><code>nombre_</code>:</strong> Nombre del reto.</li>
+<li><strong><code>rutas_</code>:</strong> Rutas del reto.</li>
+<li><strong><code>tipo_actividad_</code>:</strong> Tipo de actividad del reto.</li>
+<li><strong><code>km_totales_</code>:</strong> Kilómetros totales del reto.</li>
+<li><strong><code>usuarios_</code>:</strong> Usuarios del reto.</li>
+</ul>
+<p>Para crear un objeto ruta se utiliza el <strong>constructor</strong> de la clase el cual instancia todos los atributos de manera obligatoria, excepto los <em>km_totales</em> que se calculan automáticamente y el <em>id</em>, el cual se asigna de manera interna mediante condicionales:</p>
+<pre><code class="language-ts"><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;retos&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;nombre&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">  </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">includes</span><span class="hl-0">(</span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0">)) {</span><br/><span class="hl-0">    </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;retos&quot;</span><span class="hl-0">).</span><span class="hl-4">find</span><span class="hl-0">({ </span><span class="hl-3">nombre:</span><span class="hl-0"> </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">nombre_</span><span class="hl-0"> }).</span><span class="hl-4">value</span><span class="hl-0">().</span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">  } </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id</span><span class="hl-0"> !== </span><span class="hl-1">undefined</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-7">/**</span><br/><span class="hl-7">       * Buscar el id más alto y sumarle 1</span><br/><span class="hl-7">       */</span><br/><span class="hl-0">      </span><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">id_global</span><span class="hl-0"> = </span><span class="hl-3">database</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-5">&quot;retos&quot;</span><span class="hl-0">).</span><span class="hl-4">map</span><span class="hl-0">(</span><span class="hl-5">&quot;id&quot;</span><span class="hl-0">).</span><span class="hl-4">value</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-4">sort</span><span class="hl-0">((</span><span class="hl-3">a</span><span class="hl-0">, </span><span class="hl-3">b</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0"> - </span><span class="hl-3">b</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-6">if</span><span class="hl-0"> (</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> === </span><span class="hl-8">0</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-6">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">this</span><span class="hl-0">.</span><span class="hl-3">id_</span><span class="hl-0"> = </span><span class="hl-3">id_global</span><span class="hl-0">[</span><span class="hl-3">id_global</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">] + </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span>
+</code></pre>
+<p>Como se puede observar se declara como constante el <code>id_global</code> que es utilizado para definir el id a cada uno de los retos de manera incremental si es que el id que se extrae del reto es de tipo <code>undefined</code>. Por último se agrega en el <code>Lowdb</code> el reto con todos sus atributos.</p>
+<p>Además, se dispone de un método <em>kmTotales()</em> que se encarga de a partir de todas las rutas que componen el reto, obtener la suma de los kilómetros.</p>
+<p>Y por último dentro de esta clase se dispone para cada atributo un <strong>getter</strong> y un <strong>setter</strong> determinados los cuales serán utilizados para el acceso a los mismos de manera externa a la clase, es decir, en otras clases como puede ser ``retoCollection`.</p>
+
+<a href="#retocollection" id="retocollection" style="color: inherit; text-decoration: none;">
+  <h4><em>retoCollection</em></h4>
+</a>
+<p><code>retoCollection</code> consiste en una clase que representa una colección de retos los cuales son de tipo <code>Reto</code>, es decir, de la clase anteriormente mencionada:</p>
+<ul>
+<li><strong><code>retos_</code>:</strong> Colección de retos.</li>
+</ul>
+<p>Esta clase consta de un <strong>constructor</strong> el cual realiza una llamada al método <code>leerBD()</code>, donde se realiza una lectura de los diferentes retos presentes en el <code>Lowdb</code> y actualiza así el atributo <code>retos_</code> con todos los retos presentes en dicho <code>Lowdb</code>. Para poder acceder al atributo mencionado se recurre a su <strong>getter</strong> y <strong>setter</strong> específico.</p>
+<p>El primer método encontrado es <code>manageRetos()</code>, que invoca todas las funcionalidades de esta clase, mostrando al usuario todas las opciones:</p>
+<ul>
+<li>Añadir reto.</li>
+<li>Eliminar reto.</li>
+<li>Modificar.</li>
+<li>Salir.</li>
+</ul>
+<p>Según la respuesta del usuario se llamará al prompt <em>X</em> Reto correspondiente, o bien si la respuesta es <em>Salir</em> se finalizará el proceso <code>process.exit(0)</code>.</p>
+<p>Una de estos métodos es <code>promptAñadirReto()</code>, cuya funcionalidad es la adicción de un reto insertado en el <code>Lowdb</code> y en el atributo <code>retos_</code>. Para ello se solicitan al usuario todos los datos necesarios para la creación de un objeto <code>Reto</code> a excepción del <em>id</em>, puesto a que será asignados en el constructor de la clase <code>Reto</code>. Una vez obtenidos los datos se procede a la creación del reto en cuestión con todos los elementos excepto el <em>id</em>, el cual será insertado en el <code>Lowdb</code>, debido a la creación del mismo, y en el atributo <code>retos_</code>, debido a un <em>push</em>.</p>
+<p>A continuación tenemos dos métodos, una de las funcionalidades mencionadas anteriormente seguida de su método, <code>promptEliminarReto()</code> y <code>eliminarReto(identificador: ID)</code>. Tenemos <code>promptEliminarReto()</code>, que permitirá la selección del reto a eliminar, para así poder llamar al método <code>eliminarReto(identificador: ID)</code> que se encargará de borrar el reto con dicho <em>identificador</em> pero en este caso tanto de <code>Lowdb</code> como del atributo <code>retos_</code>, dando dos posibles resultados:</p>
+<ol>
+<li>El id del reto existe en el <code>Lowdb</code> y por lo tanto la acción resulta exitosa retornando el reto auxiliar utilizado.</li>
+<li>El id del reto es inexistente en el <code>Lowdb</code> y por ello se procede al fracaso de la acción retornando así undefined.</li>
+</ol>
+<p>Tras estos métodos nos encontramos con <code>promptModificarReto()</code>, que solicita al usuario que seleccione el reto que desee modificar llamando así con el mismo al método <code>modificarReto(identificador: ID)</code>, cuya funcionalidad consta del análisis del <em>id</em> del reto a modificar pasado por parámetro, que puede resultar en error si el mismo no existe, o en éxito accediendo a una nueva elección del usuario, específicamente del atributo que desee modificar:</p>
+<ul>
+<li>Nombre.</li>
+<li>Rutas.</li>
+<li>Tipo de Actividad.</li>
+<li>Usuarios.</li>
+</ul>
+<p>En función de la elección del usuario se procederá a un nuevo <strong>prompt</strong> en el cual se insertarán los nuevos datos a modificar, en todos los casos tendremos que realizar los siguientes pasos para la exitosa modificación:</p>
+<ol>
+<li>Cambio de la característica en su reto correspondiente mediante su setter, todo ello dentro del atributo <code>retos_</code>.</li>
+<li>Eliminación del elemento en el <code>Lowdb</code>.</li>
+<li>Construcción de un reto auxiliar con los nuevos datos del reto en cuestión, añadiendo así dicho elemento en el <code>Lowdb</code>.</li>
+<li>Inserción de dicho reto auxiliar en el atributo <code>retos_</code>.</li>
+<li>Supresión del antigüo reto del atributo <code>retos_</code>.</li>
+</ol>
+<p>Por último tenemos <code>borrarElementoBD(identificador: ID)</code> el cual se encargará de eliminar el reto del <em>identificador</em> pasado por parámetro del <code>Lowdb</code>, seguido de los métodos <code>infoUsuario()</code>, <code>ordenarRetosPorNombre()</code>, <code>ordenarPorKms()</code> y <code>ordenarPorNumUsuarios()</code>. Donde <code>infoUsuario()</code> tiene la misma funcionalidad que <code>manageRetos()</code> pero con respecto al orden en el que se desee mostras el atributo <code>retos_</code>.</p>
+<p>Todos los restantes métodos que suponen una ordenación de dicho atributo realizan en primer lugar una petición al usuario que consiste en la selección de un orden <em>ascendente</em> o <em>descendente</em>, seguida de:</p>
+<ol>
+<li>Se realiza una copia del atributo <code>retos_</code>.</li>
+<li>Se ordena dicha copia según la respuesta del usuario, <em>ascendete</em> o <em>descendente</em>.</li>
+<li>Se muestra al usuario la copia del atributo <code>retos_</code> según el orden que haya solicitado el mismo.</li>
+</ol>
+
+<a href="#gestor" id="gestor" style="color: inherit; text-decoration: none;">
+  <h3><strong>Gestor:</strong></h3>
+</a>
+<p><code>Gestor</code> consiste en una clase que gestiona el tratamiento de la información del sistema, la cual consta de diferentes métodos cuya explicación constará a continuación.</p>
+<p>En primer lugar nos encontramos con <code>registrarUsuario()</code>, cuya función es registrar un usuario en el sistema, para ello solicita al usuario sus datos y se llevaraán acabo la creación de los diferentes objetos necesarios para creación del nuevo usuario.</p>
+<ol>
+<li>Se obtienen todos los nombres de usuarios presentes en el <code>Lowdb</code>  y se comprueba que el nombre del usuario no exista, puesto a que no puede haber dos usuarios con el mismo nombre.</li>
+<li>Creación de los diferentes elementos para el posterior establecimiento de los mismos como atributos del nuevo usuario.</li>
+<li>Creación del usuario y por lo tanto adición del mismo al <code>Lowdb</code>.</li>
+</ol>
+<p>En segundo lugar nos encontramos con el método <code>iniciarSesion()</code>, que como su nombre indica permitirá al usuario iniciar sesión en el sistema mediante la selección de usuario presentes en el <code>Lowbd</code>. Seguido a este tenemos el <code>programaPrincipal()</code> que maneja el sistema proponiendo al usuario de acción desea realizar y según su respuesta llamando al método determinado:</p>
+<ul>
+<li>Registrarse en el sistema.</li>
+<li>Iniciar sesión.</li>
+<li>Funcionamiento del sistema.</li>
+<li>Salir.</li>
+</ul>
+<p>A continuación tenemos el <code>userManage()</code> utilizado para la administración de usuarios con una funcionalidad similar al <code>programaPrincipal()</code>, esto se debe a que se le muestran al usuario un listado de opciones que puede realizar en función a los usuarios, y según su elección realizará la llamada al método correspondiente:</p>
+<ul>
+<li>Ver listado de usuarios.</li>
+<li>Modificar mis amigos.</li>
+<li>Visualizar rutas.</li>
+<li>Unirse a un grupo.</li>
+<li>Gestionar grupos.</li>
+<li>Salir</li>
+</ul>
+<p>Después tenemos los métodos <code>listarUsuarios()</code> y <code>modificarAmigos()</code>, donde <code>listarUsuarios()</code> muestra por pantalla los usuarios presentes en el <code>Lowdb</code>, y <code>modificarAmigos()</code> en primer lugar le pregunta al usuario que acción desea realizar para en función de la misma realizar los cambios:</p>
+<ul>
+<li>Añadir amigo.</li>
+<li>Eliminar amigo.</li>
+<li>Salir.</li>
+</ul>
+<p>Para <strong>añadir amigo</strong> se solicitará el <em>id</em> del mismo que se agregará a la lista de amigos del usuario en cuestión y para <strong>eliminar amigo</strong> se comprobará que el usuario disponga de amigos o de la existencia de los mismos en el <code>Lowdb</code>, seguido de la petición del <em>id</em> del mismo y por lo tanto su supresión.</p>
+<p>Por otra parte disponemos de <code>verRutas()</code> que muestra por pantalla al usuario los datos de la ruta que él seleccione, y de <code>unierseGrupo()</code> que permite al usuario la adición de él mismo en un grupo, para ello se pregunta al mismo el grupo al que desea unirse procediendo así a la agregación del usuario en el grupo, actualizando el <code>Lowdb</code> y la lista de grupos.</p>
+<p>A su vez se permite la gestión de los grupos mediante <code>gestionarGrupos()</code>, que la igual que <code>userManage()</code> muestra al usuario diferentes opciones, que en función de la respuesta del mismo que llamará a un método o a otro, excepto por <strong>ver grupos</strong> el cual se ejecutará en este método junto con <strong>salir</strong>:</p>
+<ul>
+<li>Crear grupo.</li>
+<li>Eliminar grupo.</li>
+<li>Ver grupos.</li>
+<li>Salir.</li>
+</ul>
+<p>Los dos siguientes métodos son las funcionalidades mencionadas anteriormente del método <code>gestionarGrupos()</code>, en primer lugar <code>eliminarGrupo()</code>, que solicitará al usuario el grupo a eliminar procediendo a su eliminación según la elección del mismo, y posteriormente <code>crearGrupo()</code>, que nuevamente solicita al usuario todos los atributos necesarios para la creación del grupo que desee y a continuación procederá a dicha acción, ambos métodos realizarán los cambios tanto en el <code>Lowdb</code> como en el listado de grupos correspondiente.</p>
+<p>Para finalizar nos encontramos con <code>funcionamientoSistema()</code> cuya funcionalidad es permitir la gestión del funcionamiento del programa, para ello muestra al usuario las diferentes opciones de las que dispone:</p>
+<ul>
+<li>Gestionar rutas.</li>
+<li>Gestionar usuarios.</li>
+<li>Gestionar grupos.</li>
+<li>Gestionar retos.</li>
+<li>Salir.</li>
+</ul>
+<p>Tras recibir la respuesta del usuario se procederá a realizar un nuevo <strong>prompt</strong> diferente para cada opción donde:</p>
+<ol>
+<li>Se solicitará al usuario la selección de las nuevas opciones:</li>
+</ol>
+<ul>
+<li>Ver información de <em>X</em>.</li>
+<li>Modificar <em>X</em>.</li>
+<li>Salir.</li>
+</ul>
+<ol start="2">
+<li>En función de la elección se llama a su método correspondiente o se finaliza el proceso con <code>process.exit(0)</code>.</li>
+</ol>
+
+<a href="#referencias" id="referencias" style="color: inherit; text-decoration: none;">
+  <h2>Referencias</h2>
+</a>
+<p><a href="https://ull-esit-inf-dsi-2223.github.io/prct07-destravate-dataModel/">Guión de la práctica 7</a></p>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">p7</a>
+<ul>
+<li class="tsd-kind-module"><a href="modules/gestor.html">gestor</a></li>
+<li class="tsd-kind-module"><a href="modules/grupo.html">grupo</a></li>
+<li class="tsd-kind-module"><a href="modules/gruposCollection.html">grupos<wbr/>Collection</a></li>
+<li class="tsd-kind-module"><a href="modules/reto.html">reto</a></li>
+<li class="tsd-kind-module"><a href="modules/retoCollection.html">reto<wbr/>Collection</a></li>
+<li class="tsd-kind-module"><a href="modules/ruta.html">ruta</a></li>
+<li class="tsd-kind-module"><a href="modules/rutaCollection.html">ruta<wbr/>Collection</a></li>
+<li class="tsd-kind-module"><a href="modules/types.html">types</a></li>
+<li class="tsd-kind-module"><a href="modules/usuario.html">usuario</a></li>
+<li class="tsd-kind-module"><a href="modules/usuarioCollection.html">usuario<wbr/>Collection</a></li></ul></li></ul></div></details></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>

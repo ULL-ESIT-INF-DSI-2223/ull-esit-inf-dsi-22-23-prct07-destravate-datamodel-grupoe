@@ -2176,6 +2176,23 @@
         18,
         20
       ]
+    },
+    {
+      "id": 6,
+      "nombre": "Maraton",
+      "rutas": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "correr",
+      "km_totales": 51518,
+      "usuarios": [
+        1,
+        2
+      ]
     }
   ]
 }

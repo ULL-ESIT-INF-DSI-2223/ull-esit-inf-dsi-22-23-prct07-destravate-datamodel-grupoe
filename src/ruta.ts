@@ -75,6 +75,15 @@ export class Ruta {
     }
   } 
 
+  /**
+   * Método que elimina una ruta de la base de datos
+   * @returns True para las pruebas
+   */
+  autoborrarseBD(): boolean {
+    database.get("rutas").remove({ id: this.id_ }).write();
+    return true;
+  }
+
   // Getters
 
   /**
