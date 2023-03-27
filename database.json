@@ -2076,6 +2076,55 @@
           "id": 2
         }
       ]
+    },
+    {
+      "id": 8,
+      "nombre": "Sandia",
+      "participantes": [
+        7,
+        10,
+        12,
+        14,
+        13,
+        15,
+        17,
+        19,
+        20
+      ],
+      "estadisticasEntrenamiento": {
+        "semana": {
+          "km": 20,
+          "desnivel": 200
+        },
+        "mes": {
+          "km": 30,
+          "desnivel": 3000
+        },
+        "año": {
+          "km": 40,
+          "desnivel": 4000
+        }
+      },
+      "ranking": [],
+      "rutas_favoritas": [],
+      "historicoRutas": [
+        {
+          "fecha": {
+            "dia": 3,
+            "mes": 3,
+            "año": 2021
+          },
+          "id": 3
+        },
+        {
+          "fecha": {
+            "dia": 4,
+            "mes": 4,
+            "año": 2021
+          },
+          "id": 1
+        }
+      ]
     }
   ],
   "retos": [
@@ -2192,6 +2241,31 @@
       "usuarios": [
         1,
         2
+      ]
+    },
+    {
+      "id": 7,
+      "nombre": "Reto de Invierno",
+      "rutas": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tipo_actividad": "correr",
+      "km_totales": 51518,
+      "usuarios": [
+        1,
+        3,
+        4,
+        6,
+        7,
+        9,
+        11,
+        13,
+        17,
+        20
       ]
     }
   ]
